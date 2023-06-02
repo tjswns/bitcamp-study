@@ -1,27 +1,27 @@
 package bitcamp.myapp;
 
 import java.util.Scanner;
+final int MAX_SIZE = 100;
 
 public class App {
+  int[] no = new int[MAX_SIZE];
+  String[] name = new String[MAX_SIZE];
+  String[] email = new String[MAX_SIZE];
+  String[] password = new String[MAX_SIZE];
+  char[] gender = new char[MAX_SIZE];
   public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
+    static Scanner scanner = new Scanner(System.in);
 
-    final int MAX_SIZE = 100;
     int userId = 1;
     int length = 0;
 
-    int[] no = new int[MAX_SIZE];
-    String[] name = new String[MAX_SIZE];
-    String[] email = new String[MAX_SIZE];
-    String[] password = new String[MAX_SIZE];
-    char[] gender = new char[MAX_SIZE];
 
     printTitle();
 
-    for (int i = 0; i < MAX_SIZE; i++) {
+    while (length < MAX_SIZE) {
       inputMember(scanner, i, name, email, password, gender, no, userId++);
       length++;
-      if (!promptContinue(scanner)) {
+      if (!promptContinue) {
         break;
       }
     }
@@ -36,7 +36,7 @@ public class App {
     System.out.println("----------------------------------");
   }
 
-  static void inputMember(Scanner scanner, int i,
+  static void inputMember(Scanner , int i,
       String[] name, String[] email, String[] password, char[] gender, int[] no, int userId) {
 
     System.out.print("이름? ");
@@ -71,7 +71,7 @@ public class App {
     no[i] = userId++;
   }
 
-  static boolean promptContinue(Scanner scanner) {
+  static boolean promptContinue() {
     System.out.print("계속 하시겠습니까?(Y/n) ");
     String response = scanner.nextLine();
     if (!response.equals("") && !response.equalsIgnoreCase("Y")) {
@@ -80,7 +80,7 @@ public class App {
     return true;
   }
 
-  static void printMembers(int length, int[] no, String[] name, String[] email, char[] gender) {
+  static void printMembers() {
     System.out.println("---------------------------------------");
     System.out.println("번호, 이름, 이메일, 성별");
     System.out.println("---------------------------------------");
