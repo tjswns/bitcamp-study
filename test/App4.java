@@ -2,8 +2,8 @@ package test;
 
 import java.util.Scanner;
 
-
-public class App3 {
+public class App4 {
+  
   static Scanner scanner = new Scanner(System.in);
 
   static final int MAX_SIZE = 100;
@@ -14,6 +14,9 @@ public class App3 {
   static char[] gender = new char[MAX_SIZE];
   static int userId = 1;
   static int length = 0;
+
+  static final char MALE = 'M';
+  static final char FEMALE = 'W';
   
   public static void main(String[] args) {
 
@@ -26,7 +29,6 @@ public class App3 {
       }
     }
 
-
     printMembers();
 
     scanner.close();
@@ -38,23 +40,22 @@ public class App3 {
   }
 
   static void inputMember() {
-      
-    name[length] = prompt("이름?");
+    name[length] = prompt("이름? ");
     email[length] = prompt("이메일? ");
     password[length] = prompt("암호? ");
 
     loop: while (true) {
-      String title = ("성별:\n" + 
-      " 1. 남자\n" +
-      "2. 여자\n" +
+      String menuNo = prompt("성별:\n" + 
+      "  1. 남자\n" + 
+      "  2. 여자\n" + 
       "> ");
 
       switch (menuNo) {
         case "1":
-          gender[length] = 'M';
+          gender[length] = MALE;
           break loop;
         case "2":
-          gender[length] = 'W';
+          gender[length] = FEMALE;
           break loop;
         default:
           System.out.println("무효한 번호입니다.");
@@ -66,8 +67,7 @@ public class App3 {
   }
 
   static boolean promptContinue() {
-    System.out.print("계속 하시겠습니까?(Y/n) ");
-    String response = primpt();
+    String response = prompt("계속 하시겠습니까?(Y/n) ");
     if (!response.equals("") && !response.equalsIgnoreCase("Y")) {
       return false;
     }
@@ -83,10 +83,11 @@ public class App3 {
       System.out.printf("%d, %s, %s, %c\n", no[i], name[i], email[i], gender[i]);
     }
   }
-
+  
   static String prompt(String title) {
     System.out.print(title);
     return scanner.nextLine();
   }
+
 
 }
