@@ -22,12 +22,12 @@ public class App4 {
 
     printTitle();
 
-    while (length < MAX_SIZE) {
-      inputMember();
-      if (!promptContinue()) {
-        break;
-      }
-    }
+    // while (length < MAX_SIZE) {
+    //   inputMember();
+    //   if (!promptContinue()) {
+    //     break;
+    //   }
+    // }
 
     printMembers();
 
@@ -37,6 +37,15 @@ public class App4 {
   static void printTitle() {
     System.out.println("나의 목록 관리 시스템");
     System.out.println("----------------------------------");
+
+    System.out.println("1. 회원등록");
+    System.out.println("2. 회원목록");
+    System.out.println("3. 회원조회");
+    System.out.println("4. 회원변경");
+    System.out.println("5. 회원삭제");
+    System.out.println("6. 종료");
+    String menuNo = Prompt.inputString("> ");
+    
   }
 
   static void inputMember() {

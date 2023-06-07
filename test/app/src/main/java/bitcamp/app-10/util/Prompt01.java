@@ -2,7 +2,7 @@ package bitcamp.util;
 
 import java.util.Scanner;
 
-public class Prompt {
+public class Prompt01 {
 
   static Scanner scanner = new Scanner(System.in);
 
