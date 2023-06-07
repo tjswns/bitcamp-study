@@ -46,7 +46,7 @@ public class MemberHandler01 {
     for (int i = 0; i < length; i++) {
       if (no[i] == Integer.parseInt(memberNo)) {
         System.out.printf("이름: %s\n", name[i]);
-        System.out.printf("나이: $d\n", age[i]);
+        System.out.printf("나이: %s\n", age[i]);
         System.out.printf("상의: %s\n", toTopString(top[i]));
         System.out.printf("하의: %s\n", toPantsString(pants[i]));
         System.out.printf("신발: %s\n", toShoesString(shoes[i]));
@@ -56,115 +56,117 @@ public class MemberHandler01 {
     System.out.println("해당 번호의 회원이 없습니다!");
   }
 
-public static String toTopString(char top) {
-    return top == 'M' ? "M" : (top == 'L' ? "L" : "XL");
-}
+  public static String toTopString(String top) {
+    return top.equals("M") ? "M" : (top.equals("L") ? "L" : "XL");
+  }
 
-public static String toPantsString(char pants) {
-  return pants == '1' ? "28" : (pants == '2' ? "30" : "32");
-}
+  public static String toPantsString(String pants) {
+    return pants.equals("1") ? "28" : (pants.equals("2") ? "30" : "32");
+  }
 
-public static String toShoesString(char shoes) {
-  return shoes == '1' ? "260" : (shoes == '2' ? "265" : "270");
-}
+  public static String toShoesString(String shoes) {
+    return shoes.equals("1") ? "260" : (shoes.equals("2") ? "265" : "270");
+  }
 
-public static void updateMember() {
-  String memberNo = Prompt01.inputString("번호? ");
-  for (int i = 0; i < length; i++) {
-    if (no[i] == Integer.parseInt(memberNo)) {
-      System.out.printf("이름(%s)? ", name[i]);
-      name[i] = Prompt01.inputString("");
-      System.out.printf("나이(%d)? ", age[i]);
-      age[i] = Prompt01.inputString("");
-      top[i] = inputTop(top[i]);
-    pants[i] = inputPants(pants[i]);
-    shoes[i] = inputShoes(shoes[i]);
-    return;
+  public static void updateMember() {
+    String memberNo = Prompt01.inputString("번호? ");
+    for (int i = 0; i < length; i++) {
+      if (no[i] == Integer.parseInt(memberNo)) {
+        System.out.printf("이름(%s)? ", name[i]);
+        name[i] = Prompt01.inputString("");
+        System.out.printf("나이(%s)? ", age[i]);
+        age[i] = Prompt01.inputString("");
+        top[i] = String.valueOf(inputTop(top[i]));
+        pants[i] = String.valueOf(inputPants(pants[i]));
+        shoes[i] = String.valueOf(inputShoes(shoes[i]));
+        return;
+      }
+    }
+    System.out.println("해당 번호의 회원이 없습니다!");
+  }
+
+  private static char inputTop(char top) {
+    String label;
+    if (top == '1') {
+      label = "상의?\n";
+    } else {
+      label = String.format("상의(%s)?\n", toTopString(String.valueOf(top)));
+    }
+    while (true) {
+      String menuNo = Prompt01.inputString(label +
+        "  1. M\n" +
+        "  2. L\n" +
+        "  3. XL\n" +
+        "> ");
+
+      switch (menuNo) {
+        case "1":
+          return 'M';
+        case "2":
+          return 'L';
+        case "3":
+          return 'XL';
+        default:
+          System.out.println("무효한 번호입니다.");
+      }
     }
   }
-  System.out.println("해당 번호의 회원이 없습니다!");
-}
 
-private static char inputTop(char top) {
-  String label;
-  if (top == 1) {
-    label = "상의?\n";
-  } else {
-    label = String.format("상의(%s)?\n", toTopString(top));
-  }
-  loop: while (true) {
-    String menuNo = Prompt01.inputString(label + 
-    "  1. M\n" + 
-    "  2. L\n" +
-    "  3. XL\n" + 
-    "> ");
+  private static char inputPants(char pants) {
+    String label;
+    if (pants == '1') {
+      label = "바지?\n";
+    } else {
+      label = String.format("바지(%s)?\n", toPantsString(String.valueOf(pants)));
+    }
+    while (true) {
+      String menuNo = Prompt01.inputString(label +
+        "  1. 28\n" +
+        "  2. 30\n" +
+        "  3. 32\n" +
+        "> ");
 
-    switch (menuNo) {
-      case "1":
-        return M;
-      case "2":
-        return L;
-      case "3":
-        return XL;
-      default:
-        System.out.println("무효한 번호입니다.");
+      switch (menuNo) {
+        case "1":
+          return '1';
+        case "2":
+          return '2';
+        case "3":
+          return '3';
+        default:
+          System.out.println("무효한 번호입니다.");
+      }
     }
   }
-}
 
-private static char inputPants(char pants) {
-  String label;
-  if (pants == 1) {
-    label = "바지?\n";
-  } else {
-    label = String.format("바지(%s)?\n", toPantsString(pants));
-  }
-  loop: while (true) {
-    String menuNo = Prompt01.inputString(label + 
-    "  1. 28\n" + 
-    "  2. 30\n" +
-    "  3. 32\n" + 
-    "> ");
+  private static char inputShoes(char shoes) {
+    String label;
+    if (shoes == '2') {
+      label = "신발?\n";
+    } else {
+      label = String.format("신발(%s)?\n", toShoesString(String.valueOf(shoes)));
+    }
+    while (true) {
+      String menuNo = Prompt01.inputString(label +
+        "  1. 260\n" +
+        "  2. 265\n" +
+        "  3. 270\n" +
+        "> ");
 
-    switch (menuNo) {
-      case "1":
-        return 28;
-      case "2":
-        return 30;
-      case "3":
-        return 32;
-      default:
-        System.out.println("무효한 번호입니다.");
+      switch (menuNo) {
+        case "1":
+          return '1';
+        case "2":
+          return '2';
+        case "3":
+          return '3';
+        default:
+          System.out.println("무효한 번호입니다.");
+      }
     }
   }
-}
 
-private static char inputShoes(char shoes) {
-  String label;
-  if (shoes == 2) {
-    label = "신발?\n";
-  } else {
-    label = String.format("신발(%s)?\n", toShoesString(shoes));
-  }
-  loop: while (true) {
-    String menuNo = Prompt01.inputString(label + 
-    "  1. 260\n" + 
-    "  2. 265\n" +
-    "  3. 270\n" + 
-    "> ");
 
-    switch (menuNo) {
-      case "1":
-        return 260;
-      case "2":
-        return 265;
-      case "3":
-        return 270;
-      default:
-        System.out.println("무효한 번호입니다.");
-    }
-  }
-}
 
 public static void deleteMember() {
   int memberNo = Prompt01.inputInt("번호? ");
