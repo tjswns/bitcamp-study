@@ -1,6 +1,6 @@
 package bitcamp.app;
 
-import bitcamp.handler.MemberHandler01;
+import bitcamp.app.handler.MemberHandler01;
 import bitcamp.util.Prompt01;
 
 public class App10 {
