@@ -1,10 +1,10 @@
-package bitcamp.app;
+package bitcamp.app11;
 
-import bitcamp.app.vo.MemberHandler;
-import bitcamp.util.Prompt;
+import bitcamp.app11.handler3.MemberHandler02;
+import bitcamp.app11.util3.Prompt02;
 
-public class App5 {
-
+public class App11 {
+  
   public static void main(String[] args) {
 
     printTitle();
@@ -12,29 +12,28 @@ public class App5 {
     printMenu();
 
     while (true) {
-      String menuNo = Prompt.inputString("메인> ");
+      String menuNo = Prompt02.inputString("메인> ");
       if (menuNo.equals("6")) {
         break;
       } else if (menuNo.equals("menu")) {
         printMenu();
       } else if (menuNo.equals("1")) {
-        MemberHandler.inputMember();
+        MemberHandler02.inputMember();
       } else if (menuNo.equals("2")) {
-        MemberHandler.printMembers();
+        MemberHandler02.printMembers();
       } else if (menuNo.equals("3")) {
-        MemberHandler.viewMember();
+        MemberHandler02.viewMember();
       } else if (menuNo.equals("4")) {
-        MemberHandler.updateMember();
+        MemberHandler02.updateMember();
       } else if (menuNo.equals("5")) {
-        MemberHandler.deleteMember();
+        MemberHandler02.deleteMember();
       } else {
         System.out.println(menuNo);
       }
     }
 
-    Prompt.close();
+    Prompt02.close();
   }
-
   static void printMenu() {
     System.out.println("1. 회원등록");
     System.out.println("2. 회원목록");
@@ -45,12 +44,12 @@ public class App5 {
   }
 
   static void printTitle() {
-    System.out.println("나의 목록 관리 시스템");
+    System.out.println("회원별 옷 사이즈 관리 시스템");
     System.out.println("----------------------------------");
   }
 
   static boolean promptContinue() {
-    String response = Prompt.inputString("계속 하시겠습니까?(Y/n) ");
+    String response = Prompt02.inputString("계속 하시겠습니까?(Y/n) ");
     if (!response.equals("") && !response.equalsIgnoreCase("Y")) {
       return false;
     }
