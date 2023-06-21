@@ -1,26 +1,22 @@
 package bitcamp.myapp.handler;
 
 import bitcamp.myapp.vo.Board;
-import bitcamp.util.LinkedList;
-import bitcamp.util.List;
+import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.util.List;
 
-public class BoardHandler implements Handler {
+public class BoardDetailHandler implements ActionListener {
 
   private List list;
 
 
-  private String title;
-
-  public BoardHandler( List list) {
-
+  public BoardDetailHandler(List list) {
     this.list = list;
   }
 
 
-  private void viewBoard() {
-    int boardNo = this.prompt.inputInt("번호? ");
-
+  public void service(BreadcrumbPrompt prompt) {
+    int boardNo = prompt.inputInt("번호? ");
     Board board = this.findBy((boardNo));
     if (board == null) {
       System.out.println("해당 번호의 게시글이 없습니다!");
@@ -35,5 +31,14 @@ public class BoardHandler implements Handler {
     board.setViewCount(board.getViewCount() + 1);
   }
 
+  private Board findBy(int no) {
+    for (int i = 0; i < this.list.size(); i++) {
+      Board b = (Board) this.list.get(i);
+      if (b.getNo() == no) {
+        return b;
+      }
+    }
+    return null;
   }
 }
+

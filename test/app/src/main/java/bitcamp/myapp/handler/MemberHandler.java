@@ -2,17 +2,17 @@ package bitcamp.myapp.handler;
 
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.List;
-import bitcamp.util.MenuPrompt;
+import bitcamp.util.BreadcrumbPrompt;
 
 // MemberHandler 는 Handler 규칙에 따라 메서드를 구현했다.
 // 즉 Handler 인터페이스에 정의된
 public class MemberHandler implements Handler {
 
   private List list;
-  private MenuPrompt prompt;
+  private BreadcrumbPrompt prompt;
   private String title;
 
-  public MemberHandler(MenuPrompt prompt, String title, List list) {
+  public MemberHandler(BreadcrumbPrompt prompt, String title, List list) {
     this.prompt = prompt;
     this.title = title;
     this.list = list;
