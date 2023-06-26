@@ -1,8 +1,8 @@
 package bitcamp.util;
 
-public class Stack extends LinkedList {
+public class Stack<E> extends LinkedList<E> {
   public static void main(String[] args) {
-    Stack s = new Stack();
+    Stack<String> s = new Stack<>();
     s.push("홍길동");
     s.push("임꺽정");
     s.push("유관순");
@@ -18,7 +18,7 @@ public class Stack extends LinkedList {
     System.out.println(s.pop());
   }
 
-  public void push(Object value) {
+  public void push(E value) {
     // 목록 맨 끝에 추가한다.
     // 따로 만들 필요가 없다.
     // 수퍼 클래스에 있는 메서드를 이용하여 기능을 구현한다.
@@ -26,7 +26,7 @@ public class Stack extends LinkedList {
 
   }
 
-  public Object pop() {
+  public E pop() {
     if (this.empty()) {
       return null;
     }
@@ -35,7 +35,7 @@ public class Stack extends LinkedList {
 
   }
 
-  public Object peek() {
+  public E peek() {
     if (this.empty()) {
       return null;
     }

@@ -1,7 +1,7 @@
 package bitcamp.util;
 
-
 public class Menu {
+
   private String title;
   private ArrayList listeners = new ArrayList();
 
@@ -9,12 +9,17 @@ public class Menu {
     this.title = title;
   }
 
-  public void addActionListener(ActionListener listner) {
-    listeners.add(listner);
+  public Menu(String title, ActionListener listener) {
+    this(title);
+    this.addActionListener(listener);
   }
 
-  public void removeActionListener(ActionListener listner) {
-    listeners.remove(listner);
+  public void addActionListener(ActionListener listener) {
+    listeners.add(listener);
+  }
+
+  public void removeActionListener(ActionListener listener) {
+    listeners.remove(listener);
   }
 
   public String getTitle() {

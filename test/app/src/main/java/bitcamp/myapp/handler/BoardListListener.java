@@ -1,17 +1,14 @@
 package bitcamp.myapp.handler;
 
 import bitcamp.myapp.vo.Board;
-import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.LinkedList;
+import bitcamp.util.Iterator;
 import bitcamp.util.List;
 
-public class BoardListHandler implements ActionListener {
+public class BoardListListener extends AbstractBoardListener {
 
-  private List list = new LinkedList();
-
-  public BoardListHandler(List list) {
-    this.list = list;
+  public BoardListListener(List<Board> list) {
+    super(list);
   }
 
 
@@ -22,8 +19,10 @@ public class BoardListHandler implements ActionListener {
     System.out.println("번호, 제목, 작성자, 조회수, 등록일");
     System.out.println("---------------------------------------");
 
-    for (int i = 0; i < this.list.size(); i++) {
-      Board board = (Board) this.list.get(i);
+
+    Iterator<Board> iterator = list.iterator();
+    while (iterator.hasNext()) {
+      Board board = iterator.Next();
       System.out.printf("%d, %s, %s, %d, %tY-%5$tm-%5$td\n", board.getNo(), board.getTitle(),
           board.getWriter(), board.getViewCount(), board.getCreatedDate());
     }
