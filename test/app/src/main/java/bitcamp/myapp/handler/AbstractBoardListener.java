@@ -1,18 +1,16 @@
 package bitcamp.myapp.handler;
 
+import java.util.List;
 import bitcamp.myapp.vo.Board;
 import bitcamp.util.ActionListener;
-import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.List;
 
 public abstract class AbstractBoardListener implements ActionListener {
 
   protected List<Board> list;
 
   public AbstractBoardListener(List<Board> list) {
-    this.list = list; // interface 의존 객체 생성
+    this.list = list;
   }
-
 
   protected Board findBy(int no) {
     for (int i = 0; i < this.list.size(); i++) {
@@ -24,8 +22,4 @@ public abstract class AbstractBoardListener implements ActionListener {
     return null;
   }
 
-  @Override
-  public void service(BreadcrumbPrompt prompt) {
-
-  }
 }

@@ -1,15 +1,16 @@
 package bitcamp.myapp.handler;
 
+import java.util.List;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.List;
 
 public abstract class AbstractMemberListener implements ActionListener {
+
   protected List<Member> list;
 
   public AbstractMemberListener(List<Member> list) {
-    this.list = list; // interface 의존 객체 생성
+    this.list = list;
   }
 
   protected static String toGenderString(char gender) {

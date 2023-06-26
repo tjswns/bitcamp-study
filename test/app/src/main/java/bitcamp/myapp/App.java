@@ -1,5 +1,7 @@
 package bitcamp.myapp;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import bitcamp.myapp.handler.BoardAddListener;
 import bitcamp.myapp.handler.BoardDeleteListener;
 import bitcamp.myapp.handler.BoardDetailListener;
@@ -15,9 +17,7 @@ import bitcamp.myapp.handler.MemberListListener;
 import bitcamp.myapp.handler.MemberUpdateListener;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.ArrayList;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.LinkedList;
 import bitcamp.util.Menu;
 import bitcamp.util.MenuGroup;
 
@@ -63,25 +63,11 @@ public class App {
     helloMenu.addActionListener(new FooterListener());
     mainMenu.add(helloMenu);
 
-
-    // Handler memberHandler = new MemberHandler(prompt, "회원", new ArrayList());
-    // Handler boardHandler = new BoardDeleteListener(prompt, "게시글", new LinkedList());
-    // Handler readingHandler = new BoardDeleteListener(prompt, "독서록", new LinkedList());
-
     printTitle();
 
     mainMenu.execute(prompt);
 
     prompt.close();
-  }
-
-  static String getMenu() {
-    StringBuilder menu = new StringBuilder();
-    menu.append("1. 회원\n");
-    menu.append("2. 게시글\n");
-    menu.append("3. 독서록\n");
-    menu.append("0. 종료\n");
-    return menu.toString();
   }
 
   static void printTitle() {
