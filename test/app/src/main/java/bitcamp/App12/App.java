@@ -1,7 +1,7 @@
 package bitcamp.App12;
 
+import bitcamp.App12.handler.MemberHandler;
 import bitcamp.App12.util.Prompt;
-import bitcamp.app11.handler3.MemberHandler02;
 
 
 public class App {
@@ -19,15 +19,15 @@ public class App {
       } else if (menuNo.equals("menu")) {
         printMenu();
       } else if (menuNo.equals("1")) {
-        MemberHandler02.inputMember();
+        MemberHandler.inputMember();
       } else if (menuNo.equals("2")) {
-        MemberHandler02.printMembers();
+        MemberHandler.printMembers();
       } else if (menuNo.equals("3")) {
-        MemberHandler02.viewMember();
+        MemberHandler.viewMember();
       } else if (menuNo.equals("4")) {
-        MemberHandler02.updateMember();
+        MemberHandler.updateMember();
       } else if (menuNo.equals("5")) {
-        MemberHandler02.deleteMember();
+        MemberHandler.deleteMember();
       } else {
         System.out.println(menuNo);
       }
