@@ -1,11 +1,39 @@
 [
   {
     "no": 1,
-    "title": "dw",
-    "content": "dwdw",
-    "writer": "dw",
-    "password": "dw",
-    "viewCount": 0,
     "createdDate": 1688379365762
+  },
+  {
+    "no": 3,
+    "createdDate": 1688387303844
+  },
+  {
+    "no": 4,
+    "createdDate": 1688387313203
+  },
+  {
+    "no": 5,
+    "createdDate": 1688387353675
+  },
+  {
+    "no": 6,
+    "style": "가디건",
+    "brand": "구찌",
+    "fit": "슬림",
+    "createdDate": 1688388170055
+  },
+  {
+    "no": 7,
+    "style": "펑퍼짐",
+    "brand": "어어",
+    "fit": "널널",
+    "createdDate": 1688388208840
+  },
+  {
+    "no": 8,
+    "style": "크크",
+    "brand": "키키",
+    "fit": "하하",
+    "createdDate": 1688388216647
   }
 ]

@@ -1,0 +1,22 @@
+[
+  {
+    "no": 1,
+    "name": "김선",
+    "age": "32",
+    "password": "1",
+    "gender": "M",
+    "top": "XL",
+    "pants": "30",
+    "shoes": "260"
+  },
+  {
+    "no": 2,
+    "name": "ㅇㅈ",
+    "age": "23",
+    "password": "32",
+    "gender": "W",
+    "top": "S",
+    "pants": "28",
+    "shoes": "250"
+  }
+]

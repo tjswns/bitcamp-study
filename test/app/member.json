@@ -2,8 +2,27 @@
   {
     "no": 1,
     "name": "edsw",
-    "email": "dw",
     "password": "dw",
     "gender": "M"
+  },
+  {
+    "no": 2,
+    "name": "dw",
+    "age": "23",
+    "password": "11",
+    "gender": "M",
+    "top": "L",
+    "pants": "32",
+    "shoes": "260"
+  },
+  {
+    "no": 3,
+    "name": "김선준",
+    "age": "27",
+    "password": "23",
+    "gender": "M",
+    "top": "M",
+    "pants": "30",
+    "shoes": "270"
   }
 ]
