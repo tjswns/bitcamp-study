@@ -1,7 +1,7 @@
-package bitcamp.App12.handler;
+package bitcamp.App13.handler;
 
-import bitcamp.App12.util.Prompt;
-import bitcamp.App12.vo.Member;
+import bitcamp.App13.util.Prompt;
+import bitcamp.App13.vo.Member;
 
 
 public class MemberHandler {

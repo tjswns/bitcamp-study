@@ -1,10 +1,10 @@
-package bitcamp.App12.handler;
+package bitcamp.App13.handler;
 
-import bitcamp.App12.util.Prompt;
-import bitcamp.App12.vo.Member;
+import bitcamp.App13.util.Prompt;
+import bitcamp.App13.vo.Member;
 
 
-public class MemberHandler {
+public class BoardHandler {
 
   static final int MAX_SIZE = 100;
   static Member[] members = new Member[MAX_SIZE];
@@ -12,7 +12,7 @@ public class MemberHandler {
 
 
 
-  public static void inputMember() {
+  public static void inputBoard() {
     if (!available()) {
       System.out.println("더이상 입력할 수 없습니다!");
       return;

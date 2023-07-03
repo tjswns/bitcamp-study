@@ -1,8 +1,9 @@
-package bitcamp.myapp.handler;
+package bitcamp.AppProject.handler;
 
 import java.util.List;
-import bitcamp.myapp.vo.Member;
-import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.AppProject.util.BreadcrumbPrompt;
+import bitcamp.AppProject.vo.Member;
+
 
 public class MemberAddListener extends AbstractMemberListener {
 
@@ -13,6 +14,7 @@ public class MemberAddListener extends AbstractMemberListener {
   @Override
   public void service(BreadcrumbPrompt prompt) {
     Member m = new Member();
+
     m.setNo(Member.userId++);
     m.setName(prompt.inputString("이름? "));
     m.setEmail(prompt.inputString("이메일? "));

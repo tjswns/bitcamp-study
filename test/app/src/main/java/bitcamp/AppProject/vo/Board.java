@@ -1,6 +1,8 @@
-package bitcamp.myapp.vo;
+package bitcamp.AppProject.vo;
 
 import java.io.Serializable;
+import bitcamp.myapp.vo.AutoIncrement;
+import bitcamp.myapp.vo.CsvObject;
 
 public class Board implements Serializable, CsvObject, AutoIncrement {
   private static final long serialVersionUID = 1L;
@@ -128,3 +130,4 @@ public class Board implements Serializable, CsvObject, AutoIncrement {
 
 
 }
+
