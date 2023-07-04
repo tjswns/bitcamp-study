@@ -25,7 +25,7 @@ public class BoardUpdateListener extends AbstractBoardListener {
       return;
     }
 
-    board.setStyle(prompt.inputString("스타일(%s)? ", board.getStyle()));
+    inputStyle(board);
     board.setBrand(prompt.inputString("브랜드(%s)? ", board.getBrand()));
   }
 }

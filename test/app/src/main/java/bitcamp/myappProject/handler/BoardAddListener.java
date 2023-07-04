@@ -14,7 +14,7 @@ public class BoardAddListener extends AbstractBoardListener {
   public void service(BreadcrumbPrompt prompt) {
     Board board = new Board();
     board.setNo(Board.boardNo++);
-    board.setStyle(prompt.inputString("좋아하는 스타일? "));
+    inputStyle(board);
     board.setBrand(prompt.inputString("좋아하는 브랜드? "));
     board.setFit(prompt.inputString("좋아하는 핏? "));
     board.setCreatedDate(System.currentTimeMillis());

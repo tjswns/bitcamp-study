@@ -18,5 +18,45 @@
     "top": "S",
     "pants": "28",
     "shoes": "250"
+  },
+  {
+    "no": 3,
+    "name": "김선준",
+    "age": "27",
+    "password": "12",
+    "gender": "M",
+    "top": "L",
+    "pants": "28",
+    "shoes": "270"
+  },
+  {
+    "no": 4,
+    "name": "김선준",
+    "age": "23",
+    "password": "22",
+    "gender": "W",
+    "top": "XS",
+    "pants": "26",
+    "shoes": "240"
+  },
+  {
+    "no": 5,
+    "name": "김선준",
+    "age": "34",
+    "password": "11",
+    "gender": "M",
+    "top": "M",
+    "pants": "30",
+    "shoes": "270"
+  },
+  {
+    "no": 6,
+    "name": "깅",
+    "age": "232",
+    "password": "11",
+    "gender": "W",
+    "top": "S",
+    "pants": "24",
+    "shoes": "250"
   }
 ]

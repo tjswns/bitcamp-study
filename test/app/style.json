@@ -12,5 +12,33 @@
     "brand": "ㅈㄴ",
     "fit": "ㅈㄷ",
     "createdDate": 1688388788150
+  },
+  {
+    "no": 5,
+    "style": "가디건",
+    "brand": "구찌",
+    "fit": "널널",
+    "createdDate": 1688437730550
+  },
+  {
+    "no": 6,
+    "style": "쿨",
+    "brand": "1",
+    "fit": "1",
+    "createdDate": 1688453230811
+  },
+  {
+    "no": 7,
+    "style": "파티",
+    "brand": "ㄹㅇㄹ",
+    "fit": "ㅇㅇㅇ",
+    "createdDate": 1688454261094
+  },
+  {
+    "no": 8,
+    "style": "데일리",
+    "brand": "구찌",
+    "fit": "널널",
+    "createdDate": 1688454780185
   }
 ]
