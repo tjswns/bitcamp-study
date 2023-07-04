@@ -1,13 +1,13 @@
 package bitcamp.App13.handler;
 
 import bitcamp.App13.util.Prompt;
-import bitcamp.App13.vo.Member;
+import bitcamp.App13.vo.Board;
 
 
 public class BoardHandler {
 
   static final int MAX_SIZE = 100;
-  static Member[] members = new Member[MAX_SIZE];
+  static Board[] boards = new Board[MAX_SIZE];
   static int length = 0;
 
 
@@ -18,234 +18,145 @@ public class BoardHandler {
       return;
     }
 
-    Member m = new Member();
-    m.setName(Prompt.inputString("이름? "));
-    m.setAge(Prompt.inputString("나이? "));
-    m.setGender(inputGender((char) 0));
-    inputTop(m);
-    inputPants(m);
-    inputShoes(m);
-    members[length++] = m;
+    Board board = new Board();
+    board.setStyle(Prompt.inputString("스타일? "));
+    inputStyle(board);
+    inputBrand(board);
+    inputFit(board);
+    boards[length++] = board;
   }
 
-  public static void printMembers() {
+  public static void printBoard() {
     System.out.println("---------------------------------------");
-    System.out.println("번호, 이름, 나이, 상의, 하의, 신발, 성별");
+    System.out.println("번호, 스타일, 브랜드, 핏");
     System.out.println("---------------------------------------");
 
     for (int i = 0; i < length; i++) {
-      Member m = members[i];
-      System.out.printf("%d, %s, %s, %s, %s, %s, %s\n", m.getNo(), m.getName(), m.getAge(),
-          m.getTop(), m.getPants(), m.getShoes(), toGenderString(m.getGender()));
+      Board board = boards[i];
+      System.out.printf("%d, %s, %s, %s \n", board.getNo(), board.getStyle(), board.getBrand(),
+          board.getFit());
     }
   }
 
-  public static void viewMember() {
+  public static void viewBoard() {
     String memberNo = Prompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
-      Member m = members[i];
-      if (m.getNo() == Integer.parseInt(memberNo)) {
-        System.out.printf("이름: %s\n", m.getName());
-        System.out.printf("나이: %s\n", m.getAge());
-        System.out.printf("성별: %s\n", toGenderString(m.getGender()));
-        System.out.printf("상의: %s\n", m.getTop());
-        System.out.printf("바지: %s\n", m.getPants());
-        System.out.printf("신발: %s\n", m.getShoes());
+      Board board = boards[i];
+      if (board.getNo() == Integer.parseInt(memberNo)) {
+        System.out.printf("이름: %s\n", board.getStyle());
+        System.out.printf("이름: %s\n", board.getBrand());
+        System.out.printf("이름: %s\n", board.getFit());
         return;
       }
     }
     System.out.println("해당 번호의 회원이 없습니다!");
   }
 
-  public static String toGenderString(char gender) {
-    return gender == 'M' ? "남성" : "여성";
-  }
 
-  public static void updateMember() {
-    String memberNo = Prompt.inputString("번호? ");
+  public static void updateBoard() {
+    String boardNo = Prompt.inputString("번호? ");
     for (int i = 0; i < length; i++) {
-      Member m = members[i];
-      if (m.getNo() == Integer.parseInt(memberNo)) {
-        System.out.printf("이름(%s)? ", m.getName());
-        m.setName(Prompt.inputString(""));
-        System.out.printf("나이(%s)? ", m.getAge());
-        m.setAge(Prompt.inputString(""));
-        m.setGender(inputGender(m.getGender()));
-        inputTop(m);
-        inputPants(m);
-        inputShoes(m);
+      Board board = boards[i];
+      if (board.getNo() == Integer.parseInt(boardNo)) {
+        inputStyle(board);
+        inputBrand(board);
+        inputFit(board);
       }
     }
     System.out.println("해당 번호의 회원이 없습니다!");
   }
 
-  private static char inputGender(char gender) {
-    String label;
-    if (gender == 0) {
-      label = "성별?\n";
-    } else {
-      label = String.format("성별(%s)?\n", toGenderString(gender));
-    }
-    while (true) {
-      String menuNo = Prompt.inputString(label + "  1. 남자\n" + "  2. 여자\n" + "> ");
+  private static void inputStyle(Board board) {
+    loop: while (true) {
+      String menuNo =
+          Prompt.inputString("좋아하는 스타일:\n" + "  1. 데일리\n" + "  2. 파티\n" + "  3. 데이트\n" + "> ");
 
       switch (menuNo) {
         case "1":
-          return Member.MALE;
+          board.setStyle("데일리");
+          break loop;
         case "2":
-          return Member.FEMALE;
+          board.setStyle("파티");
+          break loop;
+        case "3":
+          board.setStyle("데이트");
+          break loop;
         default:
           System.out.println("무효한 번호입니다.");
       }
     }
   }
 
-  private static void inputTop(Member m) {
-    if (m.getGender() == Member.MALE) {
-      loop: while (true) {
-        String menuNo = Prompt.inputString("상의:\n" + "  1. M\n" + "  2. L\n" + "  3. XL\n" + "> ");
 
-        switch (menuNo) {
-          case "1":
-            m.setTop("M");
-            break loop;
-          case "2":
-            m.setTop("L");
-            break loop;
-          case "3":
-            m.setTop("XL");
-            break loop;
-          default:
-            System.out.println("무효한 번호입니다.");
-        }
-      }
-    } else if (m.getGender() == Member.FEMALE) {
+  private static void inputBrand(Board board) {
+    loop: while (true) {
+      String menuNo = Prompt.inputString(
+          "좋아하는 브랜드:\n" + "  1. 구찌\n" + "  2. 샤넬\n" + "  3. 프라다\n" + "  4. 그 외\n" + "> ");
 
-      loop: while (true) {
-        String menuNo = Prompt.inputString("상의:\n" + "  1. XS\n" + "  2. S\n" + "  3. M\n" + "> ");
-
-        switch (menuNo) {
-          case "1":
-            m.setTop("XS");
-            break loop;
-          case "2":
-            m.setTop("S");
-            break loop;
-          case "3":
-            m.setTop("M");
-            break loop;
-          default:
-            System.out.println("무효한 번호입니다.");
-        }
+      switch (menuNo) {
+        case "1":
+          board.setBrand("구찌");
+          break loop;
+        case "2":
+          board.setBrand("샤넬");
+          break loop;
+        case "3":
+          board.setBrand("프라다");
+          break loop;
+        case "4":
+          board.setBrand("그 외");
+          break loop;
+        default:
+          System.out.println("무효한 번호입니다.");
       }
     }
   }
 
-  private static void inputPants(Member m) {
-    if (m.getGender() == Member.MALE) {
-      loop: while (true) {
-        String menuNo =
-            Prompt.inputString("바지:\n" + "  1. 28\n" + "  2. 30\n" + "  3. 32\n" + "> ");
+  private static void inputFit(Board board) {
+    loop: while (true) {
+      String menuNo = Prompt.inputString(
+          "좋아하는 브랜드:\n" + "  1. 오버핏\n" + "  2. 슬림핏\n" + "  3. 스탠다드핏\n" + "  4. 그 외\n" + "> ");
 
-        switch (menuNo) {
-          case "1":
-            m.setPants("28");
-            break loop;
-          case "2":
-            m.setPants("30");
-            break loop;
-          case "3":
-            m.setPants("32");
-            break loop;
-          default:
-            System.out.println("무효한 번호입니다.");
-        }
-      }
-    } else if (m.getGender() == Member.FEMALE) {
-
-      loop: while (true) {
-        String menuNo =
-            Prompt.inputString("바지:\n" + "  1. 24\n" + "  2. 26\n" + "  3. 28\n" + "> ");
-
-        switch (menuNo) {
-          case "1":
-            m.setPants("24");
-            break loop;
-          case "2":
-            m.setPants("26");
-            break loop;
-          case "3":
-            m.setPants("28");
-            break loop;
-          default:
-            System.out.println("무효한 번호입니다.");
-        }
+      switch (menuNo) {
+        case "1":
+          board.setFit("오버 핏");
+          break loop;
+        case "2":
+          board.setFit("슬림 핏");
+          break loop;
+        case "3":
+          board.setFit("스텐다드 핏");
+          break loop;
+        case "4":
+          board.setFit("그 외");
+          break loop;
+        default:
+          System.out.println("무효한 번호입니다.");
       }
     }
   }
 
-  private static void inputShoes(Member m) {
-    if (m.getGender() == Member.MALE) {
-      loop: while (true) {
-        String menuNo =
-            Prompt.inputString("신발:\n" + "  1. 260\n" + "  2. 265\n" + "  3. 270\n" + "> ");
 
-        switch (menuNo) {
-          case "1":
-            m.setShoes("260");
-            break loop;
-          case "2":
-            m.setShoes("265");
-            break loop;
-          case "3":
-            m.setShoes("270");
-            break loop;
-          default:
-            System.out.println("무효한 번호입니다.");
-        }
-      }
-    } else if (m.getGender() == Member.FEMALE) {
 
-      loop: while (true) {
-        String menuNo =
-            Prompt.inputString("신발:\n" + "  1. 240\n" + "  2. 245\n" + "  3. 250\n" + "> ");
+  public static void deleteBoard() {
+    int boardNo = Prompt.inputInt("번호? ");
 
-        switch (menuNo) {
-          case "1":
-            m.setShoes("240");
-            break loop;
-          case "2":
-            m.setShoes("245");
-            break loop;
-          case "3":
-            m.setShoes("250");
-            break loop;
-          default:
-            System.out.println("무효한 번호입니다.");
-        }
-      }
-    }
-  }
-
-  public static void deleteMember() {
-    int memberNo = Prompt.inputInt("번호? ");
-
-    int deletedIndex = indexOf(memberNo);
+    int deletedIndex = indexOf(boardNo);
     if (deletedIndex == -1) {
       System.out.println("해당 번호의 회원이 없습니다!");
       return;
     }
 
     for (int i = deletedIndex; i < length - 1; i++) {
-      members[i] = members[i + 1];
+      boards[i] = boards[i + 1];
     }
 
-    members[--length] = null;
+    boards[--length] = null;
   }
 
   private static int indexOf(int memberNo) {
     for (int i = 0; i < length; i++) {
-      Member m = members[i];
+      Board m = boards[i];
       if (m.getNo() == memberNo) {
         return i;
       }
