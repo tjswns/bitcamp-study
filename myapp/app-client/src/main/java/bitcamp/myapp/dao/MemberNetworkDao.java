@@ -18,7 +18,8 @@ public class MemberNetworkDao implements MemberDao {
   }
 
   @Override
-  public void insert(Member member) {}
+  public void insert(Member member) {
+  }
 
   @Override
   public List<Member> list() {
