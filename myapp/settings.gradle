@@ -17,3 +17,4 @@ rootProject.name = 'myapp'
 include('app-client')
 include('app-server')
 include('app-common')
+include('app-project')
