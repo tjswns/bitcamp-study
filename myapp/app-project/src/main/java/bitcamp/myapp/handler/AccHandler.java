@@ -5,11 +5,9 @@ import bitcamp.util.Prompt;
 
 public class AccHandler implements Handler {
 
-  private static final int MAX_SIZE = 100;
 
+  private AccList list = new AccList();
   private Prompt prompt;
-  private Acc[] accs = new Acc[MAX_SIZE];
-  private int length = 0;
   private String title;
 
   public AccHandler(Prompt prompt, String title) {
@@ -51,16 +49,12 @@ public class AccHandler implements Handler {
   }
 
   private void inputAcc() {
-    if (!this.available()) {
-      System.out.println("더이상 입력할 수 없습니다!");
-      return;
-    }
-
     Acc acc = new Acc();
     inputSelect(acc);
     inputStyle(acc);
     inputSize(acc);
-    this.accs[this.length++] = acc;
+
+    this.list.add(acc);
   }
 
   public void printAcc() {
@@ -68,39 +62,41 @@ public class AccHandler implements Handler {
     System.out.println("번호, 악세서리, 스타일, 사이즈");
     System.out.println("---------------------------------------");
 
-    for (int i = 0; i < length; i++) {
-      Acc acc = accs[i];
+    Acc[] arr = this.list.list();
+    for (Acc acc : arr) {
       System.out.printf("%d, %s, %s, %s \n", acc.getNo(), acc.getSelect(), acc.getStyle(),
           acc.getSize());
     }
   }
 
-  public void viewAcc() {
-    String accNo = this.prompt.inputString("번호? ");
-    for (int i = 0; i < length; i++) {
-      Acc acc = accs[i];
-      if (acc.getNo() == Integer.parseInt(accNo)) {
-        System.out.printf("악세사리: %s\n", acc.getSelect());
-        System.out.printf("스타일: %s\n", acc.getStyle());
-        System.out.printf("사이즈: %s\n", acc.getSize());
-        return;
-      }
+  private void viewAcc() {
+    int accNo = this.prompt.inputInt("번호? ");
+
+    Acc arr = this.list.get(accNo);
+    if (acc == null) {
+      System.out.println("해당 번호의 스타일이 없습니다!");
+      return;
     }
-    System.out.println("해당 번호의 스타일이 없습니다!");
+
+    System.out.printf("악세사리: %s\n", acc.getSelect());
+    System.out.printf("스타일: %s\n", acc.getStyle());
+    System.out.printf("사이즈: %s\n", acc.getSize());
   }
 
   public void updateAcc() {
     String accNo = this.prompt.inputString("번호? ");
-    for (int i = 0; i < length; i++) {
-      Acc acc = accs[i];
-      if (acc.getNo() == Integer.parseInt(accNo)) {
-        inputSelect(acc);
-        inputStyle(acc);
-        inputSize(acc);
-      }
+    Acc arr = this.list.get(accNo);
+
+    if (acc == null) {
+      System.out.println("해당 번호의 스타일이 없습니다!");
+      return;
     }
-    System.out.println("해당 번호의 스타일이 없습니다!");
+    inputSelect(acc);
+    inputStyle(acc);
+    inputSize(acc);
   }
+
+
 
   private void inputStyle(Acc acc) {
     loop: while (true) {
@@ -182,33 +178,5 @@ public class AccHandler implements Handler {
     return this.prompt.inputString("자신의 사이즈를 입력하세요: ");
   }
 
-  public void deleteAcc() {
-    int accNo = this.prompt.inputInt("번호? ");
 
-    int deletedIndex = indexOf(accNo);
-    if (deletedIndex == -1) {
-      System.out.println("해당 번호의 스타일이 없습니다!");
-      return;
-    }
-
-    for (int i = deletedIndex; i < length - 1; i++) {
-      accs[i] = accs[i + 1];
-    }
-
-    accs[--length] = null;
-  }
-
-  private int indexOf(int accNo) {
-    for (int i = 0; i < this.length; i++) {
-      Acc acc = this.accs[i];
-      if (acc.getNo() == accNo) {
-        return i;
-      }
-    }
-    return -1;
-  }
-
-  private boolean available() {
-    return length < MAX_SIZE;
-  }
 }
