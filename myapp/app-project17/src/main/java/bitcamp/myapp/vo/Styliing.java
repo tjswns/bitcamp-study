@@ -1,6 +1,6 @@
 package bitcamp.myapp.vo;
 
-public class Board {
+public class Styliing {
 
   private static int boardNo = 1;
 
@@ -12,7 +12,7 @@ public class Board {
   private long createdDate;
 
 
-  public Board() {
+  public Styliing() {
     this.no = boardNo++;
     this.createdDate = System.currentTimeMillis();
   }

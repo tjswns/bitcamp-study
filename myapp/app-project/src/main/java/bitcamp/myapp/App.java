@@ -1,9 +1,9 @@
 package bitcamp.myapp;
 
 import bitcamp.myapp.handler.AccHandler;
-import bitcamp.myapp.handler.BoardHandler;
 import bitcamp.myapp.handler.Handler;
 import bitcamp.myapp.handler.MemberHandler;
+import bitcamp.myapp.handler.StylingHandler;
 import bitcamp.util.Prompt;
 
 public class App {
@@ -17,7 +17,7 @@ public class App {
     // 모든 핸들러는 Handler 규칙에 따라 정의되었기 때문에
     // Handler 레퍼런스에 그 주소를 담을 수 있다.
     Handler memberHandler = new MemberHandler(prompt, "회원");
-    Handler boardHandler = new BoardHandler(prompt, "스타일");
+    Handler stylingHandler = new StylingHandler(prompt, "스타일");
     Handler accHandler = new AccHandler(prompt, "악세서리");
     printTitle();
 
@@ -32,7 +32,7 @@ public class App {
       } else if (menuNo.equals("1")) {
         memberHandler.execute();
       } else if (menuNo.equals("2")) {
-        boardHandler.execute();
+        stylingHandler.execute();
       } else if (menuNo.equals("3")) {
         accHandler.execute();
       } else {

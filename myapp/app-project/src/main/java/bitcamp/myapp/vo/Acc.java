@@ -6,7 +6,7 @@ public class Acc {
 
   private int no;
   private String Style;
-  private String Brand;
+  private String select;
   private String Size;
   private String ohter;
 
@@ -47,16 +47,14 @@ public class Acc {
   }
 
 
-  public String getBrand() {
-    return Brand;
+
+  public String getSelect() {
+    return select;
   }
 
-
-  public void setBrand(String brand) {
-    Brand = brand;
+  public void setSelect(String select) {
+    this.select = select;
   }
-
-
 
   public String getSize() {
     return Size;

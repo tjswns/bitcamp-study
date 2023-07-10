@@ -57,21 +57,20 @@ public class AccHandler implements Handler {
     }
 
     Acc acc = new Acc();
-    acc.setStyle(this.prompt.inputString("스타일? "));
+    inputSelect(acc);
     inputStyle(acc);
-    inputBrand(acc);
     inputSize(acc);
     this.accs[this.length++] = acc;
   }
 
   public void printAcc() {
     System.out.println("---------------------------------------");
-    System.out.println("번호, 스타일, 브랜드, 사이즈");
+    System.out.println("번호, 악세서리, 스타일, 사이즈");
     System.out.println("---------------------------------------");
 
     for (int i = 0; i < length; i++) {
       Acc acc = accs[i];
-      System.out.printf("%d, %s, %s, %s \n", acc.getNo(), acc.getStyle(), acc.getBrand(),
+      System.out.printf("%d, %s, %s, %s \n", acc.getNo(), acc.getSelect(), acc.getStyle(),
           acc.getSize());
     }
   }
@@ -81,8 +80,8 @@ public class AccHandler implements Handler {
     for (int i = 0; i < length; i++) {
       Acc acc = accs[i];
       if (acc.getNo() == Integer.parseInt(accNo)) {
+        System.out.printf("악세사리: %s\n", acc.getSelect());
         System.out.printf("스타일: %s\n", acc.getStyle());
-        System.out.printf("브랜드: %s\n", acc.getBrand());
         System.out.printf("사이즈: %s\n", acc.getSize());
         return;
       }
@@ -95,8 +94,8 @@ public class AccHandler implements Handler {
     for (int i = 0; i < length; i++) {
       Acc acc = accs[i];
       if (acc.getNo() == Integer.parseInt(accNo)) {
+        inputSelect(acc);
         inputStyle(acc);
-        inputBrand(acc);
         inputSize(acc);
       }
     }
@@ -105,18 +104,21 @@ public class AccHandler implements Handler {
 
   private void inputStyle(Acc acc) {
     loop: while (true) {
-      String menuNo =
-          this.prompt.inputString("좋아하는 스타일:\n" + "  1. 데일리\n" + "  2. 파티\n" + "  3. 데이트\n" + "> ");
+      String menuNo = this.prompt.inputString(
+          "좋아하는 스타일:\n" + "  1. 데일리\n" + "  2. 힙\n" + "  3. 스트릿\n" + "  4. 아메카지\n" + "> ");
 
       switch (menuNo) {
         case "1":
           acc.setStyle("데일리");
           break loop;
         case "2":
-          acc.setStyle("파티");
+          acc.setStyle("힙");
           break loop;
         case "3":
-          acc.setStyle("데이트");
+          acc.setStyle("스트릿");
+          break loop;
+        case "4":
+          acc.setStyle("아메카지");
           break loop;
         default:
           System.out.println("무효한 번호입니다.");
@@ -124,23 +126,23 @@ public class AccHandler implements Handler {
     }
   }
 
-  private void inputBrand(Acc acc) {
+  private void inputSelect(Acc acc) {
     loop: while (true) {
       String menuNo = this.prompt.inputString(
-          "좋아하는 브랜드:\n" + "  1. 구찌\n" + "  2. 샤넬\n" + "  3. 프라다\n" + "  4. 그 외\n" + "> ");
+          "좋아하는 악세사리:\n" + "  1. 목걸이\n" + "  2. 반지\n" + "  3. 안경\n" + "  4. 그 외\n" + "> ");
 
       switch (menuNo) {
         case "1":
-          acc.setBrand("구찌");
+          acc.setSelect("목걸이");
           break loop;
         case "2":
-          acc.setBrand("샤넬");
+          acc.setSelect("반지");
           break loop;
         case "3":
-          acc.setBrand("프라다");
+          acc.setSelect("안경");
           break loop;
         case "4":
-          acc.setBrand(inputOtherBrand());
+          acc.setSelect(inputOtherBrand());
           break loop;
         default:
           System.out.println("무효한 번호입니다.");
@@ -149,7 +151,7 @@ public class AccHandler implements Handler {
   }
 
   private String inputOtherBrand() {
-    return this.prompt.inputString("좋아하는 브랜드를 입력하세요: ");
+    return this.prompt.inputString("좋아하는 악세사리를 입력하세요: ");
   }
 
   private void inputSize(Acc acc) {
