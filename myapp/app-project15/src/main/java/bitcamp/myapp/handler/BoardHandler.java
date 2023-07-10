@@ -5,8 +5,10 @@ import bitcamp.util.Prompt;
 
 public class BoardHandler {
 
+  // 인스턴스에 상관없이 공통으로 사용하는 필드라면 스태틱 필드로 선언한다.
   private static final int MAX_SIZE = 100;
 
+  // 인스턴스 마다 별개로 관리해야 할 데이터라면 논스태틱 필드(인스턴스 필드)로 선언한다.
   private Prompt prompt;
   private Board[] boards = new Board[MAX_SIZE];
   private int length = 0;
@@ -15,6 +17,7 @@ public class BoardHandler {
     this.prompt = prompt;
   }
 
+  // 인스턴스 멤버(필드나 메서드)를 사용하는 경우 인스턴스 메서드로 정의해야 한다.
   public void inputBoard() {
     if (!available()) {
       System.out.println("더이상 입력할 수 없습니다!");

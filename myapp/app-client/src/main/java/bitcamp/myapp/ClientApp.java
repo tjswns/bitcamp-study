@@ -48,7 +48,7 @@ public class ClientApp {
 
     this.memberDao = daoBuilder.build("member", MemberDao.class);
     this.boardDao = daoBuilder.build("board", BoardDao.class);
-    this.readingDao = daoBuilder.build("board", BoardDao.class);
+    this.readingDao = daoBuilder.build("reading", BoardDao.class);
 
     prepareMenu();
   }

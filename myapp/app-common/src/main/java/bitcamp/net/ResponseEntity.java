@@ -8,6 +8,7 @@ public class ResponseEntity {
 
   public static final String SUCCESS = "success";
   public static final String ERROR = "error";
+
   String status;
   String result;
 
@@ -20,8 +21,10 @@ public class ResponseEntity {
     }
   }
 
+
   public <T> List<T> getList(Class<T> clazz) {
-    return new Gson().fromJson(result, TypeToken.getParameterized(List.class, clazz).getType());
+    return new Gson().fromJson(result,
+        TypeToken.getParameterized(List.class, clazz).getType());
   }
 
   public String toJson() {
@@ -38,6 +41,10 @@ public class ResponseEntity {
   }
 
   public ResponseEntity result(Object obj) {
+    if (obj == null) {
+      return this;
+    }
+
     if (obj.getClass() == String.class) {
       this.result = (String) obj;
     } else {
@@ -53,4 +60,6 @@ public class ResponseEntity {
   public String getResult() {
     return result;
   }
+
+
 }

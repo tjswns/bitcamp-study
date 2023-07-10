@@ -1,29 +1,19 @@
 package bitcamp.myapp.vo;
 
-public class Acc {
+public class Board {
 
-  private static int accNo = 1;
+  private static int boardNo = 1;
 
   private int no;
   private String Style;
   private String Brand;
-  private String Size;
-  private String ohter;
-
-  public String getOhter() {
-    return ohter;
-  }
-
-  public void setOhter(String ohter) {
-    this.ohter = ohter;
-  }
-
+  private String fit;
 
   private long createdDate;
 
 
-  public Acc() {
-    this.no = accNo++;
+  public Board() {
+    this.no = boardNo++;
     this.createdDate = System.currentTimeMillis();
   }
 
@@ -57,14 +47,15 @@ public class Acc {
   }
 
 
-
-  public String getSize() {
-    return Size;
+  public String getFit() {
+    return fit;
   }
 
-  public void setSize(String size) {
-    Size = size;
+
+  public void setFit(String fit) {
+    this.fit = fit;
   }
+
 
   public long getCreatedDate() {
     return createdDate;

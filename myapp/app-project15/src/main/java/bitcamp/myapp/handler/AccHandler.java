@@ -11,13 +11,8 @@ public class AccHandler {
   private Acc[] accs = new Acc[MAX_SIZE];
   private int length = 0;
 
-  public AccHandler(Prompt prompt, String title) {
+  public AccHandler(Prompt prompt) {
     this.prompt = prompt;
-    this.title = title;
-  }
-
-  public void service() {
-
   }
 
   public void inputAcc() {
