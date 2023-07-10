@@ -3,7 +3,7 @@ package bitcamp.myapp.handler;
 import bitcamp.myapp.vo.Acc;
 import bitcamp.util.Prompt;
 
-public class AccHandler implements Handler {
+public class AccHandler {
 
   private static final int MAX_SIZE = 100;
 
@@ -17,7 +17,7 @@ public class AccHandler implements Handler {
     this.title = title;
   }
 
-  public void execute() {
+  public void add() {
     printMenu();
     while (true) {
       String menuNo = prompt.inputString("%s>", this.title);

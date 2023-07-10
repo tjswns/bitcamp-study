@@ -3,7 +3,7 @@ package bitcamp.myapp.handler;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.Prompt;
 
-public class MemberHandler implements Handler {
+public class MemberHandler {
 
   private static final int MAX_SIZE = 100;
   private Prompt prompt;
