@@ -10,7 +10,7 @@ public class Client0121 {
   public static void main(String[] args) {
     Scanner keyScan = new Scanner(System.in);
 
-    try (Socket socket = new Socket("localhost", 8888);
+    try (Socket socket = new Socket("192.168.0.225", 8888);
         OutputStream out = socket.getOutputStream();
         InputStream in = socket.getInputStream()) {
 

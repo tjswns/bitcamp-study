@@ -39,4 +39,39 @@ public class MemberList {
     // 새 배열을 리턴한다.
     return arr;
   }
+
+  public Member get(int no) {
+    for (int i = 0; i < this.length; i++) {
+      Member m = this.members[i];
+      if (m.getNo() == no) {
+        return m;
+      }
+    }
+    return null;
+  }
+
+  public boolean delete(int no) {
+    int deletedIndex = indexOf(no);
+    if (deletedIndex == -1) {
+      System.out.println("해당 번호의 회원이 없습니다!");
+      return false;
+    }
+
+    for (int i = deletedIndex; i < length - 1; i++) {
+      members[i] = members[i + 1];
+    }
+
+    members[--length] = null;
+    return true;
+  }
+
+  private int indexOf(int memberNo) {
+    for (int i = 0; i < this.length; i++) {
+      Member m = members[i];
+      if (m.getNo() == memberNo) {
+        return i;
+      }
+    }
+    return -1;
+  }
 }
