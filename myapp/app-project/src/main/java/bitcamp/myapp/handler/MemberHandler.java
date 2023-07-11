@@ -5,10 +5,8 @@ import bitcamp.util.Prompt;
 
 public class MemberHandler implements Handler {
 
-  private static final int MAX_SIZE = 100;
+  private MemberList list = new MemberList();
   private Prompt prompt;
-  private Member[] members = new Member[MAX_SIZE];
-  private int length;
   private String title;
 
   public MemberHandler(Prompt prompt, String title) {
@@ -63,7 +61,9 @@ public class MemberHandler implements Handler {
     inputTop(m);
     inputPants(m);
     inputShoes(m);
-    this.members[this.length++] = m;
+    if (!this.list.add(m)) {
+      System.out.println("입력 실패입니다!");
+    }
   }
 
   public void printMembers() {
@@ -71,8 +71,8 @@ public class MemberHandler implements Handler {
     System.out.println("번호, 이름, 나이, 상의, 하의, 신발, 성별");
     System.out.println("---------------------------------------");
 
-    for (int i = 0; i < this.length; i++) {
-      Member m = this.members[i];
+    Member[] arr = this.list.list();
+    for (member m : arr) {
       System.out.printf("%d, %s, %s, %s, %s, %s, %s\n", m.getNo(), m.getName(), m.getAge(),
           m.getTop(), m.getPants(), m.getShoes(), toGenderString(m.getGender()));
     }

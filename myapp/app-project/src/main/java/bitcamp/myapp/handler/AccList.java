@@ -27,7 +27,7 @@ public class AccList {
     // boards 레퍼런스가 새 배열을 가리키도록 한다.
     accs = arr;
 
-    // System.out.println("배열 확장: " + accs.length);
+    System.out.println("배열 확장: " + accs.length);
   }
 
   public Acc[] list() {

@@ -72,7 +72,7 @@ public class AccHandler implements Handler {
   private void viewAcc() {
     int accNo = this.prompt.inputInt("번호? ");
 
-    Acc arr = this.list.get(accNo);
+    Acc acc = this.list.get(accNo);
     if (acc == null) {
       System.out.println("해당 번호의 스타일이 없습니다!");
       return;
@@ -84,9 +84,9 @@ public class AccHandler implements Handler {
   }
 
   public void updateAcc() {
-    String accNo = this.prompt.inputString("번호? ");
-    Acc arr = this.list.get(accNo);
+    int accNo = this.prompt.inputInt("번호? ");
 
+    Acc acc = this.list.get(accNo);
     if (acc == null) {
       System.out.println("해당 번호의 스타일이 없습니다!");
       return;
@@ -178,5 +178,10 @@ public class AccHandler implements Handler {
     return this.prompt.inputString("자신의 사이즈를 입력하세요: ");
   }
 
+  private void deleteAcc() {
+    if (!this.list.delete(this.prompt.inputInt("번호? "))) {
+      System.out.println("해당 번호의 게시글이 없습니다!");
+    }
+  }
 
 }
