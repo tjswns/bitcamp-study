@@ -1,19 +1,29 @@
 package bitcamp.myapp.vo;
 
-public class Styliing {
+public class Acc {
 
-  private static int boardNo = 1;
+  private static int accNo = 1;
 
   private int no;
   private String Style;
-  private String Brand;
-  private String fit;
+  private String select;
+  private String Size;
+  private String ohter;
+
+  public String getOhter() {
+    return ohter;
+  }
+
+  public void setOhter(String ohter) {
+    this.ohter = ohter;
+  }
+
 
   private long createdDate;
 
 
-  public Styliing() {
-    this.no = boardNo++;
+  public Acc() {
+    this.no = accNo++;
     this.createdDate = System.currentTimeMillis();
   }
 
@@ -37,25 +47,22 @@ public class Styliing {
   }
 
 
-  public String getBrand() {
-    return Brand;
+
+  public String getSelect() {
+    return select;
   }
 
-
-  public void setBrand(String brand) {
-    Brand = brand;
+  public void setSelect(String select) {
+    this.select = select;
   }
 
-
-  public String getFit() {
-    return fit;
+  public String getSize() {
+    return Size;
   }
 
-
-  public void setFit(String fit) {
-    this.fit = fit;
+  public void setSize(String size) {
+    Size = size;
   }
-
 
   public long getCreatedDate() {
     return createdDate;
