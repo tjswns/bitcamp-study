@@ -12,6 +12,8 @@ import bitcamp.myapp.dao.BoardListDao;
 import bitcamp.myapp.dao.MemberListDao;
 import bitcamp.net.RequestEntity;
 import bitcamp.net.ResponseEntity;
+import bitcamp.util.ManagedThread;
+import bitcamp.util.ThreadPool;
 
 public class ServerApp {
 
@@ -19,6 +21,9 @@ public class ServerApp {
   ServerSocket serverSocket;
 
   HashMap<String, Object> daoMap = new HashMap<>();
+
+  // 스레드를 리턴해 줄 스레드풀 준비
+  ThreadPool threadPool = new ThreadPool();
 
   public ServerApp(int port) throws Exception {
     this.port = port;
@@ -44,27 +49,16 @@ public class ServerApp {
   }
 
   public void execute() throws Exception {
-    class RequestAgentThread extends Thread {
-      Socket socket;
-
-      public RequestAgentThread(Socket socket) {
-        this.socket = socket;
-      }
-
-      @Override
-      public void run() {
-        processRequest(socket);
-      }
-    }
     System.out.println("[MyList 서버 애플리케이션]");
 
     this.serverSocket = new ServerSocket(port);
     System.out.println("서버 실행 중...");
 
     while (true) {
-      new RequestAgentThread(serverSocket.accept()).start();;
+      Socket socket = serverSocket.accept();
+      ManagedThread t = threadPool.getResource();
+      t.setJob(() -> processRequest(socket));
     }
-
   }
 
   public static Method findMethod(Object obj, String methodName) {
@@ -86,26 +80,25 @@ public class ServerApp {
     }
   }
 
-  // 클라이언트와 접속이 이루어지면 클라이언트의 요청을 처리한다.
   public void processRequest(Socket socket) {
-
     try (Socket s = socket;
         DataInputStream in = new DataInputStream(socket.getInputStream());
-        DataOutputStream out = new DataOutputStream(socket.getOutputStream());) {
+        DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
 
       InetSocketAddress socketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
-      System.out.printf("%s:%s 클라이언트가 접속 했음!\n", socketAddress.getHostString(),
-          socketAddress.getHostName(), socketAddress.getPort());
+      System.out.printf("%s:%s 클라이언트가 접속했음!\n", socketAddress.getHostString(),
+          socketAddress.getPort());
+
+      // 스레드풀이 새 스레드를 만드는 것을 테스트하기 위함.
+      // => 스레드풀에 스레드가 없을 때 새 스레드를 만들 것이다.
+      Thread.sleep(10000);
+
       // 클라이언트 요청을 반복해서 처리하지 않는다.
       // => 접속 -> 요청 -> 실행 -> 응답 -> 연결 끊기
       RequestEntity request = RequestEntity.fromJson(in.readUTF());
 
       String command = request.getCommand();
       System.out.println(command);
-
-      if (command.equals("quit")) {
-        return;
-      }
 
       String[] values = command.split("/");
       String dataName = values[0];
@@ -118,15 +111,14 @@ public class ServerApp {
         return;
       }
 
-      // DAO 객체에서 메서드 찾기
       Method method = findMethod(dao, methodName);
       if (method == null) {
         out.writeUTF(
             new ResponseEntity().status(ResponseEntity.ERROR).result("메서드를 찾을 수 없습니다.").toJson());
         return;
       }
+
       try {
-        // DAO 메서드 호출하기
         Object result = call(dao, method, request);
 
         ResponseEntity response = new ResponseEntity();
@@ -136,11 +128,10 @@ public class ServerApp {
 
       } catch (Exception e) {
         ResponseEntity response = new ResponseEntity();
-        response.status(ResponseEntity.SUCCESS);
+        response.status(ResponseEntity.ERROR);
         response.result(e.getMessage());
         out.writeUTF(response.toJson());
       }
-
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
