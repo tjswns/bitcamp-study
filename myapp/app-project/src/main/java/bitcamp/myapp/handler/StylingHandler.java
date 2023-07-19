@@ -2,15 +2,15 @@ package bitcamp.myapp.handler;
 
 import bitcamp.myapp.vo.Styling;
 import bitcamp.util.List;
-import bitcamp.util.MenuPrompt;
+import bitcamp.util.BreadcrumbPrompt;
 
 public class StylingHandler implements Handler {
 
   private List list;
-  private MenuPrompt prompt;
+  private BreadcrumbPrompt prompt;
   private String title;
 
-  public StylingHandler(MenuPrompt prompt, String title, List list) {
+  public StylingHandler(BreadcrumbPrompt prompt, String title, List list) {
     this.prompt = prompt;
     this.title = title;
     this.list = list;

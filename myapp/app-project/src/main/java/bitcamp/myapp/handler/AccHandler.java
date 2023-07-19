@@ -2,16 +2,16 @@ package bitcamp.myapp.handler;
 
 import bitcamp.myapp.vo.Acc;
 import bitcamp.util.List;
-import bitcamp.util.MenuPrompt;
+import bitcamp.util.BreadcrumbPrompt;
 
 public class AccHandler implements Handler {
 
 
   private List list;
-  private MenuPrompt prompt;
+  private BreadcrumbPrompt prompt;
   private String title;
 
-  public AccHandler(MenuPrompt prompt, String title, List list) {
+  public AccHandler(BreadcrumbPrompt prompt, String title, List list) {
     this.prompt = prompt;
     this.title = title;
     this.list = list;
