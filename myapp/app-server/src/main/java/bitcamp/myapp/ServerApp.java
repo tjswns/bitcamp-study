@@ -56,12 +56,9 @@ public class ServerApp {
 
     while (true) {
       Socket socket = serverSocket.accept();
-      threadPool.execute(new Runnable() {
-        @Override
-        public void run() {
-          threadPool.execute(() -> processRequest(socket));
-        }
-      });
+
+      threadPool.execute(() -> processRequest(socket));
+
       // 컴파일러는 위의 문장을 다음 문장으로 변환한다.
       // class $1 implements Runnable {
       // ServerApp this$0;
@@ -106,7 +103,7 @@ public class ServerApp {
         DataOutputStream out = new DataOutputStream(socket.getOutputStream())) {
 
       InetSocketAddress socketAddress = (InetSocketAddress) socket.getRemoteSocketAddress();
-      System.out.printf("%s:%s 클라이언트가 접속했음!\n", Thread.currentThread().getName(),
+      System.out.printf("[%s] %s:%s 클라이언트가 접속했음!\n", Thread.currentThread().getName(),
           socketAddress.getHostString(), socketAddress.getPort());
 
       // 스레드풀이 새 스레드를 만드는 것을 테스트하기 위함.
