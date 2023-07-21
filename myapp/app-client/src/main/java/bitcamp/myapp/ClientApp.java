@@ -1,9 +1,10 @@
 package bitcamp.myapp;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import bitcamp.dao.MySQLBoardDao;
+import bitcamp.dao.MySQLMemberDao;
 import bitcamp.myapp.dao.BoardDao;
-import bitcamp.myapp.dao.DaoBuilder;
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.handler.BoardAddListener;
 import bitcamp.myapp.handler.BoardDeleteListener;
@@ -24,9 +25,6 @@ import bitcamp.util.MenuGroup;
 
 public class ClientApp {
 
-  DataOutputStream out;
-  DataInputStream in;
-
   MemberDao memberDao;
   BoardDao boardDao;
   BoardDao readingDao;
@@ -37,20 +35,19 @@ public class ClientApp {
 
   public ClientApp(String ip, int port) throws Exception {
 
+    Connection con = DriverManager.getConnection("jdbc:mysql://study:1111@localhost:3306/studydb" // JDBC
+                                                                                                  // URL
+    );
 
-    DaoBuilder daoBuilder = new DaoBuilder(ip, port);
-
-    this.memberDao = daoBuilder.build("member", MemberDao.class);
-    this.boardDao = daoBuilder.build("board", BoardDao.class);
-    this.readingDao = daoBuilder.build("reading", BoardDao.class);
+    this.memberDao = new MySQLMemberDao(con);
+    this.boardDao = new MySQLBoardDao(con);
+    this.readingDao = null;
 
     prepareMenu();
   }
 
   public void close() throws Exception {
     prompt.close();
-    out.close();
-    in.close();
   }
 
   public static void main(String[] args) throws Exception {
@@ -72,7 +69,6 @@ public class ClientApp {
   public void execute() {
     printTitle();
     mainMenu.execute(prompt);
-
   }
 
   private void prepareMenu() {
