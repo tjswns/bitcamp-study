@@ -53,16 +53,6 @@ public class MemberHandler implements Handler {
     return menu.toString();
   }
 
-  public void inputMember() {
-    Member m = new Member();
-    m.setName(this.prompt.inputString("이름? "));
-    m.setAge(this.prompt.inputString("나이? "));
-    m.setGender(inputGender((char) 0));
-    inputTop(m);
-    inputPants(m);
-    inputShoes(m);
-    this.list.add(m);
-  }
 
 
   public void printMembers() {
