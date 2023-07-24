@@ -2,11 +2,10 @@ package bitcamp.util;
 
 import java.lang.reflect.Array;
 
-public class LinkedList<E> implements List<E> {
+public class LinkedList<E> extends AbstractList<E> {
 
   Node<E> head;
   Node<E> tail;
-  int size;
 
   public static void main(String[] args) {
     LinkedList<Integer> list = new LinkedList<>();
@@ -182,15 +181,6 @@ public class LinkedList<E> implements List<E> {
     cursor.value = null;
 
     return old;
-  }
-
-  @Override
-  public int size() {
-    return this.size;
-  }
-
-  private boolean isValid(int index) {
-    return index >= 0 && index < this.size;
   }
 
   static class Node<T> {

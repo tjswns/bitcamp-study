@@ -6,9 +6,9 @@ import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.List;
 
 public abstract class AbstractMemberListener implements ActionListener {
-  protected List list;
+  protected List<Member> list;
 
-  public AbstractMemberListener(List list) {
+  public AbstractMemberListener(List<Member> list) {
     this.list = list;
   }
 
@@ -18,7 +18,7 @@ public abstract class AbstractMemberListener implements ActionListener {
 
   public Member findBy(int no) {
     for (int i = 0; i < this.list.size(); i++) {
-      Member m = (Member) this.list.get(i);
+      Member m = this.list.get(i);
       if (m.getNo() == no) {
         return m;
       }

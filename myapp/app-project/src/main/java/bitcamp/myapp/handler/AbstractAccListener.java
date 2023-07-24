@@ -7,15 +7,15 @@ import bitcamp.util.List;
 
 public abstract class AbstractAccListener implements ActionListener {
 
-  protected List list;
+  protected List<Acc> list;
 
-  public AbstractAccListener(List list) {
+  public AbstractAccListener(List<Acc> list) {
     this.list = list;
   }
 
   protected Acc findBy(int no) {
     for (int i = 0; i < this.list.size(); i++) {
-      Acc b = (Acc) this.list.get(i);
+      Acc b = this.list.get(i);
       if (b.getNo() == no) {
         return b;
       }

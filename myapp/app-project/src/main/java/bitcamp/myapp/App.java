@@ -18,6 +18,9 @@ import bitcamp.myapp.handler.StylingDeleteListener;
 import bitcamp.myapp.handler.StylingDetailListener;
 import bitcamp.myapp.handler.StylingListListener;
 import bitcamp.myapp.handler.StylingUpdateListener;
+import bitcamp.myapp.vo.Acc;
+import bitcamp.myapp.vo.Member;
+import bitcamp.myapp.vo.Styling;
 import bitcamp.util.ArrayList;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Menu;
@@ -27,9 +30,9 @@ public class App {
 
   public static void main(String[] args) {
 
-    ArrayList memberList = new ArrayList();
-    ArrayList accList = new ArrayList();
-    ArrayList stylingList = new ArrayList();
+    ArrayList<Member> memberList = new ArrayList<>();
+    ArrayList<Acc> accList = new ArrayList<>();
+    ArrayList<Styling> stylingList = new ArrayList<>();
 
     BreadcrumbPrompt prompt = new BreadcrumbPrompt();
 

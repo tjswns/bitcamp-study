@@ -6,7 +6,7 @@ import bitcamp.util.List;
 
 public class StylingAddListener extends AbstractStylingListener {
 
-  public StylingAddListener(List list) {
+  public StylingAddListener(List<Styling> list) {
     super(list);
   }
 

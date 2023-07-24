@@ -6,15 +6,15 @@ import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.List;
 
 public abstract class AbstractStylingListener implements ActionListener {
-  protected List list;
+  protected List<Styling> list;
 
-  public AbstractStylingListener(List list) {
+  public AbstractStylingListener(List<Styling> list) {
     this.list = list;
   }
 
   protected Styling findBy(int no) {
     for (int i = 0; i < this.list.size(); i++) {
-      Styling sty = (Styling) this.list.get(i);
+      Styling sty = this.list.get(i);
       if (sty.getNo() == no) {
         return sty;
       }

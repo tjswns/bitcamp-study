@@ -6,7 +6,7 @@ import bitcamp.util.List;
 
 public class AccDeleteListener extends AbstractAccListener {
 
-  public AccDeleteListener(List list) {
+  public AccDeleteListener(List<Acc> list) {
     super(list);
   }
 

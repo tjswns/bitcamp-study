@@ -6,7 +6,7 @@ import bitcamp.util.List;
 
 public class StylingListListener extends AbstractStylingListener {
 
-  public StylingListListener(List list) {
+  public StylingListListener(List<Styling> list) {
     super(list);
   }
 
@@ -17,7 +17,7 @@ public class StylingListListener extends AbstractStylingListener {
     System.out.println("---------------------------------------");
 
     for (int i = 0; i < this.list.size(); i++) {
-      Styling styling = (Styling) this.list.get(i);
+      Styling styling = this.list.get(i);
       System.out.printf("%d, %s, %s, %s \n", styling.getNo(), styling.getStyle(),
           styling.getBrand(), styling.getFit());
     }

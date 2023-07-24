@@ -6,7 +6,7 @@ import bitcamp.util.List;
 
 public class AccUpdateListener extends AbstractAccListener {
 
-  public AccUpdateListener(List list) {
+  public AccUpdateListener(List<Acc> list) {
     super(list);
   }
 

@@ -12,7 +12,6 @@ public class BreadcrumbPrompt extends Prompt {
     this.breadcrumbs.pop();
   }
 
-
   public String inputMenu() {
     StringBuilder titleBuilder = new StringBuilder(); // 예) 메인/회원>
     for (int i = 0; i < this.breadcrumbs.size(); i++) {
@@ -25,3 +24,5 @@ public class BreadcrumbPrompt extends Prompt {
     return this.inputString(titleBuilder.toString());
   }
 }
+
+
