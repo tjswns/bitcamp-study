@@ -17,7 +17,7 @@ public class AccAddListener extends AbstractAccListener {
     inputSelect(acc, prompt);
     inputStyle(acc, prompt);
     inputSize(acc, prompt);
-
+    acc.setPassword(prompt.inputString("암호? "));
     this.list.add(acc);
   }
 }

@@ -22,6 +22,8 @@ public class StylingDetailListener extends AbstractStylingListener {
     System.out.printf("스타일: %s\n", styling.getStyle());
     System.out.printf("브랜드: %s\n", styling.getBrand());
     System.out.printf("핏: %s\n", styling.getFit());
-    return;
+    System.out.printf("조회수: %s\n", styling.getViewCount());
+    System.out.printf("등록일: %tY-%1$tm-%1$td\n", styling.getCreatedDate());
+    styling.setViewCount(styling.getViewCount() + 1);
   }
 }

@@ -2,18 +2,19 @@ package bitcamp.myapp.vo;
 
 public class Styling {
 
-  private static int boardNo = 1;
+  public static int stylingNo = 1;
 
   private int no;
   private String Style;
   private String Brand;
   private String fit;
-
+  private String password;
+  private int viewCount;
   private long createdDate;
 
 
   public Styling() {
-    this.no = boardNo++;
+    this.no = stylingNo++;
     this.createdDate = System.currentTimeMillis();
   }
 
@@ -85,6 +86,22 @@ public class Styling {
 
   public void setCreatedDate(long createdDate) {
     this.createdDate = createdDate;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public int getViewCount() {
+    return viewCount;
+  }
+
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
   }
 
 

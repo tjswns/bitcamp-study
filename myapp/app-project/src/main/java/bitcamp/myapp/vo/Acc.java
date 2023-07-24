@@ -2,13 +2,15 @@ package bitcamp.myapp.vo;
 
 public class Acc {
 
-  private static int accNo = 1;
+  public static int accNo = 1;
 
   private int no;
-  private String Style;
+  private String style;
   private String select;
-  private String Size;
+  private String size;
   private String ohter;
+  private String password;
+  private int viewCount;
   private long createdDate;
 
 
@@ -55,16 +57,6 @@ public class Acc {
     this.ohter = ohter;
   }
 
-  public String getStyle() {
-    return Style;
-  }
-
-
-  public void setStyle(String style) {
-    Style = style;
-  }
-
-
 
   public String getSelect() {
     return select;
@@ -74,12 +66,38 @@ public class Acc {
     this.select = select;
   }
 
+
+
+  public String getStyle() {
+    return style;
+  }
+
+  public void setStyle(String style) {
+    this.style = style;
+  }
+
   public String getSize() {
-    return Size;
+    return size;
   }
 
   public void setSize(String size) {
-    Size = size;
+    this.size = size;
+  }
+
+  public String getPassword() {
+    return password;
+  }
+
+  public void setPassword(String password) {
+    this.password = password;
+  }
+
+  public int getViewCount() {
+    return viewCount;
+  }
+
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
   }
 
   public long getCreatedDate() {

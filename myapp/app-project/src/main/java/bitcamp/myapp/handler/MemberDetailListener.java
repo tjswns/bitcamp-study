@@ -20,6 +20,8 @@ public class MemberDetailListener extends AbstractMemberListener {
       return;
     }
     System.out.printf("이름: %s\n", m.getName());
+    System.out.printf("이메일: %s\n", m.getEmail());
+    System.out.printf("비밀번호: %s\n", m.getPassword());
     System.out.printf("나이: %s\n", m.getAge());
     System.out.printf("성별: %s\n", toGenderString(m.getGender()));
     System.out.printf("상의: %s\n", m.getTop());

@@ -16,7 +16,7 @@ public class StylingAddListener extends AbstractStylingListener {
     inputStyle(styling, prompt);
     inputBrand(styling, prompt);
     inputFit(styling, prompt);
-
+    styling.setPassword(prompt.inputString("암호? "));
     this.list.add(styling);
   }
 }

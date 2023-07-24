@@ -12,9 +12,9 @@ public class MemberListListener extends AbstractMemberListener {
 
   @Override
   public void service(BreadcrumbPrompt prompt) {
-    System.out.println("---------------------------------------");
-    System.out.println("번호, 이름, 나이, 상의, 하의, 신발, 성별");
-    System.out.println("---------------------------------------");
+    System.out.println("-------------------------------------------------------------");
+    System.out.println("번호, 이름, 이메일, 비밀번호, 나이, 상의, 하의, 신발, 성별");
+    System.out.println("--------------------------------------------------------------");
 
     for (int i = 0; i < this.list.size(); i++) {
       Member m = this.list.get(i);

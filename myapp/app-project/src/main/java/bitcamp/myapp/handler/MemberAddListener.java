@@ -16,6 +16,8 @@ public class MemberAddListener extends AbstractMemberListener {
   public void service(BreadcrumbPrompt prompt) {
     Member m = new Member();
     m.setName(prompt.inputString("이름? "));
+    m.setEmail(prompt.inputString("이메일? "));
+    m.setPassword(prompt.inputString("비밀번호? "));
     m.setAge(prompt.inputString("나이? "));
     m.setGender(inputGender((char) 0, prompt));
     inputTop(m, prompt);
