@@ -4,9 +4,9 @@ import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.List;
 
-public abstract class MemberUpdateHandler extends AbstractMemberListener {
+public class MemberUpdateListener extends AbstractMemberListener {
 
-  public MemberUpdateHandler(List list) {
+  public MemberUpdateListener(List list) {
     super(list);
   }
 
