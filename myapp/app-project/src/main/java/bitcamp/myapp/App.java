@@ -3,8 +3,8 @@ package bitcamp.myapp;
 
 import java.util.ArrayList;
 import java.util.List;
-import bitcamp.io.DataInputStream;
-import bitcamp.io.DataOutputStream;
+import bitcamp.io.BufferedDataInputStream;
+import bitcamp.io.BufferedDataOutputStream;
 import bitcamp.myapp.handler.AccAddListener;
 import bitcamp.myapp.handler.AccDeleteListener;
 import bitcamp.myapp.handler.AccDetailListener;
@@ -109,7 +109,7 @@ public class App {
 
   private void loadMember() {
     try {
-      DataInputStream in = new DataInputStream("member.data");
+      BufferedDataInputStream in = new BufferedDataInputStream("member.data");
       int size = in.readShort();
 
       for (int i = 0; i < size; i++) {
@@ -137,7 +137,7 @@ public class App {
 
   private void loadStyling(String filename, List<Styling> list) {
     try {
-      DataInputStream in = new DataInputStream(filename);
+      BufferedDataInputStream in = new BufferedDataInputStream(filename);
       int size = in.readShort();
 
       for (int i = 0; i < size; i++) {
@@ -163,7 +163,7 @@ public class App {
 
   private void loadAcc(String filename, List<Acc> list) {
     try {
-      DataInputStream in = new DataInputStream(filename);
+      BufferedDataInputStream in = new BufferedDataInputStream(filename);
       int size = in.readShort();
 
       for (int i = 0; i < size; i++) {
@@ -189,7 +189,7 @@ public class App {
 
   private void saveMember() {
     try {
-      DataOutputStream out = new DataOutputStream("member.data");
+      BufferedDataOutputStream out = new BufferedDataOutputStream("member.data");
 
       // 저장할 데이터의 개수를 먼저 출력한다.
       out.writeShort(memberList.size());
@@ -214,7 +214,7 @@ public class App {
 
   private void saveStyling(String filename, List<Styling> list) {
     try {
-      DataOutputStream out = new DataOutputStream("styling.data");
+      BufferedDataOutputStream out = new BufferedDataOutputStream("styling.data");
 
 
       out.writeShort(list.size());
@@ -238,7 +238,7 @@ public class App {
 
   private void saveAcc(String filename, List<Acc> list) {
     try {
-      DataOutputStream out = new DataOutputStream(filename);
+      BufferedDataOutputStream out = new BufferedDataOutputStream(filename);
 
       out.writeShort(list.size());
 
