@@ -21,7 +21,7 @@ public class StylingListListener extends AbstractStylingListener {
 
     while (iterator.hasNext()) {
       Styling styling = iterator.next();
-      System.out.printf("%d, %s, %s, %s, %d, %tY-%5$tm-%5$td \n", styling.getNo(),
+      System.out.printf("%d, %s, %s, %s, %d, %tY-%6$tm-%6$td \n", styling.getNo(),
           styling.getStyle(), styling.getBrand(), styling.getFit(), styling.getViewCount(),
           styling.getCreatedDate());
     }

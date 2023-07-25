@@ -1,9 +1,10 @@
 package bitcamp.myapp;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+
 import java.util.ArrayList;
 import java.util.List;
+import bitcamp.io.DataInputStream;
+import bitcamp.io.DataOutputStream;
 import bitcamp.myapp.handler.AccAddListener;
 import bitcamp.myapp.handler.AccDeleteListener;
 import bitcamp.myapp.handler.AccDetailListener;
@@ -108,47 +109,20 @@ public class App {
 
   private void loadMember() {
     try {
-      FileInputStream in = new FileInputStream("member.data");
-      int size = in.read() << 8;
-      size |= in.read();
-
-      byte[] buf = new byte[1000];
+      DataInputStream in = new DataInputStream("member.data");
+      int size = in.readShort();
 
       for (int i = 0; i < size; i++) {
         Member member = new Member();
-        member.setNo(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
-
-        int length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        member.setName(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        member.setEmail(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        member.setPassword(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        member.setAge(new String(buf, 0, length, "UTF-8"));
-
-        member.setGender((char) (in.read() << 8 | in.read()));
-
-        length = in.read() << 16 | in.read();
-        in.read(buf, 0, length);
-        member.setTop(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 16 | in.read();
-        in.read(buf, 0, length);
-        member.setPants(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 16 | in.read();
-        in.read(buf, 0, length);
-        member.setShoes(new String(buf, 0, length, "UTF-8"));
-
-
+        member.setNo(in.readInt());
+        member.setName(in.readUTF());
+        member.setEmail(in.readUTF());
+        member.setPassword(in.readUTF());
+        member.setAge(in.readUTF());
+        member.setGender(in.readChar());
+        member.setTop(in.readUTF());
+        member.setPants(in.readUTF());
+        member.setShoes(in.readUTF());
         memberList.add(member);
       }
       // 데이터를 로딩한 이후에 추가할 회원의 번호를 설정한다.
@@ -163,39 +137,18 @@ public class App {
 
   private void loadStyling(String filename, List<Styling> list) {
     try {
-      FileInputStream in = new FileInputStream(filename);
-      int size = in.read() << 8;
-      size |= in.read();
-
-      byte[] buf = new byte[1000];
+      DataInputStream in = new DataInputStream(filename);
+      int size = in.readShort();
 
       for (int i = 0; i < size; i++) {
         Styling styling = new Styling();
-        styling.setNo(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
-
-        int length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        styling.setStyle(new String(buf, 0, length, "UTF-8"));
-
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        styling.setBrand(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        styling.setFit(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        styling.setPassword(new String(buf, 0, length, "UTF-8"));
-
-        styling.setViewCount(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
-
-        styling.setCreatedDate((long) in.read() << 56 | (long) in.read() << 48
-            | (long) in.read() << 40 | (long) in.read() << 32 | (long) in.read() << 24
-            | (long) in.read() << 16 | (long) in.read() << 8 | in.read());
-
+        styling.setNo(in.readInt());
+        styling.setStyle(in.readUTF());
+        styling.setBrand(in.readUTF());
+        styling.setFit(in.readUTF());
+        styling.setPassword(in.readUTF());
+        styling.setViewCount(in.readInt());
+        styling.setCreatedDate(in.readLong());
         list.add(styling);
       }
 
@@ -210,39 +163,18 @@ public class App {
 
   private void loadAcc(String filename, List<Acc> list) {
     try {
-      FileInputStream in = new FileInputStream(filename);
-      int size = in.read() << 8;
-      size |= in.read();
-
-      byte[] buf = new byte[1000];
+      DataInputStream in = new DataInputStream(filename);
+      int size = in.readShort();
 
       for (int i = 0; i < size; i++) {
         Acc acc = new Acc();
-        acc.setNo(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
-
-        int length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        acc.setSelect(new String(buf, 0, length, "UTF-8"));
-
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        acc.setStyle(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        acc.setSize(new String(buf, 0, length, "UTF-8"));
-
-        length = in.read() << 8 | in.read();
-        in.read(buf, 0, length);
-        acc.setPassword(new String(buf, 0, length, "UTF-8"));
-
-        acc.setViewCount(in.read() << 24 | in.read() << 16 | in.read() << 8 | in.read());
-
-        acc.setCreatedDate((long) in.read() << 56 | (long) in.read() << 48 | (long) in.read() << 40
-            | (long) in.read() << 32 | (long) in.read() << 24 | (long) in.read() << 16
-            | (long) in.read() << 8 | in.read());
-
+        acc.setNo(in.readInt());
+        acc.setSelect(in.readUTF());
+        acc.setStyle(in.readUTF());
+        acc.setSize(in.readUTF());
+        acc.setPassword(in.readUTF());
+        acc.setViewCount(in.readInt());
+        acc.setCreatedDate(in.readLong());
         list.add(acc);
       }
 
@@ -257,42 +189,21 @@ public class App {
 
   private void saveMember() {
     try {
-      FileOutputStream out = new FileOutputStream("member.data");
+      DataOutputStream out = new DataOutputStream("member.data");
 
       // 저장할 데이터의 개수를 먼저 출력한다.
-      int size = memberList.size();
-      out.write(size >> 8);
-      out.write(size);
+      out.writeShort(memberList.size());
 
       for (Member member : memberList) {
-        int no = member.getNo();
-        out.write(no >> 24);
-        out.write(no >> 16);
-        out.write(no >> 8);
-        out.write(no);
-
-        byte[] bytes = member.getName().getBytes("UTF-8");
-        // 출력할 바이트의 개수를 2바이트로 표시한다.
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-
-        // 문자열의 바이트를 출력한다.
-        out.write(bytes);
-
-
-        bytes = member.getEmail().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        bytes = member.getPassword().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        char gender = member.getGender();
-        out.write(gender >> 8);
-        out.write(gender);
+        out.writeInt(member.getNo());
+        out.writeUTF(member.getName());
+        out.writeUTF(member.getEmail());
+        out.writeUTF(member.getPassword());
+        out.writeUTF(member.getAge());
+        out.writeChar(member.getGender());
+        out.writeUTF(member.getTop());
+        out.writeUTF(member.getPants());
+        out.writeUTF(member.getShoes());
       }
       out.close();
 
@@ -303,56 +214,20 @@ public class App {
 
   private void saveStyling(String filename, List<Styling> list) {
     try {
-      FileOutputStream out = new FileOutputStream(filename);
+      DataOutputStream out = new DataOutputStream("styling.data");
 
-      // 저장할 데이터의 개수를 먼저 출력한다.
-      int size = list.size();
-      out.write(size >> 8);
-      out.write(size);
+
+      out.writeShort(list.size());
 
       for (Styling styling : list) {
-        int no = styling.getNo();
-        out.write(no >> 24);
-        out.write(no >> 16);
-        out.write(no >> 8);
-        out.write(no);
+        out.writeInt(styling.getNo());
+        out.writeUTF(styling.getStyle());
+        out.writeUTF(styling.getBrand());
+        out.writeUTF(styling.getFit());
+        out.writeUTF(styling.getPassword());
+        out.writeInt(styling.getViewCount());
+        out.writeLong(styling.getCreatedDate());
 
-        byte[] bytes = styling.getStyle().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-
-        bytes = styling.getBrand().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        bytes = styling.getFit().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        bytes = styling.getPassword().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        int viewCount = styling.getViewCount();
-        out.write(viewCount >> 24);
-        out.write(viewCount >> 16);
-        out.write(viewCount >> 8);
-        out.write(viewCount);
-
-        long createdDate = styling.getCreatedDate();
-        out.write((int) (createdDate >> 56));
-        out.write((int) (createdDate >> 48));
-        out.write((int) (createdDate >> 40));
-        out.write((int) (createdDate >> 32));
-        out.write((int) (createdDate >> 24));
-        out.write((int) (createdDate >> 16));
-        out.write((int) (createdDate >> 8));
-        out.write((int) createdDate);
       }
       out.close();
 
@@ -363,56 +238,19 @@ public class App {
 
   private void saveAcc(String filename, List<Acc> list) {
     try {
-      FileOutputStream out = new FileOutputStream(filename);
+      DataOutputStream out = new DataOutputStream(filename);
 
-      // 저장할 데이터의 개수를 먼저 출력한다.
-      int size = list.size();
-      out.write(size >> 8);
-      out.write(size);
+      out.writeShort(list.size());
 
       for (Acc acc : list) {
-        int no = acc.getNo();
-        out.write(no >> 24);
-        out.write(no >> 16);
-        out.write(no >> 8);
-        out.write(no);
+        out.writeInt(acc.getNo());
+        out.writeUTF(acc.getSelect());
+        out.writeUTF(acc.getStyle());
+        out.writeUTF(acc.getSize());
+        out.writeUTF(acc.getPassword());
+        out.writeInt(acc.getViewCount());
+        out.writeLong(acc.getCreatedDate());
 
-        byte[] bytes = acc.getSelect().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-
-        bytes = acc.getStyle().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        bytes = acc.getSize().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        bytes = acc.getPassword().getBytes("UTF-8");
-        out.write(bytes.length >> 8);
-        out.write(bytes.length);
-        out.write(bytes);
-
-        int viewCount = acc.getViewCount();
-        out.write(viewCount >> 24);
-        out.write(viewCount >> 16);
-        out.write(viewCount >> 8);
-        out.write(viewCount);
-
-        long createdDate = acc.getCreatedDate();
-        out.write((int) (createdDate >> 56));
-        out.write((int) (createdDate >> 48));
-        out.write((int) (createdDate >> 40));
-        out.write((int) (createdDate >> 32));
-        out.write((int) (createdDate >> 24));
-        out.write((int) (createdDate >> 16));
-        out.write((int) (createdDate >> 8));
-        out.write((int) createdDate);
       }
       out.close();
 

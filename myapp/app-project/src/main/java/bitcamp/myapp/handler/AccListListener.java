@@ -21,7 +21,7 @@ public class AccListListener extends AbstractAccListener {
 
     while (iterator.hasNext()) {
       Acc acc = iterator.next();
-      System.out.printf("%d, %s, %s, %s, %d, %tY-%5$tm-%5$td \n", acc.getNo(), acc.getSelect(),
+      System.out.printf("%d, %s, %s, %s, %d, %tY-%6$tm-%6$td \n", acc.getNo(), acc.getSelect(),
           acc.getStyle(), acc.getSize(), acc.getViewCount(), acc.getCreatedDate());
     }
   }

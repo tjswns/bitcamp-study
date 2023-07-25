@@ -45,23 +45,23 @@ public abstract class AbstractStylingListener implements ActionListener {
 
 
   protected void inputBrand(Styling styling, BreadcrumbPrompt prompt) {
-    while (true) {
+    loop: while (true) {
       String menuNo = prompt.inputString(
           "좋아하는 브랜드:\n" + "  1. 구찌\n" + "  2. 샤넬\n" + "  3. 프라다\n" + "  4. 그 외\n" + "> ");
 
       switch (menuNo) {
         case "1":
           styling.setBrand("구찌");
-          break;
+          break loop;
         case "2":
           styling.setBrand("샤넬");
-          break;
+          break loop;
         case "3":
           styling.setBrand("프라다");
-          break;
+          break loop;
         case "4":
           styling.setBrand(inputOtherBrand(prompt));
-          break;
+          break loop;
         default:
           System.out.println("무효한 번호입니다.");
       }
@@ -73,23 +73,23 @@ public abstract class AbstractStylingListener implements ActionListener {
   }
 
   protected void inputFit(Styling styling, BreadcrumbPrompt prompt) {
-    while (true) {
+    loop: while (true) {
       String menuNo = prompt.inputString(
           "좋아하는 브랜드:\n" + "  1. 오버핏\n" + "  2. 슬림핏\n" + "  3. 스탠다드핏\n" + "  4. 그 외\n" + "> ");
 
       switch (menuNo) {
         case "1":
           styling.setFit("오버 핏");
-          break;
+          break loop;
         case "2":
           styling.setFit("슬림 핏");
-          break;
+          break loop;
         case "3":
           styling.setFit("스텐다드 핏");
-          break;
+          break loop;
         case "4":
           styling.setFit(inputOtherFit(prompt));
-          break;
+          break loop;
         default:
           System.out.println("무효한 번호입니다.");
       }
