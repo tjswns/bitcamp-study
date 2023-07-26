@@ -1,11 +1,12 @@
 package bitcamp.myapp;
 
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import bitcamp.myapp.handler.AccAddListener;
@@ -66,16 +67,16 @@ public class App {
   }
 
   private void loadData() {
-    loadMember("member.csv", memberList);
-    loadStyling("styling.csv", stylingList);
-    loadAcc("acc.csv", accList);
+    loadMember("member.data2", memberList);
+    loadStyling("styling.data2", stylingList);
+    loadAcc("acc.data2", accList);
 
   }
 
   private void saveData() {
-    saveMember("member.csv", memberList);
-    saveStyling("styling.csv", stylingList);
-    saveAcc("acc.csv", accList);
+    saveMember("member.data2", memberList);
+    saveStyling("styling.data2", stylingList);
+    saveAcc("acc.data2", accList);
   }
 
   private void prepareMenu() {
@@ -112,29 +113,28 @@ public class App {
 
   private void loadMember(String filename, List<Member> list) {
     try {
-      FileReader in0 = new FileReader(filename);
-      BufferedReader in = new BufferedReader(in0); // <== Decorator 역할을 수행!
+      FileInputStream in0 = new FileInputStream("member.data");
+      BufferedInputStream in1 = new BufferedInputStream(in0); // <== Decorator 역할을 수행!
+      ObjectInputStream in = new ObjectInputStream(in1); // <== Decorator 역할을 수행!
 
-      String line = null;
+      int size = in.readShort();
 
-      while ((line = in.readLine()) != null) {
-        String[] values = line.split(",");
+      for (int i = 0; i < size; i++) {
         Member member = new Member();
-        member.setNo(Integer.parseInt(values[0]));
-        member.setName(values[1]);
-        member.setEmail(values[2]);
-        member.setPassword(values[3]);
-        member.setAge(values[4]);
-        member.setGender(values[5].charAt(0));
-        member.setTop(values[6]);
-        member.setPants(values[7]);
-        member.setShoes(values[8]);
+        member.setNo(in.readInt());
+        member.setName(in.readUTF());
+        member.setEmail(in.readUTF());
+        member.setPassword(in.readUTF());
+        member.setAge(in.readUTF());
+        member.setGender(in.readChar());
+        member.setTop(in.readUTF());
+        member.setPants(in.readUTF());
+        member.setShoes(in.readUTF());
         memberList.add(member);
       }
-      if (list.size() > 0) {
-        // 데이터를 로딩한 이후에 추가할 회원의 번호를 설정한다.
-        Member.userId = memberList.get(memberList.size() - 1).getNo() + 1;
-      }
+      // 데이터를 로딩한 이후에 추가할 회원의 번호를 설정한다.
+      Member.userId = memberList.get(memberList.size() - 1).getNo() + 1;
+
       in.close();
 
     } catch (Exception e) {
@@ -144,27 +144,26 @@ public class App {
 
   private void loadStyling(String filename, List<Styling> list) {
     try {
-      FileReader in0 = new FileReader(filename);
-      BufferedReader in = new BufferedReader(in0); // <== Decorator 역할을 수행!
+      FileInputStream in0 = new FileInputStream(filename);
+      BufferedInputStream in1 = new BufferedInputStream(in0);
+      ObjectInputStream in = new ObjectInputStream(in1); // <== Decorator 역할을 수행!
 
-      String line = null;
+      int size = in.readShort();
 
-      while ((line = in.readLine()) != null) {
-        String[] values = line.split(",");
+      for (int i = 0; i < size; i++) {
         Styling styling = new Styling();
-        styling.setNo(Integer.parseInt(values[0]));
-        styling.setStyle(values[1]);
-        styling.setBrand(values[2]);
-        styling.setFit(values[3]);
-        styling.setPassword(values[4]);
-        styling.setViewCount(Integer.parseInt(values[5]));
-        styling.setCreatedDate(Long.parseLong(values[6]));
+        styling.setNo(in.readInt());
+        styling.setStyle(in.readUTF());
+        styling.setBrand(in.readUTF());
+        styling.setFit(in.readUTF());
+        styling.setPassword(in.readUTF());
+        styling.setViewCount(in.readInt());
+        styling.setCreatedDate(in.readLong());
         list.add(styling);
       }
 
-      if (list.size() > 0) {
-        Styling.stylingNo = Math.max(Styling.stylingNo, list.get(list.size() - 1).getNo() + 1);
-      }
+      Styling.stylingNo = Math.max(Styling.stylingNo, list.get(list.size() - 1).getNo() + 1);
+
       in.close();
 
     } catch (Exception e) {
@@ -174,27 +173,26 @@ public class App {
 
   private void loadAcc(String filename, List<Acc> list) {
     try {
-      FileReader in0 = new FileReader(filename);
-      BufferedReader in = new BufferedReader(in0); // <== Decorator 역할을 수행!
+      FileInputStream in0 = new FileInputStream(filename);
+      BufferedInputStream in1 = new BufferedInputStream(in0);
+      ObjectInputStream in = new ObjectInputStream(in1); // <== Decorator 역할을 수행!
 
-      String line = null;
+      int size = in.readShort();
 
-      while ((line = in.readLine()) != null) {
-        String[] values = line.split(",");
-
+      for (int i = 0; i < size; i++) {
         Acc acc = new Acc();
-        acc.setNo(Integer.parseInt(values[0]));
-        acc.setSelect(values[1]);
-        acc.setStyle(values[2]);
-        acc.setSize(values[3]);
-        acc.setPassword(values[4]);
-        acc.setViewCount(Integer.parseInt(values[5]));
-        acc.setCreatedDate(Long.parseLong(values[6]));
+        acc.setNo(in.readInt());
+        acc.setSelect(in.readUTF());
+        acc.setStyle(in.readUTF());
+        acc.setSize(in.readUTF());
+        acc.setPassword(in.readUTF());
+        acc.setViewCount(in.readInt());
+        acc.setCreatedDate(in.readLong());
         list.add(acc);
       }
-      if (list.size() > 0) {
-        Acc.accNo = Math.max(Acc.accNo, list.get(list.size() - 1).getNo() + 1);
-      }
+
+      Acc.accNo = Math.max(Acc.accNo, list.get(list.size() - 1).getNo() + 1);
+
       in.close();
 
     } catch (Exception e) {
@@ -204,15 +202,22 @@ public class App {
 
   private void saveMember(String filename, List<Member> list) {
     try {
-      FileWriter out0 = new FileWriter(filename);
-      BufferedWriter out1 = new BufferedWriter(out0); // <== Decorator(장식품) 역할 수행!
-      PrintWriter out = new PrintWriter(out1); // <== Decorator(장식품) 역할 수행!
-
+      FileOutputStream out0 = new FileOutputStream("member.data");
+      BufferedOutputStream out1 = new BufferedOutputStream(out0);
+      ObjectOutputStream out = new ObjectOutputStream(out1); // <== Decorator(장식품) 역할 수행!
+      // 저장할 데이터의 개수를 먼저 출력한다.
+      out.writeShort(memberList.size());
 
       for (Member member : memberList) {
-        out.printf("%d,%s,%s,%s,%s,%c,%s,%s,%s\n", member.getNo(), member.getName(),
-            member.getEmail(), member.getPassword(), member.getAge(), member.getGender(),
-            member.getTop(), member.getPants(), member.getShoes());
+        out.writeInt(member.getNo());
+        out.writeUTF(member.getName());
+        out.writeUTF(member.getEmail());
+        out.writeUTF(member.getPassword());
+        out.writeUTF(member.getAge());
+        out.writeChar(member.getGender());
+        out.writeUTF(member.getTop());
+        out.writeUTF(member.getPants());
+        out.writeUTF(member.getShoes());
       }
       out.close();
 
@@ -223,14 +228,21 @@ public class App {
 
   private void saveStyling(String filename, List<Styling> list) {
     try {
-      FileWriter out0 = new FileWriter(filename);
-      BufferedWriter out1 = new BufferedWriter(out0); // <== Decorator(장식품) 역할 수행!
-      PrintWriter out = new PrintWriter(out1); // <== Decorator(장식품) 역할 수행!
+      FileOutputStream out0 = new FileOutputStream(filename);
+      BufferedOutputStream out1 = new BufferedOutputStream(out0);
+      ObjectOutputStream out = new ObjectOutputStream(out1); // <== Decorator(장식품) 역할 수행!
+
+      out.writeShort(list.size());
 
       for (Styling styling : list) {
-        out.printf("%d,%s,%s,%s,%s,%d,%d\n", styling.getNo(), styling.getStyle(),
-            styling.getBrand(), styling.getFit(), styling.getPassword(), styling.getViewCount(),
-            styling.getCreatedDate());
+        out.writeInt(styling.getNo());
+        out.writeUTF(styling.getStyle());
+        out.writeUTF(styling.getBrand());
+        out.writeUTF(styling.getFit());
+        out.writeUTF(styling.getPassword());
+        out.writeInt(styling.getViewCount());
+        out.writeLong(styling.getCreatedDate());
+
       }
       out.close();
 
@@ -241,13 +253,20 @@ public class App {
 
   private void saveAcc(String filename, List<Acc> list) {
     try {
-      FileWriter out0 = new FileWriter(filename);
-      BufferedWriter out1 = new BufferedWriter(out0); // <== Decorator(장식품) 역할 수행!
-      PrintWriter out = new PrintWriter(out1); // <== Decorator(장식품) 역할 수행!
+      FileOutputStream out0 = new FileOutputStream(filename);
+      BufferedOutputStream out1 = new BufferedOutputStream(out0);
+      ObjectOutputStream out = new ObjectOutputStream(out1); // <== Decorator(장식품) 역할 수행!
+      out.writeShort(list.size());
 
       for (Acc acc : list) {
-        out.printf("%d,%s,%s,%s,%s,%d,%d\n", acc.getNo(), acc.getSelect(), acc.getStyle(),
-            acc.getSize(), acc.getPassword(), acc.getViewCount(), acc.getCreatedDate());
+        out.writeInt(acc.getNo());
+        out.writeUTF(acc.getSelect());
+        out.writeUTF(acc.getStyle());
+        out.writeUTF(acc.getSize());
+        out.writeUTF(acc.getPassword());
+        out.writeInt(acc.getViewCount());
+        out.writeLong(acc.getCreatedDate());
+
       }
       out.close();
 
