@@ -6,13 +6,17 @@ import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.ActionListener;
 import bitcamp.util.BreadcrumbPrompt;
+import bitcamp.util.DataSource;
 
 public class BoardUpdateListener implements ActionListener {
 
   BoardDao boardDao;
+  DataSource ds;
 
-  public BoardUpdateListener(BoardDao boardDao) {
+
+  public BoardUpdateListener(BoardDao boardDao, DataSource ds) {
     this.boardDao = boardDao;
+    this.ds = ds;
   }
 
   @Override
@@ -28,6 +32,20 @@ public class BoardUpdateListener implements ActionListener {
     board.setTitle(prompt.inputString("제목(%s)? ", board.getTitle()));
     board.setContent(prompt.inputString("내용(%s)? ", board.getContent()));
     board.setWriter((Member) prompt.getAttribute("loginUser"));
+
+    try {
+      boardDao.insert(board);
+      Thread.currentThread().sleep(5000);
+      boardDao.insert(board);
+      Thread.currentThread().sleep(5000);
+      boardDao.insert(board);
+      Thread.currentThread().sleep(5000);
+
+      ds.getConnection().commit();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+
 
     if (boardDao.update(board) == 0) {
       prompt.println("게시글 변경 권한이 없습니다!");
