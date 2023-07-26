@@ -2,7 +2,7 @@ package bitcamp.myapp.vo;
 
 import java.io.Serializable;
 
-public class Styling implements Serializable, CsvObject {
+public class Styling implements Serializable, CsvObject, AutoIncrement {
 
   private static final long serialVersionUID = 1L;
   public static int stylingNo = 1;
@@ -16,10 +16,7 @@ public class Styling implements Serializable, CsvObject {
   private long createdDate;
 
 
-  public Styling() {
-    this.no = stylingNo++;
-    this.createdDate = System.currentTimeMillis();
-  }
+  public Styling() {}
 
   public Styling(int no) {
     this.no = no;
@@ -49,6 +46,13 @@ public class Styling implements Serializable, CsvObject {
   public String toCsvString() {
     return String.format("%d,%s,%s,%s,%s,%d,%d\n", this.getNo(), this.getStyle(), this.getBrand(),
         this.getFit(), this.getPassword(), this.getViewCount(), this.getCreatedDate());
+  }
+
+  @Override
+  public void updateKey() {
+    if (Styling.stylingNo <= this.no) {
+      Styling.stylingNo = this.no + 1;
+    }
   }
 
   public boolean equals(Object obj) {
