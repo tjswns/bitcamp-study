@@ -34,7 +34,7 @@ public class MySQLMemberDao implements MemberDao {
   }
 
   @Override
-  public List<Member> list() {
+  public List<Member> findAll() {
     try (
         PreparedStatement stmt = con.prepareStatement(
             "select member_no, name, email, gender" + " from myapp_member" + " order by name asc");

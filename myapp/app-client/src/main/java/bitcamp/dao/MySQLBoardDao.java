@@ -44,7 +44,7 @@ public class MySQLBoardDao implements BoardDao {
    * b inner join myapp_member m on b.writer=m.member_no where category=1 order by board_no desc
    */
   @Override
-  public List<Board> list() {
+  public List<Board> findAll() {
     try (PreparedStatement stmt = con.prepareStatement("select" + "  b.board_no, " + "  b.title, "
         + "  b.view_count, " + "  b.created_date, " + "  m.member_no, " + "  m.name " + " from "
         + "  myapp_board b inner join myapp_member m on b.writer=m.member_no" + " where "

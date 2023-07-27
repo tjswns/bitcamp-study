@@ -22,7 +22,7 @@ public class BoardListListener implements ActionListener {
     System.out.println("번호, 제목, 작성자, 조회수, 등록일");
     System.out.println("---------------------------------------");
 
-    List<Board> list = boardDao.list();
+    List<Board> list = boardDao.findAll();
 
     for (Board board : list) {
       System.out.printf("%d, %s, %s, %d, %s\n", board.getNo(), board.getTitle(),
