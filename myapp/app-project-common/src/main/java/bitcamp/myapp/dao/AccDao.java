@@ -12,5 +12,5 @@ public interface AccDao {
 
   int update(Acc acc);
 
-  int delete(int no);
+  int delete(Acc acc);
 }

@@ -12,5 +12,5 @@ public interface StylingDao {
 
   int update(Styling styling);
 
-  int delete(int no);
+  int delete(Styling styling);
 }

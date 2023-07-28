@@ -1,10 +1,10 @@
 package bitcamp.myapp.vo;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
-public class Acc implements Serializable, CsvObject, AutoIncrement {
+public class Acc implements Serializable {
   private static final long serialVersionUID = 1L;
-  public static int accNo = 1;
 
   private int no;
   private String style;
@@ -13,8 +13,8 @@ public class Acc implements Serializable, CsvObject, AutoIncrement {
   private String ohter;
   private String password;
   private int viewCount;
-  private long createdDate;
-
+  private Timestamp createdDate;
+  private int category;
 
   public Acc() {
 
@@ -22,38 +22,6 @@ public class Acc implements Serializable, CsvObject, AutoIncrement {
 
   public Acc(int no) {
     this.no = no;
-  }
-
-  public static Acc fromCsv(String csv) {
-
-    String[] values = csv.split(",");
-
-    Acc acc = new Acc(Integer.parseInt(values[0]));
-    acc.setSelect(values[1]);
-    acc.setStyle(values[2]);
-    acc.setSize(values[3]);
-    acc.setPassword(values[4]);
-    acc.setViewCount(Integer.parseInt(values[5]));
-    acc.setCreatedDate(Long.parseLong(values[6]));
-
-    if (Acc.accNo <= acc.getNo()) {
-      Acc.accNo = acc.getNo() + 1;
-    }
-    return acc;
-  }
-
-  @Override
-  public String toCsvString() {
-
-    return String.format("%d,%s,%s,%s,%s,%d,%d\n", this.getNo(), this.getSelect(), this.getStyle(),
-        this.getSize(), this.getPassword(), this.getViewCount(), this.getCreatedDate());
-  }
-
-  @Override
-  public void updateKey() {
-    if (Acc.accNo <= this.no) {
-      Acc.accNo = this.no + 1;
-    }
   }
 
   public boolean equals(Object obj) {
@@ -133,13 +101,21 @@ public class Acc implements Serializable, CsvObject, AutoIncrement {
     this.viewCount = viewCount;
   }
 
-  public long getCreatedDate() {
+  public Timestamp getCreatedDate() {
     return createdDate;
   }
 
 
-  public void setCreatedDate(long createdDate) {
+  public void setCreatedDate(Timestamp createdDate) {
     this.createdDate = createdDate;
+  }
+
+  public int getCategory() {
+    return category;
+  }
+
+  public void setCategory(int category) {
+    this.category = category;
   }
 
 
