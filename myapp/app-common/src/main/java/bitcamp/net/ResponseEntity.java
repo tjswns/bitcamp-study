@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 public class ResponseEntity {
 
   public static final String SUCCESS = "success";
+  public static final String FAILURE = "failure";
   public static final String ERROR = "error";
 
   String status;
@@ -23,8 +24,7 @@ public class ResponseEntity {
 
 
   public <T> List<T> getList(Class<T> clazz) {
-    return new Gson().fromJson(result,
-        TypeToken.getParameterized(List.class, clazz).getType());
+    return new Gson().fromJson(result, TypeToken.getParameterized(List.class, clazz).getType());
   }
 
   public String toJson() {
