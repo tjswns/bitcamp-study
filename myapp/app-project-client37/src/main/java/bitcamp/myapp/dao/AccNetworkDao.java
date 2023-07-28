@@ -4,27 +4,29 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.List;
-import bitcamp.myapp.vo.Member;
+import bitcamp.myapp.vo.Acc;
 import bitcamp.net.RequestEntity;
 import bitcamp.net.ResponseEntity;
 
-public class MemberNetworkDao implements MemberDao {
+public class AccNetworkDao implements AccDao {
 
   String dataName;
   DataInputStream in;
   DataOutputStream out;
 
-  public MemberNetworkDao(String dataName, DataInputStream in, DataOutputStream out) {
+  public AccNetworkDao(String dataName, DataInputStream in, DataOutputStream out) {
     this.dataName = dataName;
     this.in = in;
     this.out = out;
   }
 
   @Override
-  public void insert(Member member) {
+  public void insert(Acc acc) {
     try {
-      out.writeUTF(new RequestEntity().command(dataName + "/insert").data(member).toJson());
+      // 서버에 요청을 보낸다.
+      out.writeUTF(new RequestEntity().command(dataName + "/insert").data(acc).toJson());
 
+      // 서버에서 보낸 응답을 받는다.
       ResponseEntity response = ResponseEntity.fromJson(in.readUTF());
       if (response.getStatus().equals(ResponseEntity.ERROR)) {
         throw new RuntimeException(response.getResult());
@@ -35,7 +37,7 @@ public class MemberNetworkDao implements MemberDao {
   }
 
   @Override
-  public List<Member> list() {
+  public List<Acc> list() {
     try {
       out.writeUTF(new RequestEntity().command(dataName + "/list").toJson());
 
@@ -44,7 +46,7 @@ public class MemberNetworkDao implements MemberDao {
         throw new RuntimeException(response.getResult());
       }
 
-      return response.getList(Member.class);
+      return response.getList(Acc.class);
 
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -52,7 +54,7 @@ public class MemberNetworkDao implements MemberDao {
   }
 
   @Override
-  public Member findBy(int no) {
+  public Acc findBy(int no) {
     try {
       out.writeUTF(new RequestEntity().command(dataName + "/findBy").data(no).toJson());
 
@@ -64,7 +66,7 @@ public class MemberNetworkDao implements MemberDao {
         return null;
       }
 
-      return response.getObject(Member.class);
+      return response.getObject(Acc.class);
 
     } catch (IOException e) {
       throw new RuntimeException(e);
@@ -72,10 +74,10 @@ public class MemberNetworkDao implements MemberDao {
   }
 
   @Override
-  public int update(Member member) {
+  public int update(Acc acc) {
     try {
       // 서버에 요청을 보낸다.
-      out.writeUTF(new RequestEntity().command(dataName + "/update").data(member).toJson());
+      out.writeUTF(new RequestEntity().command(dataName + "/update").data(acc).toJson());
 
       // 서버에서 보낸 응답을 받는다.
       ResponseEntity response = ResponseEntity.fromJson(in.readUTF());

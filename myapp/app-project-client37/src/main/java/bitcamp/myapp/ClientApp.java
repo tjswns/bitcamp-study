@@ -1,12 +1,15 @@
 package bitcamp.myapp;
 
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
 import bitcamp.myapp.dao.AccDao;
-import bitcamp.myapp.dao.AccListDao;
+import bitcamp.myapp.dao.AccNetworkDao;
 import bitcamp.myapp.dao.MemberDao;
-import bitcamp.myapp.dao.MemberListDao;
+import bitcamp.myapp.dao.MemberNetworkDao;
 import bitcamp.myapp.dao.StylingDao;
-import bitcamp.myapp.dao.StylingListDao;
+import bitcamp.myapp.dao.StylingNetworkDao;
 import bitcamp.myapp.handler.AccAddListener;
 import bitcamp.myapp.handler.AccDeleteListener;
 import bitcamp.myapp.handler.AccDetailListener;
@@ -25,25 +28,52 @@ import bitcamp.myapp.handler.StylingDeleteListener;
 import bitcamp.myapp.handler.StylingDetailListener;
 import bitcamp.myapp.handler.StylingListListener;
 import bitcamp.myapp.handler.StylingUpdateListener;
+import bitcamp.net.RequestEntity;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Menu;
 import bitcamp.util.MenuGroup;
 
-public class App {
-  MemberDao memberDao = new MemberListDao("member.json");
-  AccDao accDao = new AccListDao("acc.json");
-  StylingDao stylingDao = new StylingListDao("styling.json");
+public class ClientApp {
+  Socket socket;
+  DataOutputStream out;
+  DataInputStream in;
+
+  MemberDao memberDao;
+  AccDao accDao;
+  StylingDao stylingDao;
 
   BreadcrumbPrompt prompt = new BreadcrumbPrompt();
 
   MenuGroup mainMenu = new MenuGroup("메인");
 
-  public App() {
+  public ClientApp(String ip, int port) throws Exception {
+    this.socket = new Socket(ip, port);
+    this.out = new DataOutputStream(socket.getOutputStream());
+    this.in = new DataInputStream(socket.getInputStream());
+
+    this.memberDao = new MemberNetworkDao("member", in, out);
+    this.accDao = new AccNetworkDao("acc", in, out);
+    this.stylingDao = new StylingNetworkDao("styling", in, out);
+
     prepareMenu();
   }
 
-  public static void main(String[] args) {
-    new App().execute();
+
+  public void close() throws Exception {
+    prompt.close();
+    out.close();
+    in.close();
+    socket.close();
+  }
+
+  public static void main(String[] args) throws Exception {
+    if (args.length < 2) {
+      System.out.println("실행 예) java ... bitcamp.myapp.ClientApp 서버주소 포트번호");
+      return;
+    }
+    ClientApp app = new ClientApp(args[0], Integer.parseInt(args[1]));
+    app.execute();
+    app.close();
   }
 
   static void printTitle() {
@@ -55,7 +85,13 @@ public class App {
     printTitle();
 
     mainMenu.execute(prompt);
-    prompt.close();
+    try {
+      out.writeUTF(new RequestEntity().command("quit").toJson());
+
+    } catch (Exception e) {
+      System.out.println("종료 오류!");
+      e.printStackTrace();
+    }
   }
 
 
