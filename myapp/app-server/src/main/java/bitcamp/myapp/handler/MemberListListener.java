@@ -22,7 +22,7 @@ public class MemberListListener implements ActionListener {
 
     List<Member> list = memberDao.findAll();
     for (Member m : list) {
-      prompt.printf("%d, %s, %s\n", m.getNo(), m.getName(), m.getEmail());
+      prompt.printf("%d, %s, %s, %s\n", m.getNo(), m.getName(), m.getEmail(), m.getPassword());
     }
   }
 
