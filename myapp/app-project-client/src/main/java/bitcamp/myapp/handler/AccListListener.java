@@ -22,7 +22,7 @@ public class AccListListener implements AccActionListener {
     List<Acc> list = accDao.list();
 
     for (Acc acc : list) {
-      System.out.printf("%d, %s, %s, %s, %d, %tY-%6$tm-%6$td \n", acc.getNo(), acc.getSelect(),
+      System.out.printf("%d, %s, %s, %s, %d, %tY-%6$tm-%6$td \n", acc.getNo(), acc.getChoose(),
           acc.getStyle(), acc.getSize(), acc.getViewCount(), acc.getCreatedDate());
     }
   }

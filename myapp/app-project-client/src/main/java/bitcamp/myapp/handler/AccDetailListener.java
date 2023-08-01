@@ -22,8 +22,8 @@ public class AccDetailListener implements AccActionListener {
       return;
     }
 
-    System.out.printf("악세사리: %s\n", acc.getSelect());
     System.out.printf("스타일: %s\n", acc.getStyle());
+    System.out.printf("악세사리: %s\n", acc.getChoose());
     System.out.printf("사이즈: %s\n", acc.getSize());
     System.out.printf("조회수: %s\n", acc.getViewCount());
     System.out.printf("등록일: %tY-%1$tm-%1$td\n", acc.getCreatedDate());

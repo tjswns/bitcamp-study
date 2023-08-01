@@ -8,14 +8,14 @@ create table myapp_styling(
   created_date datetime default now()
 );
 
-alter table myapp_acc
-  add constraint primary key (acc_no),
-  modify column acc_no int not null auto_increment;
+alter table myapp_styling
+  add constraint primary key (styling_no),
+  modify column styling_no int not null auto_increment;
 
 create table myapp_acc(
   acc_no int not null,
   style varchar(255) not null,
-  select text null,
+  choose text null,
   size varchar(20) not null,
   password varchar(100) null,
   view_count int default 0,

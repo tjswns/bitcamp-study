@@ -16,8 +16,8 @@ public class AccAddListener implements AccActionListener {
   @Override
   public void service(BreadcrumbPrompt prompt) {
     Acc acc = new Acc();
-    AccActionListener.inputSelect(acc, prompt);
     AccActionListener.inputStyle(acc, prompt);
+    AccActionListener.inputChoose(acc, prompt);
     AccActionListener.inputSize(acc, prompt);
     acc.setPassword(prompt.inputString("암호? "));
     accDao.insert(acc);

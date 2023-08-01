@@ -52,9 +52,9 @@ public class AccListDao implements AccDao {
   }
 
   @Override
-  public int delete(int no) {
+  public int delete(Acc acc) {
     for (int i = 0; i < list.size(); i++) {
-      if (list.get(i).getNo() == no) {
+      if (list.get(i).getNo() == acc.getNo()) {
         list.remove(i);
         JsonDataHelper.saveJson(filename, list);
         return 1;

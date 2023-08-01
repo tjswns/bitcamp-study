@@ -20,8 +20,8 @@ public class AccUpdateListener implements AccActionListener {
       System.out.println("해당 번호의 스타일이 없습니다!");
       return;
     }
-    AccActionListener.inputSelect(acc, prompt);
     AccActionListener.inputStyle(acc, prompt);
+    AccActionListener.inputChoose(acc, prompt);
     AccActionListener.inputSize(acc, prompt);
 
     accDao.update(acc);

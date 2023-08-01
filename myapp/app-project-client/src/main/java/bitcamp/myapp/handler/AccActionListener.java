@@ -31,23 +31,23 @@ public interface AccActionListener extends ActionListener {
     }
   }
 
-  static void inputSelect(Acc acc, BreadcrumbPrompt prompt) {
+  static void inputChoose(Acc acc, BreadcrumbPrompt prompt) {
     loop: while (true) {
       String menuNo = prompt.inputString(
           "좋아하는 악세사리:\n" + "  1. 목걸이\n" + "  2. 반지\n" + "  3. 안경\n" + "  4. 그 외\n" + "> ");
 
       switch (menuNo) {
         case "1":
-          acc.setSelect("목걸이");
+          acc.setChoose("목걸이");
           break loop;
         case "2":
-          acc.setSelect("반지");
+          acc.setChoose("반지");
           break loop;
         case "3":
-          acc.setSelect("안경");
+          acc.setChoose("안경");
           break loop;
         case "4":
-          acc.setSelect(inputOtherBrand(prompt));
+          acc.setChoose(inputOtherBrand(prompt));
           break loop;
         default:
           System.out.println("무효한 번호입니다.");

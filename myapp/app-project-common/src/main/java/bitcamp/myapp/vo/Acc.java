@@ -8,7 +8,7 @@ public class Acc implements Serializable {
 
   private int no;
   private String style;
-  private String select;
+  private String choose;
   private String size;
   private String ohter;
   private String password;
@@ -59,12 +59,12 @@ public class Acc implements Serializable {
   }
 
 
-  public String getSelect() {
-    return select;
+  public String getChoose() {
+    return choose;
   }
 
-  public void setSelect(String select) {
-    this.select = select;
+  public void setChoose(String choose) {
+    this.choose = choose;
   }
 
 
