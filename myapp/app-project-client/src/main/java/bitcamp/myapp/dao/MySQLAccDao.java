@@ -1,6 +1,7 @@
 package bitcamp.myapp.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -19,12 +20,15 @@ public class MySQLAccDao implements AccDao {
 
   @Override
   public void insert(Acc acc) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt =
+        con.prepareStatement("insert into myapp_acc(style,size,select,password,category)"
+            + " values(?,?,?,sha1(?),?)")) {
 
-      stmt.executeUpdate(String.format(
-          "insert into myapp_acc(style,size,select,password,category)"
-              + " values('%s','%s','%s','%s',%d)",
-          acc.getStyle(), acc.getSize(), acc.getSelect(), acc.getPassword(), this.category));
+      stmt.setString(1, acc.getStyle());
+      stmt.setString(2, acc.getSize());
+      stmt.setString(3, acc.getChoose());
+      stmt.setString(4, acc.getPassword());
+      stmt.setInt(5, this.category);
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -34,26 +38,26 @@ public class MySQLAccDao implements AccDao {
 
   @Override
   public List<Acc> list() {
-    try (Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(
-            "select acc_no, style, size, select, view_count, created_date" + " from myapp_acc"
-                + " where category=" + this.category + " order by acc_no desc")) {
+    try (PreparedStatement stmt =
+        con.prepareStatement("select myapp_acc, style, size, select, view_count, created_date"
+            + " from myapp_acc" + " where category=?" + " order by acc_no desc")) {
 
-      List<Acc> list = new ArrayList<>();
+      stmt.setInt(1, this.category);
 
-      while (rs.next()) {
-        Acc acc = new Acc();
-        acc.setNo(rs.getInt("acc_no"));
-        acc.setStyle(rs.getString("style"));
-        acc.setSize(rs.getString("size"));
-        acc.setSelect(rs.getString("select"));
-        acc.setViewCount(rs.getInt("view_count"));
-        acc.setCreatedDate(rs.getTimestamp("created_date"));
-
-        list.add(acc);
+      try (ResultSet rs = stmt.executeQuery()) {
+        List<Acc> list = new ArrayList<>();
+        while (rs.next()) {
+          Acc acc = new Acc();
+          acc.setNo(rs.getInt("acc_no"));
+          acc.setStyle(rs.getString("style"));
+          acc.setSize(rs.getString("size"));
+          acc.setChoose(rs.getString("select"));
+          acc.setViewCount(rs.getInt("view_count"));
+          acc.setCreatedDate(rs.getTimestamp("created_date"));
+          list.add(acc);
+        }
+        return list;
       }
-
-      return list;
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -73,7 +77,7 @@ public class MySQLAccDao implements AccDao {
         acc.setNo(rs.getInt("acc_no"));
         acc.setStyle(rs.getString("style"));
         acc.setSize(rs.getString("size"));
-        acc.setSelect(rs.getString("select"));
+        acc.setChoose(rs.getString("select"));
         acc.setViewCount(rs.getInt("view_count"));
         acc.setCreatedDate(rs.getTimestamp("created_date"));
 
@@ -97,7 +101,7 @@ public class MySQLAccDao implements AccDao {
       return stmt.executeUpdate(String.format(
           "update myapp_acc set" + " style='%s'," + " size='%s'" + " select='%s'"
               + " where category=%d and board_no=%d and password='%s'",
-          acc.getStyle(), acc.getSize(), acc.getSelect(), this.category, acc.getNo(),
+          acc.getStyle(), acc.getSize(), acc.getChoose(), this.category, acc.getNo(),
           acc.getPassword()));
 
     } catch (Exception e) {
