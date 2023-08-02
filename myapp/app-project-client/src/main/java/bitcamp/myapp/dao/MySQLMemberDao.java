@@ -1,8 +1,8 @@
 package bitcamp.myapp.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import bitcamp.myapp.vo.Member;
@@ -17,12 +17,19 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public void insert(Member member) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "insert into myapp_member(name,email,password,age,gender,top,pants,shoes) values(?,?,sha1(?),?,?,?,?,?)")) {
 
-      stmt.executeUpdate(String.format(
-          "insert into myapp_member(name,email,password,age,gender,top,pants,shoes) values('%s','%s','%s','%s','%c','%s','%s','%s')",
-          member.getName(), member.getEmail(), member.getPassword(), member.getAge(),
-          member.getGender(), member.getTop(), member.getPants(), member.getShoes()));
+      stmt.setString(1, member.getName());
+      stmt.setString(2, member.getEmail());
+      stmt.setString(3, member.getPassword());
+      stmt.setString(4, member.getAge());
+      stmt.setString(5, String.valueOf(member.getGender()));
+      stmt.setString(6, member.getTop());
+      stmt.setString(7, member.getPants());
+      stmt.setString(8, member.getShoes());
+
+      stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -31,9 +38,10 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public List<Member> list() {
-    try (Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(
-            "select member_no, name, email, age, gender, top, pants, shoes from myapp_member order by name asc")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "select member_no, name, email, age, gender, top, pants, shoes from myapp_member order by name asc");
+
+        ResultSet rs = stmt.executeQuery()) {
 
       List<Member> list = new ArrayList<>();
 
@@ -59,25 +67,27 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public Member findBy(int no) {
-    try (Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(
-            "select member_no, name, email, age, gender, top, pants, shoes from myapp_member where member_no="
-                + no)) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "select member_no, name, email, age, gender, top, pants, shoes from myapp_member where member_no=?"
+            + no)) {
 
-      if (rs.next()) {
-        Member m = new Member();
-        m.setNo(rs.getInt("member_no"));
-        m.setName(rs.getString("name"));
-        m.setEmail(rs.getString("email"));
-        m.setGender(rs.getString("gender").charAt(0));
-        m.setTop(rs.getString("top"));
-        m.setPants(rs.getString("pants"));
-        m.setShoes(rs.getString("shoes"));
-        return m;
+      stmt.setInt(1, no);
+
+      try (ResultSet rs = stmt.executeQuery()) {
+        if (rs.next()) {
+          Member m = new Member();
+          m.setNo(rs.getInt("member_no"));
+          m.setName(rs.getString("name"));
+          m.setEmail(rs.getString("email"));
+          m.setGender(rs.getString("gender").charAt(0));
+          m.setTop(rs.getString("top"));
+          m.setPants(rs.getString("pants"));
+          m.setShoes(rs.getString("shoes"));
+          return m;
+        }
+
+        return null;
       }
-
-      return null;
-
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -85,15 +95,20 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public int update(Member member) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "update myapp_member set" + " name=?," + " email=?," + " password=sha1(?)," + " age=?,"
+            + " gender=?" + " top=?," + " pants=?," + " shoes=?," + " where member_no=?")) {
+      stmt.setString(1, member.getName());
+      stmt.setString(2, member.getEmail());
+      stmt.setString(3, member.getPassword());
+      stmt.setString(4, member.getAge());
+      stmt.setString(5, String.valueOf(member.getGender()));
+      stmt.setString(6, member.getTop());
+      stmt.setString(7, member.getPants());
+      stmt.setString(8, member.getShoes());
+      stmt.setInt(9, member.getNo());
 
-      return stmt.executeUpdate(String.format(
-          "update myapp_member set" + " name='%s'," + " email='%s'," + " password='%s',"
-              + " age='%s'," + " gender='%c'" + " top='%s'," + " pants='%s'," + " shoes='%s',"
-              + " where member_no=%d",
-          member.getName(), member.getEmail(), member.getPassword(), member.getAge(),
-          member.getGender(), member.getTop(), member.getPants(), member.getShoes(),
-          member.getNo()));
+      return stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -102,9 +117,12 @@ public class MySQLMemberDao implements MemberDao {
 
   @Override
   public int delete(int no) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt = con.prepareStatement(
 
-      return stmt.executeUpdate(String.format("delete from myapp_member where member_no=%d", no));
+        "delete from myapp_member where member_no=?")) {
+      stmt.setInt(1, no);
+
+      return stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
