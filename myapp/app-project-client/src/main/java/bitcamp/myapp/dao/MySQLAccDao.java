@@ -20,12 +20,12 @@ public class MySQLAccDao implements AccDao {
   @Override
   public void insert(Acc acc) {
     try (PreparedStatement stmt =
-        con.prepareStatement("insert into myapp_acc(style,size,select,password,category)"
+        con.prepareStatement("insert into myapp_acc(style,choose,size,password,category)"
             + " values(?,?,?,sha1(?),?)")) {
 
       stmt.setString(1, acc.getStyle());
-      stmt.setString(2, acc.getSize());
       stmt.setString(3, acc.getChoose());
+      stmt.setString(2, acc.getSize());
       stmt.setString(4, acc.getPassword());
       stmt.setInt(5, this.category);
 
@@ -38,7 +38,7 @@ public class MySQLAccDao implements AccDao {
   @Override
   public List<Acc> list() {
     try (PreparedStatement stmt =
-        con.prepareStatement("select myapp_acc, style, size, select, view_count, created_date"
+        con.prepareStatement("select acc_no, style, choose, size, view_count, created_date"
             + " from myapp_acc" + " where category=?" + " order by acc_no desc")) {
 
       stmt.setInt(1, this.category);
@@ -49,8 +49,8 @@ public class MySQLAccDao implements AccDao {
           Acc acc = new Acc();
           acc.setNo(rs.getInt("acc_no"));
           acc.setStyle(rs.getString("style"));
+          acc.setChoose(rs.getString("choose"));
           acc.setSize(rs.getString("size"));
-          acc.setChoose(rs.getString("select"));
           acc.setViewCount(rs.getInt("view_count"));
           acc.setCreatedDate(rs.getTimestamp("created_date"));
           list.add(acc);
@@ -66,7 +66,7 @@ public class MySQLAccDao implements AccDao {
   @Override
   public Acc findBy(int no) {
     try (PreparedStatement stmt = con.prepareStatement(
-        "select acc_no, style, size, select, view_count, created_date" + " from myapp_acc"
+        "select acc_no, style, choose, size, view_count, created_date" + " from myapp_acc"
             + " where category=?" + " and acc_no=?" + " order by acc_no desc")) {
 
       stmt.setInt(1, this.category);
@@ -77,8 +77,8 @@ public class MySQLAccDao implements AccDao {
           Acc acc = new Acc();
           acc.setNo(rs.getInt("acc_no"));
           acc.setStyle(rs.getString("style"));
+          acc.setChoose(rs.getString("choose"));
           acc.setSize(rs.getString("size"));
-          acc.setChoose(rs.getString("select"));
           acc.setViewCount(rs.getInt("view_count"));
           acc.setCreatedDate(rs.getTimestamp("created_date"));
 
@@ -98,10 +98,10 @@ public class MySQLAccDao implements AccDao {
   @Override
   public int update(Acc acc) {
     try (PreparedStatement stmt = con.prepareStatement("update myapp_acc set" + " style=?,"
-        + " size=?" + " select=?" + " where category=? and board_no=? and password=sha1(?)")) {
+        + " choose=?" + " size=?" + " where category=? and board_no=? and password=sha1(?)")) {
       stmt.setString(1, acc.getStyle());
-      stmt.setString(2, acc.getSize());
       stmt.setString(3, acc.getChoose());
+      stmt.setString(2, acc.getSize());
       stmt.setInt(4, this.category);
       stmt.setInt(5, acc.getNo());
       stmt.setString(6, acc.getPassword());

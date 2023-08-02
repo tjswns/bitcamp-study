@@ -1,8 +1,8 @@
 package bitcamp.myapp.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import bitcamp.myapp.vo.Styling;
@@ -19,13 +19,17 @@ public class MySQLStylingDao implements StylingDao {
 
   @Override
   public void insert(Styling styling) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt =
+        con.prepareStatement("insert into myapp_styling(style,brand,fit,password,category)"
+            + " values(?,?,?,sha(?),?")) {
 
-      stmt.executeUpdate(String.format(
-          "insert into myapp_styling(style,brand,fit,password,category)"
-              + " values('%s','%s','%s','%s',%d)",
-          styling.getStyle(), styling.getBrand(), styling.getFit(), styling.getPassword(),
-          this.category));
+      stmt.setString(1, styling.getStyle());
+      stmt.setString(2, styling.getBrand());
+      stmt.setString(3, styling.getFit());
+      stmt.setString(4, styling.getPassword());
+      stmt.setInt(5, this.category);
+
+      stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -35,27 +39,27 @@ public class MySQLStylingDao implements StylingDao {
 
   @Override
   public List<Styling> list() {
-    try (Statement stmt = con.createStatement();
-        ResultSet rs = stmt.executeQuery(
-            "select styling_no, style, brand, fit, view_count, created_date" + " from myapp_styling"
-                + " where category=" + this.category + " order by styling_no desc")) {
+    try (PreparedStatement stmt =
+        con.prepareStatement("select styling_no, style, brand, fit, view_count, created_date"
+            + " from myapp_styling" + " where category=?" + " order by styling_no desc")) {
 
-      List<Styling> list = new ArrayList<>();
+      stmt.setInt(1, this.category);
 
-      while (rs.next()) {
-        Styling styling = new Styling();
-        styling.setNo(rs.getInt("acc_no"));
-        styling.setStyle(rs.getString("style"));
-        styling.setBrand(rs.getString("brand"));
-        styling.setFit(rs.getString("fit"));
-        styling.setViewCount(rs.getInt("view_count"));
-        styling.setCreatedDate(rs.getTimestamp("created_date"));
+      try (ResultSet rs = stmt.executeQuery()) {
+        List<Styling> list = new ArrayList<>();
+        while (rs.next()) {
+          Styling styling = new Styling();
+          styling.setNo(rs.getInt("styling_no"));
+          styling.setStyle(rs.getString("style"));
+          styling.setBrand(rs.getString("brand"));
+          styling.setFit(rs.getString("fit"));
+          styling.setViewCount(rs.getInt("view_count"));
+          styling.setCreatedDate(rs.getTimestamp("created_date"));
 
-        list.add(styling);
+          list.add(styling);
+        }
+        return list;
       }
-
-      return list;
-
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -63,29 +67,31 @@ public class MySQLStylingDao implements StylingDao {
 
   @Override
   public Styling findBy(int no) {
-    try (Statement stmt = con.createStatement();
-        ResultSet rs =
-            stmt.executeQuery("select styling_no, style, brand, fit, view_count, created_date"
-                + " from myapp_styling" + " where category=" + this.category + " and styling_no="
-                + no + " order by styling_no desc")) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "select styling_no, style, brand, fit, view_count, created_date" + " from myapp_styling"
+            + " where category=?" + " and styling_no=?" + " order by styling_no desc")) {
 
-      if (rs.next()) {
-        Styling styling = new Styling();
-        styling.setNo(rs.getInt("styling_no"));
-        styling.setStyle(rs.getString("style"));
-        styling.setBrand(rs.getString("brand"));
-        styling.setFit(rs.getString("fit"));
-        styling.setViewCount(rs.getInt("view_count"));
-        styling.setCreatedDate(rs.getTimestamp("created_date"));
+      stmt.setInt(1, this.category);
+      stmt.setInt(2, no);
 
-        stmt.executeUpdate(
-            "update myapp_styling set" + " view_count=view_count + 1" + " where styling_no=" + no);
+      try (ResultSet rs = stmt.executeQuery()) {
+        if (rs.next()) {
+          Styling styling = new Styling();
+          styling.setNo(rs.getInt("styling_no"));
+          styling.setStyle(rs.getString("style"));
+          styling.setBrand(rs.getString("brand"));
+          styling.setFit(rs.getString("fit"));
+          styling.setViewCount(rs.getInt("view_count"));
+          styling.setCreatedDate(rs.getTimestamp("created_date"));
 
-        return styling;
+          stmt.executeUpdate("update myapp_styling set" + " view_count=view_count + 1"
+              + " where styling_no=" + no);
+
+          return styling;
+        }
+
+        return null;
       }
-
-      return null;
-
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -93,13 +99,17 @@ public class MySQLStylingDao implements StylingDao {
 
   @Override
   public int update(Styling styling) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt = con.prepareStatement("update myapp_styling set" + " style=?,"
+        + " brand=?" + " fit=?'" + " where category=? and styling_no=? and password=sha(1)")) {
 
-      return stmt.executeUpdate(String.format(
-          "update myapp_styling set" + " style='%s'," + " brand='%s'" + " fit='%s'"
-              + " where category=%d and styling_no=%d and password='%s'",
-          styling.getStyle(), styling.getBrand(), styling.getFit(), this.category, styling.getNo(),
-          styling.getPassword()));
+      stmt.setString(1, styling.getStyle());
+      stmt.setString(2, styling.getBrand());
+      stmt.setString(3, styling.getFit());
+      stmt.setInt(4, this.category);
+      stmt.setInt(5, styling.getNo());
+      stmt.setString(6, styling.getPassword());
+
+      return stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -108,11 +118,14 @@ public class MySQLStylingDao implements StylingDao {
 
   @Override
   public int delete(Styling styling) {
-    try (Statement stmt = con.createStatement()) {
+    try (PreparedStatement stmt = con.prepareStatement(
+        "delete from myapp_styling where category=? and styling_no=? and password=sha(1)")) {
 
-      return stmt.executeUpdate(String.format(
-          "delete from myapp_styling where category=%d and styling_no=%d and password='%s'",
-          this.category, styling.getNo(), styling.getPassword()));
+      stmt.setInt(1, this.category);
+      stmt.setInt(2, styling.getNo());
+      stmt.setString(3, styling.getPassword());
+
+      return stmt.executeUpdate();
 
     } catch (Exception e) {
       throw new RuntimeException(e);

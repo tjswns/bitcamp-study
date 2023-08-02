@@ -66,7 +66,7 @@ public class ClientApp {
       return;
     }
     ClientApp app = new ClientApp(args[0], Integer.parseInt(args[1]));
-    app.execute();
+
     app.close();
   }
 

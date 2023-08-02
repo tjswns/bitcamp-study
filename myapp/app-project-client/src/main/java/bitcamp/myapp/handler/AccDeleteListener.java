@@ -16,7 +16,7 @@ public class AccDeleteListener implements AccActionListener {
   public void service(BreadcrumbPrompt prompt) {
 
     Acc acc = new Acc();
-    acc.setNo(prompt.inputInt("번호"));
+    acc.setNo(prompt.inputInt("번호?"));
     acc.setPassword(prompt.inputString("암호? "));
     if (accDao.delete(acc) == 0) {
       System.out.println("해당 번호의 게시글이 없습니다!");
