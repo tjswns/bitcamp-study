@@ -1,16 +1,21 @@
 package bitcamp.myapp.handler;
 
+import java.io.IOException;
 import java.io.PrintWriter;
-import bitcamp.util.Component;
-import bitcamp.util.HttpServletRequest;
-import bitcamp.util.HttpServletResponse;
-import bitcamp.util.Servlet;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-@Component("/board/form")
-public class BoardFormServlet implements Servlet {
+@WebServlet("/board/form")
+public class BoardFormServlet extends HttpServlet {
+
+  private static final long serialVersionUID = 1L;
 
   @Override
-  public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
+  protected void service(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
 
     int category = Integer.parseInt(request.getParameter("category"));
 
@@ -24,10 +29,10 @@ public class BoardFormServlet implements Servlet {
     out.println("</head>");
     out.println("<body>");
     out.println("<h1>게시글</h1>");
-    out.println("<form action='/board/add'>");
+    out.println("<form action='/board/add' method='post'>");
     out.println("제목 <input type='text' name='title'><br>");
     out.println("내용 <textarea name='content'></textarea><br>");
-    out.printf("<input type='hidden' name='category' value=%d>\n", category);
+    out.printf("<input type='hidden' name='category' value='%d'>\n", category);
     out.println("<button>등록</button>");
     out.println("</form>");
     out.println("</body>");

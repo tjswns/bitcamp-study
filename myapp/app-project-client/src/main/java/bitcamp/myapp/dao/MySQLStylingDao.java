@@ -21,7 +21,7 @@ public class MySQLStylingDao implements StylingDao {
   public void insert(Styling styling) {
     try (PreparedStatement stmt =
         con.prepareStatement("insert into myapp_styling(style,brand,fit,password,category)"
-            + " values(?,?,?,sha(?),?")) {
+            + " values(?,?,?,sha(?),?)")) {
 
       stmt.setString(1, styling.getStyle());
       stmt.setString(2, styling.getBrand());
@@ -100,7 +100,7 @@ public class MySQLStylingDao implements StylingDao {
   @Override
   public int update(Styling styling) {
     try (PreparedStatement stmt = con.prepareStatement("update myapp_styling set" + " style=?,"
-        + " brand=?" + " fit=?'" + " where category=? and styling_no=? and password=sha(1)")) {
+        + " brand=?" + " fit=?'" + " where category=? and styling_no=? and password=sha1(?)")) {
 
       stmt.setString(1, styling.getStyle());
       stmt.setString(2, styling.getBrand());
@@ -119,7 +119,7 @@ public class MySQLStylingDao implements StylingDao {
   @Override
   public int delete(Styling styling) {
     try (PreparedStatement stmt = con.prepareStatement(
-        "delete from myapp_styling where category=? and styling_no=? and password=sha(1)")) {
+        "delete from myapp_styling where category=? and styling_no=? and password=sha1(?)")) {
 
       stmt.setInt(1, this.category);
       stmt.setInt(2, styling.getNo());
