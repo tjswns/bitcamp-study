@@ -27,12 +27,16 @@ import bitcamp.myapp.handler.StylingDeleteListener;
 import bitcamp.myapp.handler.StylingDetailListener;
 import bitcamp.myapp.handler.StylingListListener;
 import bitcamp.myapp.handler.StylingUpdateListener;
+import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Menu;
 import bitcamp.util.MenuGroup;
 
+
+
 public class ClientApp {
 
+  public static Member loginUser;
   MemberDao memberDao;
   AccDao accDao;
   StylingDao stylingDao;
