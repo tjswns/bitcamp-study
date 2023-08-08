@@ -25,7 +25,7 @@ public class StylingListListener implements StylingActionListener {
     List<Styling> list = stylingDao.list();
 
     for (Styling styling : list) {
-      System.out.printf("%d, %s, %s, %s, %s, %d, %s\n", styling.getNo(), styling.getStyle(),
+      prompt.printf("%d, %s, %s, %s, %s, %d, %s\n", styling.getNo(), styling.getStyle(),
           styling.getBrand(), styling.getFit(), styling.getWriter().getName(),
           styling.getViewCount(), styling.getCreatedDate());
     }

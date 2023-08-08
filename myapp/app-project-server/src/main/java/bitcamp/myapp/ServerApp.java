@@ -85,7 +85,7 @@ public class ServerApp {
     } catch (Exception e) {
       System.out.println("서버 실행 오류!");
       e.printStackTrace();
-    } ;
+    }
   }
 
   private void processRequest(Socket socket) {
