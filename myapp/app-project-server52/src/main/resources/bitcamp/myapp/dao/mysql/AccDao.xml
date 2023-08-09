@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.myapp.dao.AccDao">
+  <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
+  <resultMap type="acc" id="accMap">
+    <id     column="acc_no"       property="no"/>
+    <result column="style"          property="style"/>
+    <result column="choose"        property="choose"/>
+    <result column="size"        property="size"/>
+    <result column="view_count"     property="viewCount"/>
+    <result column="created_date"   property="createdDate"/>
+    <result column="category"       property="category"/>
+    
+    <association property="writer" javaType="member">
+      <id     column="member_no"    property="no"/>
+      <result column="name"         property="name"/>
+    </association>
+    
+  </resultMap>
+  <insert id="insert" parameterType="acc">
+    insert into myapp_acc(style,choose,size,writer,category)
+    values(#{style},#{choose},#{size},#{writer.no},#{category})
+  </insert>
+ <select id="findAll" parameterType="int" resultMap="accMap">
+  select
+    acc.acc_no,
+    acc.style,
+    acc.choose,
+    acc.size,
+    acc.view_count,
+    acc.category,
+    m.member_no,
+    m.name
+    from
+    myapp_acc b inner join myapp_member m on b.writer=m.member_no
+    where
+      category=#{categoryNo}
+    order by
+      acc_no desc
+  </select>
+  
+  <select id="findBy" parameterType="map" resultMap="accMap">
+  select
+    acc.acc_no,
+    acc.style,
+    acc.choose,
+    acc.size,
+    acc.view_count,
+    acc.category,
+    m.member_no,
+    m.name
+    from
+    myapp_acc b inner join myapp_member m on b.writer=m.member_no
+    where
+      category=#{categoryNo}
+      and acc_no=#{accNo}
+  </select>
+  
+  <update id="update" parameterType="acc">
+  update myapp_acc set
+      style=#{style},
+      choose=#{choose}
+      size=#{size}
+      
+    where 
+      category=#{category}
+      and acc_no=#{no}
+      and writer=#{writer.no}
+  </update>
+    <update id="updateCount" parameterType="acc">
+    update myapp_acc set
+      view_count=#{viewCount}
+    where
+      category=#{category}
+      and acc_no=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="acc">
+    delete from myapp_acc
+    where 
+      category=#{category}
+      and acc_no=#{no}
+      and writer=#{writer.no}
+  </delete>
+</mapper>
+
+
+
