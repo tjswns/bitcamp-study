@@ -20,18 +20,23 @@
     
      <insert id="insert" parameterType="member">
     insert into myapp_member(name,email,password,age,gender,top,pants,shoes)
-    values(#{name},#{email},sha1(#{password}),#{age},#{gender}#{top},#{pants},#{shoes})
+    values(#{name},#{email},sha1(#{password}),#{age},#{gender},#{top},#{pants},#{shoes})
   </insert>
   
     <select id="findAll" resultMap="memberMap">
     select
       member_no,
       name,
-      email
+      email,
+      age,
+      gender,
+      top,
+      pants,
+      shoes
     from
       myapp_member 
     order by
-      name desc
+      name asc
   </select>
   
   <select id="findBy" parameterType="int" resultMap="memberMap">

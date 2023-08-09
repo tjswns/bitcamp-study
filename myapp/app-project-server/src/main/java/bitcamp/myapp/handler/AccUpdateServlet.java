@@ -8,33 +8,38 @@ import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Component;
 
-@Component("acc/delete")
-public class AccDeleteListener implements AccActionListener {
+@Component("/acc/update")
+public class AccUpdateServlet implements AccActionListener {
 
-  int category;
   AccDao accDao;
   SqlSessionFactory sqlSessionFactory;
 
-  public AccDeleteListener(AccDao accDao, SqlSessionFactory sqlSessionFactory) {
+  public AccUpdateServlet(AccDao accDao, SqlSessionFactory sqlSessionFactory) {
     this.accDao = accDao;
     this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void service(BreadcrumbPrompt prompt) throws IOException {
+    int accNo = prompt.inputInt("번호? ");
 
-    Acc acc = new Acc();
-    acc.setNo(prompt.inputInt("번호?"));
+    Acc acc = accDao.findBy(Integer.parseInt((String) prompt.getAttribute("category")), accNo);
+    if (acc == null) {
+      prompt.println("해당 번호의 스타일이 없습니다!");
+      return;
+    }
+    AccActionListener.inputStyle(acc, prompt);
+    AccActionListener.inputChoose(acc, prompt);
+    AccActionListener.inputSize(acc, prompt);
     acc.setWriter((Member) prompt.getAttribute("loginUser"));
-    acc.setCategory(Integer.parseInt((String) prompt.getAttribute("category")));
+
     try {
-      if (accDao.delete(acc) == 0) {
-        prompt.println("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
+      if (accDao.update(acc) == 0) {
+        prompt.println("게시글 변경 권한이 없습니다.");
       } else {
-        prompt.println("삭제했습니다.");
+        prompt.println("변경했습니다!");
       }
       sqlSessionFactory.openSession(false).commit();
-
     } catch (Exception e) {
       sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);

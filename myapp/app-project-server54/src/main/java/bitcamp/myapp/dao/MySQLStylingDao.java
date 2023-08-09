@@ -6,7 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.vo.Styling;
+import bitcamp.util.Component;
 
+@Component
 public class MySQLStylingDao implements StylingDao {
 
   SqlSessionFactory sqlSessionFactory;

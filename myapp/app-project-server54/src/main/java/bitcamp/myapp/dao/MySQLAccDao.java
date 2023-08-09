@@ -6,7 +6,9 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.vo.Acc;
+import bitcamp.util.Component;
 
+@Component
 public class MySQLAccDao implements AccDao {
 
   SqlSessionFactory sqlSessionFactory;

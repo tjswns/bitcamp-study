@@ -12,6 +12,7 @@ public class LoginListener implements MemberActionListener {
   MemberDao memberDao;
 
   public LoginListener(MemberDao memberDao) {
+    System.out.println(memberDao);
     this.memberDao = memberDao;
   }
 

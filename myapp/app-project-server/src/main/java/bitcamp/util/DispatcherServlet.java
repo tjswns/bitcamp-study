@@ -2,11 +2,11 @@ package bitcamp.util;
 
 import java.io.IOException;
 
-public class DispatcherListener implements ActionListener {
+public class DispatcherServlet implements ActionListener {
 
   ApplicationContext iocContainer;
 
-  public DispatcherListener(ApplicationContext iocContainer) throws Exception {
+  public DispatcherServlet(ApplicationContext iocContainer) throws Exception {
     this.iocContainer = iocContainer;
   }
 

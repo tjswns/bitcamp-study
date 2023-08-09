@@ -9,12 +9,12 @@ import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Component;
 
 @Component("/acc/list")
-public class AccListListener implements AccActionListener {
+public class AccListServlet implements AccActionListener {
 
   AccDao accDao;
   SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
 
-  public AccListListener(AccDao accDao) {
+  public AccListServlet(AccDao accDao) {
     this.accDao = accDao;
 
   }

@@ -8,12 +8,12 @@ import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Component;
 
 @Component("/acc/detail")
-public class AccDetailListener implements AccActionListener {
+public class AccDetailServlet implements AccActionListener {
 
   AccDao accDao;
   SqlSessionFactory sqlSessionFactory;
 
-  public AccDetailListener(AccDao accDao, SqlSessionFactory sqlSessionFactory) {
+  public AccDetailServlet(AccDao accDao, SqlSessionFactory sqlSessionFactory) {
     this.accDao = accDao;
     this.sqlSessionFactory = sqlSessionFactory;
   }

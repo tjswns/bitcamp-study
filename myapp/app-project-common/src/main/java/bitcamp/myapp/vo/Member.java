@@ -23,7 +23,6 @@ public class Member implements Serializable {
   private char gender;
   private String top;
   private String pants;
-  private String skirt;
   private String shoes;
   private Date createdDate;
 
@@ -109,14 +108,6 @@ public class Member implements Serializable {
 
   public void setPants(String pants) {
     this.pants = pants;
-  }
-
-  public String getSkirt() {
-    return skirt;
-  }
-
-  public void setSkirt(String skirt) {
-    this.skirt = skirt;
   }
 
   public String getShoes() {

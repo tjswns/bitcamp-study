@@ -23,6 +23,7 @@
     insert into myapp_acc(style,choose,size,writer,category)
     values(#{style},#{choose},#{size},#{writer.no},#{category})
   </insert>
+  
  <select id="findAll" parameterType="int" resultMap="accMap">
   select
     acc.acc_no,
@@ -30,11 +31,12 @@
     acc.choose,
     acc.size,
     acc.view_count,
+    acc.created_date,
     acc.category,
     m.member_no,
     m.name
     from
-    myapp_acc b inner join myapp_member m on b.writer=m.member_no
+    myapp_acc acc inner join myapp_member m on acc.writer=m.member_no
     where
       category=#{categoryNo}
     order by
@@ -48,11 +50,12 @@
     acc.choose,
     acc.size,
     acc.view_count,
+    acc.created_date,
     acc.category,
     m.member_no,
     m.name
     from
-    myapp_acc b inner join myapp_member m on b.writer=m.member_no
+    myapp_acc acc inner join myapp_member m on acc.writer=m.member_no
     where
       category=#{categoryNo}
       and acc_no=#{accNo}
@@ -63,7 +66,6 @@
       style=#{style},
       choose=#{choose}
       size=#{size}
-      
     where 
       category=#{category}
       and acc_no=#{no}

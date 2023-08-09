@@ -8,30 +8,31 @@ import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
 import bitcamp.util.Component;
 
-@Component("/acc/add")
-public class AccAddListener implements AccActionListener {
+@Component("acc/delete")
+public class AccDeleteServlet implements AccActionListener {
 
+  int category;
   AccDao accDao;
   SqlSessionFactory sqlSessionFactory;
 
-  public AccAddListener(AccDao accDao, SqlSessionFactory sqlSessionFactory) {
+  public AccDeleteServlet(AccDao accDao, SqlSessionFactory sqlSessionFactory) {
     this.accDao = accDao;
     this.sqlSessionFactory = sqlSessionFactory;
   }
 
-
   @Override
   public void service(BreadcrumbPrompt prompt) throws IOException {
+
     Acc acc = new Acc();
-    AccActionListener.inputStyle(acc, prompt);
-    AccActionListener.inputChoose(acc, prompt);
-    AccActionListener.inputSize(acc, prompt);
+    acc.setNo(prompt.inputInt("번호?"));
     acc.setWriter((Member) prompt.getAttribute("loginUser"));
     acc.setCategory(Integer.parseInt((String) prompt.getAttribute("category")));
     try {
-      accDao.insert(acc);
-
-
+      if (accDao.delete(acc) == 0) {
+        prompt.println("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
+      } else {
+        prompt.println("삭제했습니다.");
+      }
       sqlSessionFactory.openSession(false).commit();
 
     } catch (Exception e) {
