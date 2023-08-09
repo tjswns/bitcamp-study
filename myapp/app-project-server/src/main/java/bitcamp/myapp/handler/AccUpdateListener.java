@@ -1,28 +1,31 @@
 package bitcamp.myapp.handler;
 
 import java.io.IOException;
+import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.dao.AccDao;
 import bitcamp.myapp.vo.Acc;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.DataSource;
 
 public class AccUpdateListener implements AccActionListener {
 
+  int category;
   AccDao accDao;
-  DataSource ds;
+  SqlSessionFactory sqlSessionFactory;
 
-  public AccUpdateListener(AccDao accDao, DataSource ds) {
+  public AccUpdateListener(int category, AccDao accDao, SqlSessionFactory sqlSessionFactory) {
+    this.category = category;
     this.accDao = accDao;
-    this.ds = ds;
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void service(BreadcrumbPrompt prompt) throws IOException {
     int accNo = prompt.inputInt("번호? ");
-    Acc acc = accDao.findBy(accNo);
+
+    Acc acc = accDao.findBy(category, accNo);
     if (acc == null) {
-      System.out.println("해당 번호의 스타일이 없습니다!");
+      prompt.println("해당 번호의 스타일이 없습니다!");
       return;
     }
     AccActionListener.inputStyle(acc, prompt);
@@ -36,12 +39,9 @@ public class AccUpdateListener implements AccActionListener {
       } else {
         prompt.println("변경했습니다!");
       }
-      ds.getConnection().commit();
+      sqlSessionFactory.openSession(false).commit();
     } catch (Exception e) {
-      try {
-        ds.getConnection().rollback();
-      } catch (Exception e2) {
-      }
+      sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
     }
   }

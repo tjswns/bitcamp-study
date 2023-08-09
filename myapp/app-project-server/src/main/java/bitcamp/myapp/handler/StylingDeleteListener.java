@@ -1,20 +1,24 @@
 package bitcamp.myapp.handler;
 
 import java.io.IOException;
+import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.dao.StylingDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.Styling;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.DataSource;
 
 public class StylingDeleteListener implements StylingActionListener {
 
+  int category;
   StylingDao stylingDao;
-  DataSource ds;
+  SqlSessionFactory sqlSessionFactory;
 
-  public StylingDeleteListener(StylingDao stylingDao, DataSource ds) {
+  public StylingDeleteListener(int category, StylingDao stylingDao,
+      SqlSessionFactory sqlSessionFactory) {
+
+    this.category = category;
     this.stylingDao = stylingDao;
-    this.ds = ds;
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
@@ -23,6 +27,7 @@ public class StylingDeleteListener implements StylingActionListener {
     Styling sty = new Styling();
     sty.setNo(prompt.inputInt("번호? "));
     sty.setWriter((Member) prompt.getAttribute("loginUser"));
+    sty.setCategory(category);
 
     try {
       if (stylingDao.delete(sty) == 0) {
@@ -30,12 +35,9 @@ public class StylingDeleteListener implements StylingActionListener {
       } else {
         prompt.println("삭제했습니다.");
       }
-      ds.getConnection().commit();
+      sqlSessionFactory.openSession(false).commit();
     } catch (Exception e) {
-      try {
-        ds.getConnection().rollback();
-      } catch (Exception e2) {
-      }
+      sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
     }
   }

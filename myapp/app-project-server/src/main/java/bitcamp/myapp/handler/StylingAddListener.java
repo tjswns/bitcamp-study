@@ -1,20 +1,22 @@
 package bitcamp.myapp.handler;
 
 import java.io.IOException;
+import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.dao.StylingDao;
 import bitcamp.myapp.vo.Member;
 import bitcamp.myapp.vo.Styling;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.DataSource;
 
 public class StylingAddListener implements StylingActionListener {
-
+  int category;
   StylingDao stylingDao;
-  DataSource ds;
+  SqlSessionFactory sqlSessionFactory;
 
-  public StylingAddListener(StylingDao stylingDao, DataSource ds) {
+  public StylingAddListener(int category, StylingDao stylingDao,
+      SqlSessionFactory sqlSessionFactory) {
+    this.category = category;
     this.stylingDao = stylingDao;
-    this.ds = ds;
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
@@ -24,17 +26,14 @@ public class StylingAddListener implements StylingActionListener {
     StylingActionListener.inputBrand(styling, prompt);
     StylingActionListener.inputFit(styling, prompt);
     styling.setWriter((Member) prompt.getAttribute("loginUser"));
+    styling.setCategory(category);
 
     try {
       stylingDao.insert(styling);
-
-      ds.getConnection().commit();
+      sqlSessionFactory.openSession(false).commit();
 
     } catch (Exception e) {
-      try {
-        ds.getConnection().rollback();
-      } catch (Exception e2) {
-      }
+      sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
     }
   }

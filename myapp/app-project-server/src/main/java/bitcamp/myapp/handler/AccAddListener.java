@@ -1,20 +1,22 @@
 package bitcamp.myapp.handler;
 
 import java.io.IOException;
+import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.dao.AccDao;
 import bitcamp.myapp.vo.Acc;
 import bitcamp.myapp.vo.Member;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.DataSource;
 
 public class AccAddListener implements AccActionListener {
 
+  int category;
   AccDao accDao;
-  DataSource ds;
+  SqlSessionFactory sqlSessionFactory;
 
-  public AccAddListener(AccDao accDao, DataSource ds) {
+  public AccAddListener(int category, AccDao accDao, SqlSessionFactory sqlSessionFactory) {
     this.accDao = accDao;
-    this.ds = ds;
+    this.category = category;
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
 
@@ -25,18 +27,16 @@ public class AccAddListener implements AccActionListener {
     AccActionListener.inputChoose(acc, prompt);
     AccActionListener.inputSize(acc, prompt);
     acc.setWriter((Member) prompt.getAttribute("loginUser"));
+    acc.setCategory(category);
 
     try {
       accDao.insert(acc);
 
 
-      ds.getConnection().commit();
+      sqlSessionFactory.openSession(false).commit();
 
     } catch (Exception e) {
-      try {
-        ds.getConnection().rollback();
-      } catch (Exception e2) {
-      }
+      sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
     }
   }

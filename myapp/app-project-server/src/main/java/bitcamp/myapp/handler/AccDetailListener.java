@@ -1,28 +1,30 @@
 package bitcamp.myapp.handler;
 
 import java.io.IOException;
+import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.dao.AccDao;
 import bitcamp.myapp.vo.Acc;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.DataSource;
 
 public class AccDetailListener implements AccActionListener {
 
+  int category;
   AccDao accDao;
-  DataSource ds;
+  SqlSessionFactory sqlSessionFactory;
 
-  public AccDetailListener(AccDao accDao, DataSource ds) {
+  public AccDetailListener(int category, AccDao accDao, SqlSessionFactory sqlSessionFactory) {
+    this.category = category;
     this.accDao = accDao;
-    this.ds = ds;
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void service(BreadcrumbPrompt prompt) throws IOException {
     int accNo = prompt.inputInt("번호? ");
 
-    Acc acc = accDao.findBy(accNo);
+    Acc acc = accDao.findBy(category, accNo);
     if (acc == null) {
-      System.out.println("해당 번호의 스타일이 없습니다!");
+      prompt.println("해당 번호의 스타일이 없습니다!");
       return;
     }
 
@@ -31,16 +33,13 @@ public class AccDetailListener implements AccActionListener {
     prompt.printf("사이즈: %s\n", acc.getSize());
     prompt.printf("조회수: %s\n", acc.getViewCount());
     prompt.printf("등록일: %tY-%1$tm-%1$td\n", acc.getCreatedDate());
-    acc.setViewCount(acc.getViewCount() + 1);
     try {
+      acc.setViewCount(acc.getViewCount() + 1);
       accDao.update(acc);
-      ds.getConnection().commit();
+      sqlSessionFactory.openSession(false).commit();
 
     } catch (Exception e) {
-      try {
-        ds.getConnection().rollback();
-      } catch (Exception e2) {
-      }
+      sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
     }
   }

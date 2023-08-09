@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="bitcamp.myapp.dao.StylingDao">
+  <!-- 결과 레코드의 컬럼 값을 자바 객체에 어떻게 담을 것인지 설정한다. -->
+  <resultMap type="styling" id="stylingMap">
+    <id     column="styling_no"       property="no"/>
+    <result column="style"          property="style"/>
+    <result column="brand"        property="brand"/>
+    <result column="fit"        property="fit"/>
+    <result column="view_count"     property="viewCount"/>
+    <result column="created_date"   property="createdDate"/>
+    <result column="category"       property="category"/>
+    
+    <association property="writer" javaType="member">
+      <id     column="member_no"    property="no"/>
+      <result column="name"         property="name"/>
+    </association>
+    
+  </resultMap>
+  <insert id="insert" parameterType="styling">
+    insert into myapp_styling(style,brand,fit,writer,category)
+    values(#{style},#{brand},#{fit},#{writer.no},#{category})
+  </insert>
+ <select id="findAll" parameterType="int" resultMap="stylingMap">
+  select
+    styling.styling_no,
+    styling.style,
+    styling.brand,
+    styling.fit,
+    styling.view_count,
+    styling.category,
+    m.member_no,
+    m.name
+    from
+    myapp_acc b inner join myapp_member m on b.writer=m.member_no
+    where
+      category=#{categoryNo}
+    order by
+      styling_no desc
+  </select>
+  
+  <select id="findBy" parameterType="map" resultMap="stylingMap">
+  select
+    styling.styling_no,
+    styling.style,
+    styling.brand,
+    styling.fit,
+    styling.view_count,
+    styling.category,
+    m.member_no,
+    m.name
+    from
+    myapp_styling b inner join myapp_member m on b.writer=m.member_no
+    where
+      category=#{categoryNo}
+      and styling_no=#{stylingNo}
+  </select>
+  
+  <update id="update" parameterType="styling">
+  update myapp_acc set
+      style=#{style},
+      brand=#{brand}
+      fit=#{fit}
+      
+    where 
+      category=#{category}
+      and styling_no=#{no}
+      and writer=#{writer.no}
+  </update>
+    <update id="updateCount" parameterType="styling">
+    update myapp_styling set
+      view_count=#{viewCount}
+    where
+      category=#{category}
+      and styling_no=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="styling">
+    delete from myapp_styling
+    where 
+      category=#{category}
+      and styling_no=#{no}
+      and writer=#{writer.no}
+  </delete>
+</mapper>
+
+
+

@@ -1,26 +1,29 @@
 package bitcamp.myapp.handler;
 
 import java.io.IOException;
+import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.dao.StylingDao;
 import bitcamp.myapp.vo.Styling;
 import bitcamp.util.BreadcrumbPrompt;
-import bitcamp.util.DataSource;
 
 public class StylingDetailListener implements StylingActionListener {
 
+  int category;
   StylingDao stylingDao;
-  DataSource ds;
+  SqlSessionFactory sqlSessionFactory;
 
-  public StylingDetailListener(StylingDao stylingDao, DataSource ds) {
+  public StylingDetailListener(int category, StylingDao stylingDao,
+      SqlSessionFactory sqlSessionFactory) {
+    this.category = category;
     this.stylingDao = stylingDao;
-    this.ds = ds;
+    this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
   public void service(BreadcrumbPrompt prompt) throws IOException {
     int stylingNo = prompt.inputInt("번호? ");
 
-    Styling styling = stylingDao.findBy(stylingNo);
+    Styling styling = stylingDao.findBy(category, stylingNo);
     if (styling == null) {
       prompt.println("해당 번호의 스타일이 없습니다!");
       return;
@@ -30,16 +33,13 @@ public class StylingDetailListener implements StylingActionListener {
     prompt.printf("핏: %s\n", styling.getFit());
     prompt.printf("조회수: %s\n", styling.getViewCount());
     prompt.printf("등록일: %tY-%1$tm-%1$td\n", styling.getCreatedDate());
-    styling.setViewCount(styling.getViewCount() + 1);
     try {
+      styling.setViewCount(styling.getViewCount() + 1);
       stylingDao.update(styling);
-      ds.getConnection().commit();
+      sqlSessionFactory.openSession(false).commit();
 
     } catch (Exception e) {
-      try {
-        ds.getConnection().rollback();
-      } catch (Exception e2) {
-      }
+      sqlSessionFactory.openSession(false).rollback();
       throw new RuntimeException(e);
     }
   }
