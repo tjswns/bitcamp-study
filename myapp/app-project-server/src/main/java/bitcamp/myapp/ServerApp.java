@@ -9,6 +9,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import bitcamp.myapp.config.AppConfig;
 import bitcamp.util.ApplicationContext;
 import bitcamp.util.DispatcherServlet;
+import bitcamp.util.HttpServletRequest;
+import bitcamp.util.HttpServletResponse;
+import bitcamp.util.HttpSession;
 import bitcamp.util.SqlSessionFactoryProxy;
 import io.netty.handler.codec.http.cookie.Cookie;
 import io.netty.handler.codec.http.cookie.DefaultCookie;
@@ -26,8 +29,10 @@ public class ServerApp {
   public static final String MYAPP_SESSION_ID = "myapp_session_id";
 
   ApplicationContext iocContainer;
-  DispatcherServlet facadeListener;
+  DispatcherServlet dispatcherServlet;
   Map<String, HttpSession> sessionMap = new HashMap<>();
+
+  int port;
 
   public ServerApp(int port) throws Exception {
     this.port = port;

@@ -1,28 +1,28 @@
 package bitcamp.myapp.handler;
 
-import java.io.IOException;
 import org.apache.ibatis.session.SqlSessionFactory;
-import bitcamp.myapp.dao.AccDao;
-import bitcamp.myapp.vo.Acc;
+import bitcamp.myapp.dao.StylingDao;
 import bitcamp.myapp.vo.Member;
+import bitcamp.myapp.vo.Styling;
 import bitcamp.util.Component;
 import bitcamp.util.HttpServletRequest;
 import bitcamp.util.HttpServletResponse;
 import bitcamp.util.Servlet;
 
-@Component("acc/delete")
-public class AccDeleteServlet implements Servlet {
+@Component("/styling/delete")
+public class StylingDeleteServlet implements Servlet {
 
-  AccDao accDao;
+  StylingDao stylingDao;
   SqlSessionFactory sqlSessionFactory;
 
-  public AccDeleteServlet(AccDao accDao, SqlSessionFactory sqlSessionFactory) {
-    this.accDao = accDao;
+  public StylingDeleteServlet(StylingDao stylingDao, SqlSessionFactory sqlSessionFactory) {
+
+    this.stylingDao = stylingDao;
     this.sqlSessionFactory = sqlSessionFactory;
   }
 
   @Override
-  public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void service(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
@@ -32,16 +32,16 @@ public class AccDeleteServlet implements Servlet {
 
     int category = Integer.parseInt(request.getParameter("category"));
 
-    Acc acc = new Acc();
-    acc.setNo(Integer.parseInt(request.getParameter("no")));
-    acc.setWriter(loginUser);
-    acc.setCategory(category);
+    Styling sty = new Styling();
+    sty.setNo(Integer.parseInt(request.getParameter("no")));
+    sty.setWriter(loginUser);
+    sty.setCategory(category);
 
     try {
-      if (accDao.delete(acc) == 0) {
+      if (stylingDao.delete(sty) == 0) {
         throw new Exception("해당 번호의 게시글이 없거나 삭제 권한이 없습니다.");
       } else {
-        response.sendRedirect("/acc/list?category=" + category);
+        response.sendRedirect("/styling/list?category=" + category);
       }
       sqlSessionFactory.openSession(false).commit();
 
