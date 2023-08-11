@@ -23,3 +23,6 @@ include('app-project-client')
 include('app-project-common')
 include('app-project-server')
 include('app-project-server54')
+include('app-project-server-last')
+include('app-project-common-last')
+
