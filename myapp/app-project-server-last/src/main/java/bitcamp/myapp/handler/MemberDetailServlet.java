@@ -47,6 +47,27 @@ public class MemberDetailServlet extends HttpServlet {
           member.getEmail());
       out.println("<tr><th>암호</th>" + " <td><input type='password' name='password'></td></tr>");
       out.printf(
+          "<tr><th>나이</th>" + " <td><input type='text' name='age' value='%s'></td></tr>\n",
+          member.getEmail());
+      out.printf(
+          "<tr><th>성별</th>\n" + " <td><select name='gender'>\n"
+              + " <option value='M' %s>남자</option>\n"
+              + " <option value='W' %s>여자</option></select></td></tr>\n",
+          (member.getGender() == 'M' ? "selected" : ""),
+          (member.getGender() == 'W' ? "selected" : ""));
+      out.printf(
+          "<tr><th>성별</th>\n" + " <td><select name='top'>\n"
+              + " <option value='M' %s>남자</option>\n"
+              + " <option value='W' %s>여자</option></select></td></tr>\n",
+          (member.getGender() == 'M' ? "selected" : ""),
+          (member.getGender() == 'W' ? "selected" : ""));
+      out.printf(
+          "<tr><th>성별</th>\n" + " <td><select name='pants'>\n"
+              + " <option value='M' %s>남자</option>\n"
+              + " <option value='W' %s>여자</option></select></td></tr>\n",
+          (member.getGender() == 'M' ? "selected" : ""),
+          (member.getGender() == 'W' ? "selected" : ""));
+      out.printf(
           "<tr><th>성별</th>\n" + " <td><select name='gender'>\n"
               + " <option value='M' %s>남자</option>\n"
               + " <option value='W' %s>여자</option></select></td></tr>\n",

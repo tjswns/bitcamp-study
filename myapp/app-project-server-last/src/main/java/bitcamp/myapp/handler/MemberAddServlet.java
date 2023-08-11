@@ -23,6 +23,11 @@ public class MemberAddServlet extends HttpServlet {
     m.setEmail(request.getParameter("email"));
     m.setPassword(request.getParameter("password"));
     m.setGender(request.getParameter("gender").charAt(0));
+    m.setTop(request.getParameter("Top"));
+    m.setPants(request.getParameter("Pants"));
+    m.setNeck(request.getParameter("Nect"));
+    m.setRing(request.getParameter("Ring"));
+
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();

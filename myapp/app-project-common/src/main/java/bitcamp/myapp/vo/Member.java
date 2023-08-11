@@ -24,6 +24,8 @@ public class Member implements Serializable {
   private String top;
   private String pants;
   private String shoes;
+  private String neck;
+  private String ring;
   private Date createdDate;
 
   @Override
@@ -132,6 +134,22 @@ public class Member implements Serializable {
 
   public static char getFemale() {
     return FEMALE;
+  }
+
+  public String getNeck() {
+    return neck;
+  }
+
+  public void setNeck(String neck) {
+    this.neck = neck;
+  }
+
+  public String getRing() {
+    return ring;
+  }
+
+  public void setRing(String ring) {
+    this.ring = ring;
   }
 
 
