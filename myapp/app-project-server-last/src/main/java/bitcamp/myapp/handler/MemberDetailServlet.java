@@ -56,21 +56,24 @@ public class MemberDetailServlet extends HttpServlet {
           (member.getGender() == 'M' ? "selected" : ""),
           (member.getGender() == 'W' ? "selected" : ""));
       out.printf(
-          "<tr><th>성별</th>\n" + " <td><select name='top'>\n"
-              + " <option value='M' %s>남자</option>\n"
-              + " <option value='W' %s>여자</option></select></td></tr>\n",
+          "<tr><th>상의</th>\n" + " <td><select name='top'>\n"
+              + " <option value='M' %s>M</option>\n"
+              + " <option value='L' %s>L</option>\n"
+              + " <option value='XL' %s>XL</option></select></td></tr>\n",
           (member.getGender() == 'M' ? "selected" : ""),
           (member.getGender() == 'W' ? "selected" : ""));
       out.printf(
-          "<tr><th>성별</th>\n" + " <td><select name='pants'>\n"
-              + " <option value='M' %s>남자</option>\n"
-              + " <option value='W' %s>여자</option></select></td></tr>\n",
+          "<tr><th>하의</th>\n" + " <td><select name='pants'>\n"
+              + " <option value='28' %s>28</option>\n"
+              + " <option value='30' %s>30</option>\n"
+              + " <option value='32' %s>32</option></select></td></tr>\n",
           (member.getGender() == 'M' ? "selected" : ""),
           (member.getGender() == 'W' ? "selected" : ""));
       out.printf(
-          "<tr><th>성별</th>\n" + " <td><select name='gender'>\n"
-              + " <option value='M' %s>남자</option>\n"
-              + " <option value='W' %s>여자</option></select></td></tr>\n",
+          "<tr><th>신발</th>\n" + " <td><select name='shoes'>\n"
+              + " <option value='260' %s>260</option>\n"
+              + " <option value='265' %s>265</option>\n"
+              + " <option value='270' %s>270</option></select></td></tr>\n",
           (member.getGender() == 'M' ? "selected" : ""),
           (member.getGender() == 'W' ? "selected" : ""));
       out.println("</table>");

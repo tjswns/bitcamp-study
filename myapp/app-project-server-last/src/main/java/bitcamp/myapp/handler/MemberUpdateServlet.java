@@ -22,8 +22,13 @@ public class MemberUpdateServlet extends HttpServlet {
     member.setNo(Integer.parseInt(request.getParameter("no")));
     member.setName(request.getParameter("name"));
     member.setEmail(request.getParameter("email"));
+    member.setAge(request.getParameter("age"));
     member.setPassword(request.getParameter("password"));
     member.setGender(request.getParameter("gender").charAt(0));
+    member.setTop(request.getParameter("top"));
+    member.setPants(request.getParameter("pants"));
+    member.setShoes(request.getParameter("shoes"));
+
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
