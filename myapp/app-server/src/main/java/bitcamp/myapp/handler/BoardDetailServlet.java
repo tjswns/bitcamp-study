@@ -19,8 +19,10 @@ public class BoardDetailServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    Board board = InitServlet.boardDao.findBy(Integer.parseInt(request.getParameter("category")),
-        Integer.parseInt(request.getParameter("no")));
+    int category = Integer.parseInt(request.getParameter("category"));
+    int no = Integer.parseInt(request.getParameter("no"));
+
+    Board board = InitServlet.boardDao.findBy(category, no);
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
@@ -51,17 +53,18 @@ public class BoardDetailServlet extends HttpServlet {
       out.printf("<tr><th>작성자</th> <td>%s</td></tr>\n", board.getWriter().getName());
       out.printf("<tr><th>조회수</th> <td>%s</td></tr>\n", board.getViewCount());
       out.printf("<tr><th>등록일</th> <td>%tY-%1$tm-%1$td</td></tr>\n", board.getCreatedDate());
+      out.println("<tr><th>첨부파일</th><td>");
 
       for (AttachedFile file : board.getAttachedFiles()) {
-        out.printf("<a href=' /upload/board.%s'>%1$");
+        out.printf(
+            "<a href='/upload/board/%s'>%1$s</a>"
+                + " [<a href='/board/file/delete?category=%d&no=%d'>삭제</a>]" + "<br>\n",
+            file.getFilePath(), category, file.getNo());
       }
 
       out.println("</td></tr>");
       out.println("</table>");
 
-      for (AttachedFile file : board.getAttachedFiles()) {
-        System.out.println(file.getFilePath());
-      }
 
       out.println("<div>");
       out.println("<button>변경</button>");

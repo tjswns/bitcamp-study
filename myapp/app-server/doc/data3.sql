@@ -16,7 +16,7 @@ insert into myapp_member(member_no, name, email, password, gender)
 -- myapp_board_category 테이블 예제 데이터
 insert into myapp_board_category(board_category_no, name) values(1, '게시판');
 insert into myapp_board_category(board_category_no, name) values(2, '독서록');
-
+  
 -- myapp_board 테이블 예제 데이터
 insert into myapp_board(board_no, title, content, writer, category)
   values(11, '제목1', '내용', 1, 1);

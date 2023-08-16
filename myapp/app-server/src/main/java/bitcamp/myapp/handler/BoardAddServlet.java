@@ -22,8 +22,6 @@ import bitcamp.myapp.vo.Member;
 @WebServlet("/board/add")
 public class BoardAddServlet extends HttpServlet {
 
-
-
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -37,25 +35,25 @@ public class BoardAddServlet extends HttpServlet {
     }
 
     try {
-      // 멀티 파트의 각 파트 데이터를 저장할 객체 공장
+      // 멀티파트의 각 파트 데이터를 저장할 객체를 만드는 공장
       DiskFileItemFactory factory = new DiskFileItemFactory();
 
-      // 멀티파트 형식으로 넘어 온 요청 파라미터를 분속허요 처
+      // 멀티파트 형식으로 넘어 온 요청 파라미터를 분석하여 처리하는 객체
       ServletFileUpload upload = new ServletFileUpload(factory);
 
       // 멀티파트 요청 파라미터를 분석
       List<FileItem> parts = upload.parseRequest(request);
 
-      // 각가의 파트에서 값을 꺼낸다.
+      // 각각의 파트에서 값을 꺼낸다.
       Board board = new Board();
       board.setWriter(loginUser);
 
-
+      // 웹 애플리케이션 환경 정보를 알고 있는 객체 꺼내기
       ServletContext 웹애플리케이션환경정보 = request.getServletContext();
 
-      // 웹 애플리케이션 정보에서 /upload/board 디렉토리의 실제 경로를 계산하여 추출한다..
-      String uploadDir = 웹애플리케이션환경정보.getRealPath("/upload/board");
-      // System.out.println(uploadDir);
+      // 웹 애플리케이션 환경정보에서 /upload/board 디렉토리의 실제 경로를 계산하여 추출한다.
+      String uploadDir = 웹애플리케이션환경정보.getRealPath("/upload/board/");
+      //      System.out.println(uploadDir);
 
       ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
 
@@ -63,9 +61,9 @@ public class BoardAddServlet extends HttpServlet {
         if (part.isFormField()) { // 일반 데이터
           if (part.getFieldName().equals("title")) {
             board.setTitle(part.getString("UTF-8"));
-          } else if (part.getFieldName().equals("title")) {
+          } else if (part.getFieldName().equals("content")) {
             board.setContent(part.getString("UTF-8"));
-          } else if (part.getFieldName().equals("title")) {
+          } else if (part.getFieldName().equals("category")) {
             board.setCategory(Integer.parseInt(part.getString("UTF-8")));
           }
         } else { // 파일 데이터
@@ -85,23 +83,25 @@ public class BoardAddServlet extends HttpServlet {
       }
       board.setAttachedFiles(attachedFiles);
 
+
       response.setContentType("text/html;charset=UTF-8");
       PrintWriter out = response.getWriter();
       out.println("<!DOCTYPE html>");
       out.println("<html>");
       out.println("<head>");
       out.println("<meta charset='UTF-8'>");
-      out.printf("<meta http-equiv='refresh' content='1;url=/board/list?category=%d'>\n",
-          board.getCategory());
+      out.printf("<meta http-equiv='refresh' content='1;url=/board/list?category=%d'>\n", board.getCategory());
       out.println("<title>게시글</title>");
       out.println("</head>");
       out.println("<body>");
       out.println("<h1>게시글 등록</h1>");
       try {
-        // System.out.println(board.getNo());
+        //        System.out.println(board.getNo());
         InitServlet.boardDao.insert(board);
-        // System.out.println(board.getNo());
-        InitServlet.boardDao.insertFiles(board);
+        //        System.out.println(board.getNo());
+        int count = InitServlet.boardDao.insertFiles(board);
+        System.out.println(count);
+
         InitServlet.sqlSessionFactory.openSession(false).commit();
         out.println("<p>등록 성공입니다!</p>");
 
@@ -112,10 +112,20 @@ public class BoardAddServlet extends HttpServlet {
       }
       out.println("</body>");
       out.println("</html>");
+
     } catch (Exception e) {
       throw new ServletException(e);
     }
   }
 }
+
+
+
+
+
+
+
+
+
 
 

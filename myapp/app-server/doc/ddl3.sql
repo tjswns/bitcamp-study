@@ -61,7 +61,7 @@ ALTER TABLE myapp_board
 
 -- 게시판유형
 CREATE TABLE myapp_board_category (
-  board_category_no INTEGER     NOT NULL COMMENT '게시판번호', -- 게시판번호
+  board_category_no INTEGER     NOT NULL COMMENT '번호', -- 번호
   name              VARCHAR(50) NOT NULL COMMENT '게시판이름' -- 게시판이름
 )
 COMMENT '게시판유형';
@@ -70,7 +70,7 @@ COMMENT '게시판유형';
 ALTER TABLE myapp_board_category
   ADD CONSTRAINT PK_myapp_board_category -- 게시판유형 기본키
   PRIMARY KEY (
-  board_category_no -- 게시판번호
+  board_category_no -- 번호
   );
 
 -- 게시판유형 유니크 인덱스
@@ -80,7 +80,7 @@ CREATE UNIQUE INDEX UIX_myapp_board_category
   );
 
 ALTER TABLE myapp_board_category
-  MODIFY COLUMN board_category_no INTEGER NOT NULL AUTO_INCREMENT COMMENT '게시판번호';
+  MODIFY COLUMN board_category_no INTEGER NOT NULL AUTO_INCREMENT COMMENT '번호';
 
 -- 게시글첨부파일
 CREATE TABLE myapp_board_file (
@@ -117,7 +117,7 @@ ALTER TABLE myapp_board
   category -- 게시판
   )
   REFERENCES myapp_board_category ( -- 게시판유형
-  board_category_no -- 게시판번호
+  board_category_no -- 번호
   );
 
 -- 게시글첨부파일
