@@ -16,7 +16,7 @@ public class BoardDeleteServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+          throws ServletException, IOException {
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
@@ -45,5 +45,14 @@ public class BoardDeleteServlet extends HttpServlet {
     }
   }
 }
+
+
+
+
+
+
+
+
+
 
 
