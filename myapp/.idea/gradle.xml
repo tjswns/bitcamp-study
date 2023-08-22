@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app-common" />
+            <option value="$PROJECT_DIR$/app-common-project1" />
             <option value="$PROJECT_DIR$/app-project-common" />
             <option value="$PROJECT_DIR$/app-project-common-last" />
             <option value="$PROJECT_DIR$/app-project-server" />

@@ -22,7 +22,7 @@ public class BoardUpdateServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
 
     Member loginUser = (Member) request.getSession().getAttribute("loginUser");
     if (loginUser == null) {
@@ -53,7 +53,7 @@ public class BoardUpdateServlet extends HttpServlet {
       for (Part part : request.getParts()) {
         if (part.getName().equals("files") && part.getSize() > 0) {
           String uploadFileUrl = InitServlet.ncpObjectStorageService.uploadFile(
-                  "bitcamp-nc7-bucket-17", "board/", part);
+              "bitcamp-nc7-bucket-17", "board/", part);
           AttachedFile attachedFile = new AttachedFile();
           attachedFile.setFilePath(uploadFileUrl);
           attachedFiles.add(attachedFile);

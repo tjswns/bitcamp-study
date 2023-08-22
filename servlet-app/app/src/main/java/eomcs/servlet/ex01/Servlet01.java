@@ -1,17 +1,14 @@
 package eomcs.servlet.ex01;
 
-import java.io.IOException;
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
+import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @WebServlet("/ex01/first")
 public class Servlet01 implements Servlet {
+
 
   ServletConfig config;
 

@@ -21,8 +21,6 @@ public class MemberAddServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    request.setCharacterEncoding("UTF-8");
-
     Member m = new Member();
     m.setName(request.getParameter("name"));
     m.setEmail(request.getParameter("email"));
@@ -31,8 +29,8 @@ public class MemberAddServlet extends HttpServlet {
 
     Part photoPart = request.getPart("photo");
     if (photoPart.getSize() > 0) {
-      String uploadFileUrl = InitServlet.ncpObjectStorageService.uploadFile("bitcamp-nc7-bucket-17",
-          "member/", photoPart);
+      String uploadFileUrl = InitServlet.ncpObjectStorageService.uploadFile(
+          "bitcamp-nc7-bucket-118", "member/", photoPart);
       m.setPhoto(uploadFileUrl);
     }
 

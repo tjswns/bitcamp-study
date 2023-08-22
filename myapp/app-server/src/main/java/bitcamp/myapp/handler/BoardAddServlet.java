@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+
 import bitcamp.myapp.vo.AttachedFile;
 import bitcamp.myapp.vo.Board;
 import bitcamp.myapp.vo.Member;
@@ -39,7 +40,6 @@ public class BoardAddServlet extends HttpServlet {
 
       ArrayList<AttachedFile> attachedFiles = new ArrayList<>();
       for (Part part : request.getParts()) {
-        //        System.out.println(part.getName());
         if (part.getName().equals("files") && part.getSize() > 0) {
           String uploadFileUrl = InitServlet.ncpObjectStorageService.uploadFile(
                   "bitcamp-nc7-bucket-17", "board/", part);
@@ -51,40 +51,23 @@ public class BoardAddServlet extends HttpServlet {
       board.setAttachedFiles(attachedFiles);
 
 
-      response.setContentType("text/html;charset=UTF-8");
-      PrintWriter out = response.getWriter();
-      out.println("<!DOCTYPE html>");
-      out.println("<html>");
-      out.println("<head>");
-      out.println("<meta charset='UTF-8'>");
-      out.printf("<meta http-equiv='refresh' content='1;url=/board/list?category=%d'>\n", board.getCategory());
-      out.println("<title>게시글</title>");
-      out.println("</head>");
-      out.println("<body>");
-      out.println("<h1>게시글 등록</h1>");
-      try {
-        //        System.out.println(board.getNo());
-        InitServlet.boardDao.insert(board);
-        //        System.out.println(board.getNo());
-
-        if (attachedFiles.size() > 0) {
-          int count = InitServlet.boardDao.insertFiles(board);
-          System.out.println(count);
-        }
-
-        InitServlet.sqlSessionFactory.openSession(false).commit();
-        out.println("<p>등록 성공입니다!</p>");
-
-      } catch (Exception e) {
-        InitServlet.sqlSessionFactory.openSession(false).rollback();
-        out.println("<p>등록 실패입니다!</p>");
-        e.printStackTrace();
+      InitServlet.boardDao.insert(board);
+      if (attachedFiles.size() > 0) {
+        InitServlet.boardDao.insertFiles(board);
       }
-      out.println("</body>");
-      out.println("</html>");
+
+      InitServlet.sqlSessionFactory.openSession(false).commit();
+      response.sendRedirect("list?category=" + board.getCategory());
 
     } catch (Exception e) {
-      throw new ServletException(e);
+      InitServlet.sqlSessionFactory.openSession(false).rollback();
+
+      // ErrorServlet 으로 포워딩 하기 전에 ErrorServlet이 사용할 데이터를
+      // ServletRequest보관소에 관련 정보를 저장해 둔다.
+      request.setAttribute("error", e);
+      request.setAttribute("message", "게시글 등록 오류!");
+      request.setAttribute("refresh", "2;url=list?category=" + request.getParameter("category"));
+      request.getRequestDispatcher("/error").forward(request, response);
     }
   }
 }
