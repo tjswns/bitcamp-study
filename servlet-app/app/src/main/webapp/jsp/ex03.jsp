@@ -13,6 +13,9 @@ int i;
 i = 5;
 %>
 <body>
+<%
+
+%>
 <h1>스크립트릿(scriptlet)과 JSP 주석<%out.print(i);%></h1>
 <!-- 
   이것은 HTML 주석이다.
