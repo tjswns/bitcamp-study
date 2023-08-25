@@ -3,11 +3,10 @@
         pageEncoding="UTF-8"
         contentType="text/html;charset=UTF-8"
         trimDirectiveWhitespaces="true" %>
-<%@ page import="bitcamp.myapp.dao.MemberDao"%>
 <%@ page import="bitcamp.myapp.vo.Member"%>
 
+<jsp:useBean id="memberDao" type="bitcamp.myapp.dao.MemberDao" scope="application"/>
 <%
-    MemberDao memberDao = (MemberDao) this.getServletContext().getAttribute("memberDao");
     Member member = memberDao.findBy(Integer.parseInt(request.getParameter("no")));
 %>
 
@@ -37,7 +36,7 @@
             <td style='width:300px;'><%=
             member.getPhoto() == null ? "<img style='height:80px' src='/images/avatar.png'>" :
                     String.format("<a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-17/member/%s'>"
-                            + "<img src='http://mvsenqskbqzl19010704.cdn.ntruss.com/member/%1$s?type=f&w=60&h=80&faceopt=true&ttype=jpg'>"
+                            + "<img src='http://rckgyxwydznu19204086.cdn.ntruss.com/member/%1$s?type=f&w=60&h=80&faceopt=true&ttype=jpg'>"
                             + "</a>", member.getPhoto())%>
                 <input type='file' name='photo'></td></tr>
         <tr>
