@@ -23,7 +23,7 @@ public class Member implements Serializable {
   private char gender;
   private String top;
   private String pants;
-  private String shoes;.
+  private String shoes;
   private String neck;
   private String ring;
   private Date createdDate;

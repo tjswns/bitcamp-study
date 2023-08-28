@@ -5,13 +5,12 @@
         trimDirectiveWhitespaces="true"
         errorPage="/error.jsp"%>
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
 session.invalidate();
-response.sendRedirect("/");
 %>
-
+<c:redirect url="/"/>
 
 
 

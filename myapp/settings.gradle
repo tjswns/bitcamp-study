@@ -16,6 +16,7 @@ rootProject.name = 'myapp'
 //include('app')
 include('servlet-app')
 include('app-common-project1')
+include('app-server-project1')
 include('app-server')
 include('app-common')
 //include('app-project')

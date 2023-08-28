@@ -17,10 +17,12 @@
             <option value="$PROJECT_DIR$/app-project-server-last" />
             <option value="$PROJECT_DIR$/app-project-server54" />
             <option value="$PROJECT_DIR$/app-server" />
+            <option value="$PROJECT_DIR$/app-server-project1" />
             <option value="$PROJECT_DIR$/servlet-app" />
           </set>
         </option>
       </GradleProjectSettings>
     </option>
+    <option name="offlineMode" value="true" />
   </component>
 </project>
