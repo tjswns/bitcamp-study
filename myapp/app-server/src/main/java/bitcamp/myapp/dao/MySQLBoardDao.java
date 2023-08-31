@@ -1,18 +1,22 @@
 package bitcamp.myapp.dao;
 
+import bitcamp.myapp.vo.AttachedFile;
+import bitcamp.myapp.vo.Board;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import bitcamp.myapp.vo.AttachedFile;
-import bitcamp.myapp.vo.Board;
 
+@Component
 public class MySQLBoardDao implements BoardDao {
 
   SqlSessionFactory sqlSessionFactory;
 
   public MySQLBoardDao(SqlSessionFactory sqlSessionFactory) {
+    System.out.println("MySQLBoardDao() 호출됨!");
     this.sqlSessionFactory = sqlSessionFactory;
   }
 
@@ -81,4 +85,5 @@ public class MySQLBoardDao implements BoardDao {
     SqlSession sqlSession = sqlSessionFactory.openSession(false);
     return sqlSession.delete("bitcamp.myapp.dao.BoardDao.deleteFiles", boardNo);
   }
+
 }
