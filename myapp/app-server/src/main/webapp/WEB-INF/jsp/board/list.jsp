@@ -9,8 +9,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset='UTF-8'>
-    <title>게시글</title>
+<meta charset='UTF-8'>
+<title>게시글</title>
 </head>
 <body>
 
@@ -18,27 +18,27 @@
 
 <h1>게시글 목록</h1>
 <div style='margin:5px;'>
-    <a href='add?category=${param.category}'>새 글</a>
+<a href='add?category=${param.category}'>새 글</a>
 </div>
 <table border='1'>
-    <thead>
-    <tr><th>번호</th> <th>제목</th> <th>작성자</th> <th>조회수</th> <th>등록일</th></tr>
-    </thead>
+<thead>
+  <tr><th>번호</th> <th>제목</th> <th>작성자</th> <th>조회수</th> <th>등록일</th></tr>
+</thead>
 
-    <tbody>
-    <c:forEach items="${list}" var="board">
-        <tr>
-            <td>${board.no}</td>
-            <td><a href='detail?category=${board.category}&no=${board.no}'>
-                    ${board.title.length() > 0 ? board.title : "제목없음"}
-            </a>
-            </td>
-            <td>${board.writer.name}</td>
-            <td>${board.viewCount}</td>
-            <td><fmt:formatDate value="${board.createdDate}" pattern="yyyy-MM-dd"/></td>
-        </tr>
-    </c:forEach>
-    </tbody>
+<tbody>
+<c:forEach items="${list}" var="board">
+    <tr>
+      <td>${board.no}</td>
+      <td><a href='detail?no=${board.no}'>
+        ${board.title.length() > 0 ? board.title : "제목없음"}
+        </a>
+      </td>
+      <td>${board.writer.name}</td>
+      <td>${board.viewCount}</td>
+      <td><fmt:formatDate value="${board.createdDate}" pattern="yyyy-MM-dd"/></td>
+    </tr>
+</c:forEach>
+</tbody>
 </table>
 <a href='/'>메인</a>
 

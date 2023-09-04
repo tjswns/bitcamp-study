@@ -1,44 +1,30 @@
 package bitcamp.myapp.controller;
 
-import bitcamp.myapp.dao.MemberDao;
+import bitcamp.myapp.service.MemberService;
 import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.Member;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionDefinition;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.DefaultTransactionDefinition;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-@Component("/member/add")
+@Controller("/member/add")
 public class MemberAddController implements PageController {
 
-  MemberDao memberDao;
-  PlatformTransactionManager txManager;
-  NcpObjectStorageService ncpObjectStorageService;
+  @Autowired
+  MemberService memberService;
 
-  public MemberAddController(
-          MemberDao memberDao,
-          PlatformTransactionManager txManager,
-          NcpObjectStorageService ncpObjectStorageService) {
-    this.memberDao = memberDao;
-    this.txManager = txManager;
-    this.ncpObjectStorageService = ncpObjectStorageService;
-  }
+  @Autowired
+  NcpObjectStorageService ncpObjectStorageService;
 
   @Override
   public String execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
     if (request.getMethod().equals("GET")) {
       return "/WEB-INF/jsp/member/form.jsp";
     }
-    DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-    def.setName("tx1");
-    def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-    TransactionStatus status = txManager.getTransaction(def);
+
     try {
       Member m = new Member();
       m.setName(request.getParameter("name"));
@@ -49,15 +35,13 @@ public class MemberAddController implements PageController {
       Part photoPart = request.getPart("photo");
       if (photoPart.getSize() > 0) {
         String uploadFileUrl = ncpObjectStorageService.uploadFile(
-                "bitcamp-nc7-bucket-118", "member/", photoPart);
+                "bitcamp-nc7-bucket-17", "member/", photoPart);
         m.setPhoto(uploadFileUrl);
       }
-      memberDao.insert(m);
-      txManager.commit(status);
+      memberService.add(m);
       return "redirect:list";
 
     } catch (Exception e) {
-      txManager.rollback(status);
       request.setAttribute("message", "회원 등록 오류!");
       request.setAttribute("refresh", "2;url=list");
       throw e;
