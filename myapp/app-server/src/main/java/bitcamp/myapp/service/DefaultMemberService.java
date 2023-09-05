@@ -2,12 +2,12 @@ package bitcamp.myapp.service;
 
 import bitcamp.myapp.dao.MemberDao;
 import bitcamp.myapp.vo.Member;
-import bitcamp.util.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-//@Service
+@Service
 public class DefaultMemberService implements MemberService {
 
   MemberDao memberDao;
@@ -20,8 +20,8 @@ public class DefaultMemberService implements MemberService {
   @Override
   public int add(Member member) throws Exception {
     return memberDao.insert(member);
-
   }
+
   @Override
   public List<Member> list() throws Exception {
     return memberDao.findAll();
