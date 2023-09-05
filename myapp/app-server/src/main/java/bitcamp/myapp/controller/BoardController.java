@@ -8,7 +8,6 @@ import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.util.ArrayList;
@@ -32,8 +31,8 @@ public class BoardController {
   public String add(
           Board board,
           @RequestParam("files") Part[] parts,
-          HttpSession session,
-          Map<String,Object> model) throws Exception {
+          Map<String,Object> model,
+          HttpSession session) throws Exception {
 
     Member loginUser = (Member) session.getAttribute("loginUser");
     if (loginUser == null) {

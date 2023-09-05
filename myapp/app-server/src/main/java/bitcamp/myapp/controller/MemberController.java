@@ -57,7 +57,6 @@ public class MemberController {
       } else {
         return "redirect:list";
       }
-
     } catch (Exception e) {
       model.put("refresh", "2;url=list");
       throw e;
