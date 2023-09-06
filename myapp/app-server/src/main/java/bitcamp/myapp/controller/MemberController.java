@@ -14,6 +14,10 @@ import java.util.Map;
 @Controller
 public class MemberController {
 
+  {
+    System.out.println("MemberController 생성됨!");
+  }
+
   @Autowired
   MemberService memberService;
 

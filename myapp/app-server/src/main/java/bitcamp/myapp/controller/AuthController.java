@@ -14,9 +14,13 @@ import java.util.Map;
 
 @Controller
 public class AuthController {
+  {
+    System.out.println("AuthController 생성됨!");
+  }
 
   @Autowired
   MemberService memberService;
+
 
   @RequestMapping("/auth/form")
   public String form() {

@@ -18,6 +18,10 @@ import java.util.Map;
 @Controller
 public class BoardController {
 
+  {
+    System.out.println("boardController 생성됨!");
+  }
+
   @Autowired
   BoardService boardService;
 
