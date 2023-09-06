@@ -5,6 +5,8 @@ import bitcamp.myapp.service.NcpObjectStorageService;
 import bitcamp.myapp.vo.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Part;
 import java.util.Map;
@@ -26,7 +28,7 @@ public class MemberController {
   @RequestMapping("/member/add")
   public String add(
           Member member,
-          @RequestParam("photofile") Part photofile,
+          Part photofile,
           Map<String,Object> model) throws Exception {
 
     try {
@@ -80,7 +82,7 @@ public class MemberController {
   @RequestMapping("/member/update")
   public String update(
           Member member,
-          @RequestParam("photofile") Part photofile,
+          Part photofile,
           Map<String,Object> model) throws Exception {
     try {
       if (photofile.getSize() > 0) {
