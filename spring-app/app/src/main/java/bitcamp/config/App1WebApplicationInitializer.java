@@ -1,19 +1,11 @@
 package bitcamp.config;
 
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import javax.servlet.*;
 
 public class App1WebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-  @Override
-  protected WebApplicationContext createServletApplicationContext() {
-    AnnotationConfigWebApplicationContext iocContainer = new AnnotationConfigWebApplicationContext();
-    iocContainer.register(App1Config.class);
-    return iocContainer;
-  }
 
   @Override
   protected Class<?>[] getRootConfigClasses() {
@@ -27,17 +19,22 @@ public class App1WebApplicationInitializer extends AbstractAnnotationConfigDispa
 
   @Override
   protected String[] getServletMappings() {
-    return new String[]{"/app1/*"};
+    return new String[] {"/app1/*"};
   }
-
 
   @Override
   protected void customizeRegistration(ServletRegistration.Dynamic registration) {
     registration.setMultipartConfig(new MultipartConfigElement(null, 10000000, 15000000, 1000000));
   }
 
+
   @Override
   protected String getServletName() {
     return "app1";
+  }
+
+  @Override
+  protected Filter[] getServletFilters() {
+    return new Filter[] {new CharacterEncodingFilter("UTF-8")};
   }
 }
