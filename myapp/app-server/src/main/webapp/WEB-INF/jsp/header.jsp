@@ -10,18 +10,23 @@
     <a href='/app/board/list?category=1'>게시글</a>
     <a href='/app/board/list?category=2'>독서록</a>
 
-    <c:choose>
-        <c:when test="${empty sessionScope.loginUser}">
-            <a href='/app/auth/form'>로그인</a>
-        </c:when>
-        <c:otherwise>
-            <c:if test="${empty sessionScope.loginUser.photo}">
-                <img style='height:40px' src='/images/avatar.png'>
-            </c:if>
-            <c:if test="${not empty sessionScope.loginUser.photo}">
+<c:choose>
+    <c:when test="${empty sessionScope.loginUser}">
+        <a href='/app/auth/form'>로그인</a>
+    </c:when>
+    <c:otherwise>
+        <c:if test="${empty sessionScope.loginUser.photo}">
+            <img style='height:40px' src='/images/avatar.png'>
+        </c:if>
+        <c:if test="${not empty sessionScope.loginUser.photo}">
             <img src='http://rckgyxwydznu19204086.cdn.ntruss.com/member/${loginUser.photo}?type=f&w=30&h=40&faceopt=true&ttype=jpg'>
-    </c:if>
-            ${loginUser.name}<a href='/app/auth/logout'>로그아웃</a>
-        </c:otherwise>
-    </c:choose>
+        </c:if>
+        ${loginUser.name} <a href='/app/auth/logout'>로그아웃</a>
+    </c:otherwise>
+</c:choose>
 </div>
+
+
+
+
+

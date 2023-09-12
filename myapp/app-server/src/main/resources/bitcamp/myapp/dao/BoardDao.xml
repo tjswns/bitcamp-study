@@ -12,7 +12,7 @@
     <result column="view_count"     property="viewCount"/>
     <result column="created_date"   property="createdDate"/>
     <result column="category"       property="category"/>
-    
+
     <association property="writer" javaType="member">
       <id     column="member_no"    property="no"/>
       <result column="name"         property="name"/>
@@ -78,7 +78,7 @@
 	    title=#{title},
 	    content=#{content}
 	  where 
-        board_no=#{no}
+	    board_no=#{no}
   </update>
   
   <update id="updateCount" parameterType="int">
@@ -91,7 +91,7 @@
   <delete id="delete" parameterType="int">
     delete from myapp_board
     where 
-       board_no=#{no}
+      board_no=#{no}
   </delete>
   
   <insert id="insertFiles" parameterType="board">

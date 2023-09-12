@@ -28,7 +28,19 @@
 <hr>
 <p><%=exception%></p>
 
+
 <jsp:include page="footer.jsp"/>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

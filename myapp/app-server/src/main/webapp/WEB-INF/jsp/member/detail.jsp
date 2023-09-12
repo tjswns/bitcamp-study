@@ -19,45 +19,45 @@
     <p>해당 번호의 회원이 없습니다!</p>
 </c:if>
 <c:if test="${not empty member}">
-    <form action='update' method='post' enctype='multipart/form-data'>
-        <table border='1'>
-            <tr>
-                <th style='width:120px;'>사진</th>
-                <td style='width:300px;'>
-                    <c:if test="${empty member.photo}">
-                        <img style='height:80px' src='/images/avatar.png'>
-                    </c:if>
-                    <c:if test="${not empty member.photo}">
-                        <a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-17/member/${member.photo}'>
-                            <img src='http://rckgyxwydznu19204086.cdn.ntruss.com/member/${member.photo}?type=f&w=60&h=80&faceopt=true&ttype=jpg'>
-                        </a>
-                    </c:if>
-                    <input type='file' name='photofile'></td></tr>
-            <tr>
-                <th style='width:120px;'>번호</th>
-                <td style='width:300px;'><input type='text' name='no' value='${member.no}' readonly></td></tr>
-            <tr>
-                <th>이름</th>
-                <td><input type='text' name='name' value='${member.name}'></td></tr>
-            <tr>
-                <th>이메일</th>
-                <td><input type='email' name='email' value='${member.email}'></td></tr>
-            <tr>
-                <th>암호</th>
-                <td><input type='password' name='password'></td></tr>
-            <tr>
-                <th>성별</th>
-                <td><select name='gender'>
-                    <option value='M' ${String.valueOf(member.getGender()) == 'M' ? "selected" : ""}>남자</option>
-                    <option value='W' ${String.valueOf(member.getGender()) == 'W' ? "selected" : ""}>여자</option></select></td></tr>
-        </table>
-        <div>
-            <button>변경</button>
-            <button type='reset'>초기화</button>
-            <a href='delete?no=${member.no}'>삭제</a>
-            <a href='list'>목록</a>
-        </div>
-    </form>
+  <form action='update' method='post' enctype='multipart/form-data'>
+  <table border='1'>
+  <tr>
+      <th style='width:120px;'>사진</th>
+      <td style='width:300px;'>
+        <c:if test="${empty member.photo}">
+          <img style='height:80px' src='/images/avatar.png'>
+        </c:if>
+        <c:if test="${not empty member.photo}">
+          <a href='https://kr.object.ncloudstorage.com/bitcamp-nc7-bucket-118/member/${member.photo}'>
+            <img src='http://rckgyxwydznu19204086.cdn.ntruss.com/member/${member.photo}?type=f&w=60&h=80&faceopt=true&ttype=jpg'>
+          </a>
+        </c:if>
+          <input type='file' name='photofile'></td></tr>
+  <tr>
+      <th style='width:120px;'>번호</th>
+      <td style='width:300px;'><input type='text' name='no' value='${member.no}' readonly></td></tr>
+  <tr>
+      <th>이름</th>
+      <td><input type='text' name='name' value='${member.name}'></td></tr>
+  <tr>
+      <th>이메일</th>
+      <td><input type='email' name='email' value='${member.email}'></td></tr>
+  <tr>
+      <th>암호</th>
+      <td><input type='password' name='password'></td></tr>
+  <tr>
+      <th>성별</th>
+      <td><select name='gender'>
+          <option value='M' ${String.valueOf(member.getGender()) == 'M' ? "selected" : ""}>남자</option>
+          <option value='W' ${String.valueOf(member.getGender()) == 'W' ? "selected" : ""}>여자</option></select></td></tr>
+  </table>
+  <div>
+  <button>변경</button>
+  <button type='reset'>초기화</button>
+      <a href='delete?no=${member.no}'>삭제</a>
+  <a href='list'>목록</a>
+  </div>
+  </form>
 </c:if>
 <jsp:include page="../footer.jsp"/>
 
