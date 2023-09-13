@@ -61,19 +61,20 @@ public class MemberDetailServlet extends HttpServlet {
               + " <option value='L' %s>L</option>\n"
               + " <option value='XL' %s>XL</option></select></td></tr>\n",
           (member.getGender() == 'M' ? "selected" : ""),
-          (member.getGender() == 'W' ? "selected" : ""));
+      	  (member.getGender() == 'W' ? "selected" : ""));
+
       out.printf(
           "<tr><th>하의</th>\n" + " <td><select name='pants'>\n"
-              + " <option value='M' %s>28</option>\n"
-              + " <option value='L' %s>30</option>\n"
-              + " <option value='XL' %s>32</option></select></td></tr>\n",
+              + " <option value='P1' %s>28</option>\n"
+              + " <option value='P2' %s>30</option>\n"
+              + " <option value='P3' %s>32</option></select></td></tr>\n",
           (member.getGender() == 'M' ? "selected" : ""),
           (member.getGender() == 'W' ? "selected" : ""));
       out.printf(
           "<tr><th>신발</th>\n" + " <td><select name='shoes'>\n"
-              + " <option value='M' %s>260</option>\n"
-              + " <option value='L' %s>265</option>\n"
-              + " <option value='XL' %s>270</option></select></td></tr>\n",
+              + " <option value='S1' %s>260</option>\n"
+              + " <option value='S2' %s>265</option>\n"
+              + " <option value='S3' %s>270</option></select></td></tr>\n",
           (member.getGender() == 'M' ? "selected" : ""),
           (member.getGender() == 'W' ? "selected" : ""));
       out.println("</table>");

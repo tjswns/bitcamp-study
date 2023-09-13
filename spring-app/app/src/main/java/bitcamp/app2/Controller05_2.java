@@ -4,6 +4,8 @@ package bitcamp.app2;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

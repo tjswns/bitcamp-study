@@ -25,6 +25,7 @@ public class MemberAddServlet extends HttpServlet {
     m.setGender(request.getParameter("gender").charAt(0));
     m.setTop(request.getParameter("Top"));
     m.setPants(request.getParameter("Pants"));
+    m.setShoes(request.getParameter("Shoes"));
     m.setNeck(request.getParameter("Nect"));
     m.setRing(request.getParameter("Ring"));
 

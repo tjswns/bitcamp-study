@@ -14,7 +14,14 @@ public class Member implements Serializable {
   public static final String M = "M";
   public static final String L = "L";
   public static final String XL = "XL";
+  public static final String P1 = "28";
+  public static final String P2 = "30";
+  public static final String P3 = "32";
+  public static final String S1 = "260";
+  public static final String S2 = "265";
+  public static final String S3 = "270";
 
+  
   private int no;
   private String name;
   private String email;

@@ -6,13 +6,13 @@
 
 <div style='height:50px;background-color:orange;'>
     <img src='https://www.ncloud.com/public/img/logo-m.png' style='height:40px'>
-    <a href='/admin/member/list'>회원</a>
-    <a href='/app/board/list?category=1'>게시글</a>
-    <a href='/app/board/list?category=2'>독서록</a>
+    <a href='/member/list'>회원</a>
+    <a href='/board/list?category=1'>게시글</a>
+    <a href='/board/list?category=2'>독서록</a>
 
 <c:choose>
     <c:when test="${empty sessionScope.loginUser}">
-        <a href='/app/auth/form'>로그인</a>
+        <a href='/auth/form'>로그인</a>
     </c:when>
     <c:otherwise>
         <c:if test="${empty sessionScope.loginUser.photo}">
