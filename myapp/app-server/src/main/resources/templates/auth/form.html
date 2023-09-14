@@ -6,24 +6,24 @@
 </head>
 <body>
 
-<div data-th-insert="header :: header"></div>
+<div data-th-replace="header :: header"></div>
 
 <h1>로그인</h1>
 
 <form action='login' method='post'>
-<table style="boarder: 1px">
+<table style="border: 1px;">
 <tr>
-  <th>이메일</th> <td><input type='email' name='email' value='${email}'></td>
+  <th>이메일</th> <td><input type='email' name='email' data-th-value='${email}'></td>
 </tr>
 <tr>
   <th>암호</th> <td><input type='password' name='password'></td>
 </tr>
 </table>
 <button>로그인</button>
- <input type='checkbox' name='saveEmail' data-th-checked="${email != null}"> 이메일 저장
+ <input type='checkbox' name='saveEmail' data-th-checked="${email}"> 이메일 저장
 </form>
 
-<div data-th-insert="footer :: footer"></div>
+<div data-th-replace="footer :: footer"></div>
 
 </body>
 </html>
